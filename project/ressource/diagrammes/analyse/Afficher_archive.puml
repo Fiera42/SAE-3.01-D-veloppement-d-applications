@@ -1,0 +1,16 @@
+@startuml
+
+User -> Application : AfficherArchive()
+activate Application
+
+loop toute les tâches archivées
+Application -> "Tache X" : activéAffichage()
+activate "Tache X"
+Application <-- "Tache X"
+deactivate "Tache X"
+end loop
+
+User <-- Application : mise à jour \nde l'affichage
+deactivate Application
+
+@enduml
