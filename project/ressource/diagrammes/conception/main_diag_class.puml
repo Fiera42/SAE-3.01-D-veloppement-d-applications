@@ -1,0 +1,105 @@
+@startuml
+
+interface Model {
+    addObservator(Observator)
+    deleteObservator(Observator)
+    updateObservator()
+}
+
+class Treulo implements Model{
+    -displayArchive : boolean
+    -displayMode : String
+    -isDisplayingSubTask : boolean
+    +[getter]()
+}
+
+Treulo "1" <-- "*" Observator : observators
+Treulo "1" <-- "1" Board : board
+Treulo "*" <-- "1" Task : displayedTask \n//used for subtask, gantt & subtask gantt
+Treulo "*" <-- "1" Task : focusedTask \n//used for big display
+
+interface Observator {
+    update(Model)
+}
+
+class AppView extends "BorderPane(javafx)" implements Observator{
+
+}
+
+AppView "1" <-- "1" DisplayFactory : displayFactory
+
+note "Update display the entire app\nstrategy used for display type" as N1
+AppView <- N1
+
+class DisplayFactory {
+    +DisplayFactory(Treulo)
+    +generateDisplay(String displayMode) : Display
+    +generateSubTaskDisplay(String displayMode, Task task) : Display
+}
+
+DisplayFactory "1" <-- "1" Treulo : model
+
+interface Display {
+    +getDisplay(Task focusedTask) : Node
+}
+
+class DeskDisplay implements Display {
+    +DeskDisplay(ArrayList<TaskContainer>)
+    -getContainerDisplay(TaskContainer) : Node
+}
+DeskDisplay "*" <-- "*" TaskContainer : taskContainers
+
+class ListDisplay implements Display {
+    +ListDisplay(ArrayList<TaskContainer>)
+    -getContainerDisplay(TaskContainer) : Node
+}
+ListDisplay "*" <-- "*" TaskContainer : taskContainers
+
+class GanttDisplay implements Display {
+    +GanttDisplay(Task finalTask)
+}
+GanttDisplay "*" <-- "1" Task : finalTask
+
+class TaskContainer implements "Iterable<Task>(java)"{
+    -name : String
+    +addTask(Task)
+    +deleteTask(Task)
+    +isEmpty()
+
+    +[getter]()
+}
+
+TaskContainer "1" <-- "*" Task : tasks
+
+class Task {
+    -name : String
+    -description : String
+    -isArchived : boolean
+
+    +addDependencie(Task)
+    +deleteDependencie(Task)
+    +addWorker(Worker)
+    +deleteWorker(Worker)
+
+    +[getter]()
+}
+
+Task "1" <-- "1" Board : subTask
+Task "*" <-- "*" Task : dependencies
+Task "*" <-- "*" Worker : assignedWorker
+
+class Worker {
+    -name
+}
+
+class Board implements "Iterable<TaskContainer>(java)"{
+    +addContainer(TaskContainer)
+    +deleteContainer(TaskContainer)
+    +isEmpty()
+
+    +[getter]()
+}
+Board "1" <-- "*" TaskContainer : containers
+
+
+@enduml
