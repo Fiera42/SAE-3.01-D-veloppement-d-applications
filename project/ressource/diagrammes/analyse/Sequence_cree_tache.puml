@@ -1,0 +1,14 @@
+@startuml
+
+User -> Application : ajouter une tâche
+activate Application
+
+Application -> Application : mise à jour affichage
+User <-- Application : feedback visuel
+
+User -> Application : donné info tâche
+Application -> Application : création de la tâche
+User <-- Application : Affichage du diagramme \n avec la nouvelle tâche
+deactivate Application
+
+@enduml
