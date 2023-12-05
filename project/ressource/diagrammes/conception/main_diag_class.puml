@@ -10,6 +10,9 @@ class Treulo implements Model{
     -displayArchive : boolean
     -displayMode : String
     -isDisplayingSubTask : boolean
+    -loadFile(String fileName)
+    -saveAsFile(String fileName)
+    -exportAsImage(String fileName)
     +[getter]()
 }
 
@@ -70,29 +73,44 @@ class TaskContainer implements "Iterable<Task>(java)"{
 }
 
 TaskContainer "1" <-- "*" Task : tasks
+note on link : linked list pour \nmodification rapide de l'ordre
 
-class Task {
+abstract class Task {
     -name : String
     -description : String
     -isArchived : boolean
+    -isFocused : boolean
 
     +addDependencie(Task)
     +deleteDependencie(Task)
     +addWorker(Worker)
     +deleteWorker(Worker)
 
+    {abstract}+toNode() : Node //display of a single node, depending on isFocused
+
     +[getter]()
 }
 
-Task "1" <-- "1" Board : subTask
 Task "*" <-- "*" Task : dependencies
 Task "*" <-- "*" Worker : assignedWorker
+
+class TaskAlone extends Task {
+
+}
+
+class TaskWithSubTask extends Task {
+
+}
+
+TaskWithSubTask "1" <-- "1" Board : subTask
 
 class Worker {
     -name
 }
 
 class Board implements "Iterable<TaskContainer>(java)"{
+    +name : String
+
     +addContainer(TaskContainer)
     +deleteContainer(TaskContainer)
     +isEmpty()
@@ -100,6 +118,78 @@ class Board implements "Iterable<TaskContainer>(java)"{
     +[getter]()
 }
 Board "1" <-- "*" TaskContainer : containers
+note on link : linked list pour \nmodification rapide de l'ordre
 
+class TaskDragControl {
+    TaskDragControl(Treulo)
+    Handle(DragEvent )
+}
+TaskDragControl "*" <-- "1" Treulo : model
+
+class AddTaskControl {
+    AddTaskControl(Treulo)
+    Handle(ActionEvent )
+}
+AddTaskControl "*" <-- "1" Treulo : model
+
+class EditTaskControl {
+    EditTaskControl(Treulo)
+    Handle(ActionEvent)
+}
+EditTaskControl "*" <-- "1" Treulo : model
+
+class DeleteTaskControl {
+    DeleteTaskControl(Treulo)
+    Handle(ActionEvent )
+}
+DeleteTaskControl "*" <-- "1" Treulo : model
+
+class ChangeDisplayControl {
+    ChangeDisplayControl(Treulo)
+    Handle(ActionEvent)
+}
+ChangeDisplayControl "*" <-- "1" Treulo : model
+
+class SaveFileControl {
+    SaveFileControl(Treulo)
+    Handle(ActionEvent )
+}
+SaveFileControl "*" <-- "1" Treulo : model
+
+class LoadFileControl {
+    LoadFileControl(Treulo)
+    Handle(ActionEvent )
+}
+LoadFileControl "*" <-- "1" Treulo : model
+
+class ExportImageControl {
+    ExportImageControl(Treulo)
+    Handle(ActionEvent )
+}
+ExportImageControl "*" <-- "1" Treulo : model
+
+class ToggleArchiveTaskControl {
+    ToggleArchiveTaskControl(Treulo)
+    Handle(ActionEvent )
+}
+ToggleArchiveTaskControl "*" <-- "1" Treulo : model
+
+class AddContainerControl {
+    AddContainerControl(Treulo)
+    Handle(ActionEvent )
+}
+AddContainerControl "*" <-- "1" Treulo : model
+
+class DeleteContainerControl {
+    DeleteContainerControl(Treulo)
+    Handle(ActionEvent )
+}
+DeleteContainerControl "*" <-- "1" Treulo : model
+
+class UpdateContainerControl {
+    UpdateContainerControl(Treulo)
+    Handle(ActionEvent )
+}
+UpdateContainerControl "*" <-- "1" Treulo : model
 
 @enduml
