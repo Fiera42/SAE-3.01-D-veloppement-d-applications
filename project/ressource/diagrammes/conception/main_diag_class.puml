@@ -237,19 +237,12 @@ package Controler {
   EditCollaboratorListControl "*" <-- "1" Collaborator.CollaboratorList : collaboratorList
   EditCollaboratorListControl "*" <-- "1" Treulo : model
 
-  class EditDependcieListControl {
-    EditDependcieList(Treulo, DependencieList)
+  class EditDependencieListControl {
+    EditDependencieList(Treulo, DependencieList)
     Handle(ActionEvent)
   }
-  EditDependcieListControl "*" <-- "1" Task.DependencieList : dependencieList
-  EditDependcieListControl "*" <-- "1" Treulo : model
-
-  class EditDependcieListControl {
-    EditDependcieList(Treulo, DependencieList)
-    Handle(ActionEvent)
-  }
-  EditDependcieListControl "*" <-- "1" Task.DependencieList : dependencieList
-  EditDependcieListControl "*" <-- "1" Treulo : model
+  EditDependencieListControl "*" <-- "1" Task.DependencieList : dependencieList
+  EditDependencieListControl "*" <-- "1" Treulo : model
 
   class OpenFileControl {
     OpenFileControl(Treulo)
