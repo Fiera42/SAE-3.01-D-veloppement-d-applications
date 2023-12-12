@@ -1,6 +1,6 @@
 Affichage :
 
-L'utilasteur lance l'application 
+L'utilisateur lance l'application
 Le systeme lui propose diférents affichage
 L'utilisateur choisit ensuite l'affichage bureau 
 Le systeme affiche la page bureau ou l'on peut voir les diférentes tâche ansi que les collones
@@ -8,7 +8,7 @@ L'utilisateur clique sur une des taches.
 Le systeme va afficher cette tâche en mode dévlopper.
 L'utilisateur va cliquer sur le bouton retour. 
 Le système retourne à l'affichage bureau. 
-L'utilisateur fait glisser une tache dans une autre colonne.
+L'utilisateur fait glisser une tache dans une autre colonne ou une autre tache.
 Le systeme va afficher le changement en direct dans le bureau.
 L'utilisateur ferme l'application.
 
