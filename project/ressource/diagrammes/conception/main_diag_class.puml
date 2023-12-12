@@ -206,9 +206,10 @@ package Controler {
   AddTaskControl "*" <-- "1" Treulo : model
 
   class DeleteTaskControl {
-    DeleteTaskControl(Treulo)
+    DeleteTaskControl(Treulo, Task.TaskList)
     Handle(ActionEvent)
   }
+  DeleteTaskControl "*" <-- "1" Task.TaskList : taskList
   DeleteTaskControl "*" <-- "1" Treulo : model
 
   class EditTaskListControl {
