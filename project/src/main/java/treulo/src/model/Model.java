@@ -1,8 +1,6 @@
 package treulo.src.model;
 
-import treulo.src.observator.Observator;
-
-import java.util.ArrayList;
+import treulo.src.view.Observator;
 
 public interface Model {
 
