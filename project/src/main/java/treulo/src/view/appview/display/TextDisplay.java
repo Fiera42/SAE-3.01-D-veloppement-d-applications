@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import treulo.src.model.TaskList;
 import treulo.src.model.TreuloTask;
-import javafx.scene.layout.
 
 import java.util.ArrayList;
 
@@ -31,6 +30,8 @@ public class TextDisplay implements Display {
             }
             vBox.getChildren().add(listVbox);
         }
+
+        return vBox;
     }
 
     @Override
