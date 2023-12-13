@@ -3,5 +3,5 @@ module trello.project {
     requires javafx.fxml;
 
     opens treulo.src to javafx.fxml;
-    exports treulo.src;
+
 }
