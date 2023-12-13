@@ -9,6 +9,8 @@ public class Treulo implements  Model{
 
     protected boolean displayArchive;
     protected String displayMode;
+
+    protected ArrayList <TaskList> tasks;
     protected TaskList editedTaskList;
 
     public void loadFile(String fileName)
