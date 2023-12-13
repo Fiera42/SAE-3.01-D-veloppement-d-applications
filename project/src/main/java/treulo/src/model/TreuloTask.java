@@ -9,6 +9,8 @@ import java.util.List;
 public class TreuloTask implements Model{
     private String name , description;
     private boolean isArchive;
+
+    private float duration ;
     private ArrayList<String> collaborators ;
     private ArrayList<TreuloTask> dependencies ;
     private ArrayList<TreuloTask> subtasks ;
@@ -17,9 +19,11 @@ public class TreuloTask implements Model{
     private static List<TreuloTask> alltasks ;
 
 
+
     public TreuloTask (){
         this.name = "" ;
         this.description = "" ;
+        this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new ArrayList<TreuloTask>() ;
@@ -30,6 +34,7 @@ public class TreuloTask implements Model{
     public TreuloTask (String n){
         this.name = n ;
         this.description = "" ;
+        this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new ArrayList<TreuloTask>() ;
@@ -40,12 +45,25 @@ public class TreuloTask implements Model{
     public TreuloTask (String d , String n){
         this.name = n ;
         this.description = d ;
+        this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new ArrayList<TreuloTask>() ;
         this.observators = new ArrayList<Observator>();
         alltasks = new ArrayList<TreuloTask>() ;
     }
+
+    public TreuloTask (String d , String n , float f){
+        this.name = n ;
+        this.description = d ;
+        this.duration = f ;
+        this.collaborators = new ArrayList<String>();
+        this.dependencies = new ArrayList<TreuloTask>() ;
+        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.observators = new ArrayList<Observator>();
+        alltasks = new ArrayList<TreuloTask>() ;
+    }
+
 
     public void addDependencie(TreuloTask task){
         this.dependencies.add(task);
