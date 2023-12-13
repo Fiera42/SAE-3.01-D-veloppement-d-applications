@@ -2,7 +2,9 @@ package treulo.src.model;
 
 import treulo.src.view.Observator;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TreuloTask implements Model{
     private String name , description;
@@ -10,6 +12,10 @@ public class TreuloTask implements Model{
     private ArrayList<String> collaborators ;
     private ArrayList<TreuloTask> dependencies ;
     private ArrayList<TreuloTask> subtasks ;
+
+    private ArrayList<Observator> observators ;
+    private static List<TreuloTask> alltasks ;
+
 
     public TreuloTask (){
 
