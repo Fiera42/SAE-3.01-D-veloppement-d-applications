@@ -1,6 +1,7 @@
 package treulo.src.view.appview;
 
 import javafx.scene.control.ScrollPane;
+import treulo.src.model.Model;
 import treulo.src.view.Observator;
 
 public class AppView extends ScrollPane implements Observator {
