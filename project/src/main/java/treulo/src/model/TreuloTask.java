@@ -72,7 +72,7 @@ public class TreuloTask implements Model{
         return this.name;
     }
 
-    public String getDescritpion() {
+    public String getDescription() {
         return this.description;
     }
 
