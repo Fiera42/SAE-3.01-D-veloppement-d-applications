@@ -11,25 +11,31 @@ public class TaskList implements Model{
     private ArrayList<TreuloTask> tasks ;
     private ArrayList<Observator> observators ;
 
-    public void addTask (TreuloTask task){}
+    public void addTask (TreuloTask task){
+        this.tasks.add(task);
+    }
 
-    public void deleteTask (TreuloTask task){}
+    public void deleteTask (TreuloTask task){
+        this.tasks.remove(task);
+    }
 
     public boolean isEmpty(){
-        return true ;
+        return this.name.isEmpty();
     }
     @Override
     public void addObservator(Observator o) {
-
+        this.observators.add(o);
     }
 
     @Override
     public void deleteObservator(Observator o) {
-
+        this.observators.remove(o);
     }
 
     @Override
     public void updateObservator() {
-
+        for (Observator o: this.observators) {
+            o.update(this);
+        }
     }
 }

@@ -18,23 +18,41 @@ public class TreuloTask implements Model{
 
 
     public TreuloTask (){
-
+        this.name = "" ;
+        this.description = "" ;
+        this.collaborators = new ArrayList<String>();
+        this.dependencies = new ArrayList<TreuloTask>() ;
+        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.observators = new ArrayList<Observator>();
+        alltasks.add(this) ;
     }
 
     public TreuloTask (String n){
-
+        this.name = n ;
+        this.description = "" ;
+        this.collaborators = new ArrayList<String>();
+        this.dependencies = new ArrayList<TreuloTask>() ;
+        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.observators = new ArrayList<Observator>();
+        alltasks = new ArrayList<TreuloTask>() ;
     }
 
-    public TreuloTask (String s , String n){
-
+    public TreuloTask (String d , String n){
+        this.name = n ;
+        this.description = d ;
+        this.collaborators = new ArrayList<String>();
+        this.dependencies = new ArrayList<TreuloTask>() ;
+        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.observators = new ArrayList<Observator>();
+        alltasks = new ArrayList<TreuloTask>() ;
     }
 
     public void addDependencie(TreuloTask task){
-
+        this.dependencies.add(task);
     }
 
     public void deleteDependencie(TreuloTask task){
-
+        this.dependencies.remove(task);
     }
 
     public ArrayList<TreuloTask> getDependencies(){
@@ -42,11 +60,11 @@ public class TreuloTask implements Model{
     }
 
     public void addSubTask(TreuloTask task){
-
+        this.subtasks.add(task);
     }
 
     public void deleteSubTask(TreuloTask task){
-
+        this.subtasks.remove(task);
     }
 
     public ArrayList<TreuloTask> getSubtasks(){
@@ -55,17 +73,19 @@ public class TreuloTask implements Model{
 
     @Override
     public void addObservator(Observator o) {
-
+        this.observators.add(o);
     }
 
     @Override
     public void deleteObservator(Observator o) {
-
+        this.observators.remove(o);
     }
 
     @Override
     public void updateObservator() {
-
+        for (Observator o: this.observators) {
+            o.update(this);
+        }
     }
 
     public String getName() {
@@ -78,5 +98,9 @@ public class TreuloTask implements Model{
 
     public boolean isArchive() {
         return this.isArchive;
+    }
+
+    public List<TreuloTask> getAlltasks(){
+        return alltasks;
     }
 }
