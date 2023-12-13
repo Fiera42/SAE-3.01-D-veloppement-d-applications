@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class EditCollaboratorControl {
     Model model;
-    ArrayList <Colaborator> colaborator;
+    /*ArrayList <Colaborator> colaborator;
 
     public EditCollaboratorControl (Model m,ArrayList<Colaborator> col)
     {
         model=m;
         colaborator=col;
-    }
+    }*/
 }
