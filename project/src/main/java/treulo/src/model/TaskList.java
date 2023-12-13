@@ -3,8 +3,9 @@ package treulo.src.model;
 import treulo.src.view.Observator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class TaskList implements Model{
+public class TaskList implements Model , Iterable<TreuloTask>{
 
     private String name ;
     public boolean isArchived ;
@@ -37,5 +38,10 @@ public class TaskList implements Model{
         for (Observator o: this.observators) {
             o.update(this);
         }
+    }
+
+    @Override
+    public Iterator<TreuloTask> iterator() {
+        return this.tasks.iterator();
     }
 }
