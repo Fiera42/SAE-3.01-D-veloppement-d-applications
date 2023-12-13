@@ -57,4 +57,8 @@ public class Treulo implements  Model{
             observators.get(i).update(this);
         }
     }
+
+    public ArrayList<TaskList> getTasks() {
+        return tasks;
+    }
 }
