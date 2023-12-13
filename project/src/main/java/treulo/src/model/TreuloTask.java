@@ -5,7 +5,7 @@ import treulo.src.view.Observator;
 import java.util.ArrayList;
 
 public class TreuloTask implements Model{
-    private String name , descritpion;
+    private String name , description;
     private boolean isArchive;
     private ArrayList<String> collaborators ;
     private ArrayList<TreuloTask> dependencies ;
@@ -63,14 +63,14 @@ public class TreuloTask implements Model{
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescritpion() {
-        return descritpion;
+        return this.description;
     }
 
     public boolean isArchive() {
-        return isArchive;
+        return this.isArchive;
     }
 }
