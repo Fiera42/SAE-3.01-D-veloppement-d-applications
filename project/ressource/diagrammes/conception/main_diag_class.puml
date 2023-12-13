@@ -60,21 +60,14 @@ package MVC {
   }
 }
 
-package Collaborator {
-  class CollaboratorList implements java.Iterable {
-    +addCollaborator(String)
-    +deleteCollaborator(String)
-  }
-
-  CollaboratorList "1" <-- "1" javaFX.TextField : newCollaborator
-  CollaboratorList o-- javaFX.TextField : collaborators
-}
-
 package Task {
 
-  class Task {
-    -taskId : int
-    -{static} maxId : int
+  class Task implements MVC.Model{
+    -name : string
+    -description : string
+    -isArchive : boolean
+    -collaborators : arrayList<String>
+    -dependencies : arrayList<Task>
     -{static} allTasks : list<Task>
     +Task() //taskId = ++maxId && add it to "allTask"
     +Task(String) //taskId = ++maxId && add it to "allTask"
@@ -92,13 +85,9 @@ package Task {
     +[getter]()
   }
 
-  class DependencieList implements java.Iterable{
-    +addDependencie(int)
-    +deleteDependencie(int)
-    +isEmpty()
-  }
-
-  class TaskList implements java.Iterable {
+  class TaskList implements java.Iterable, MVC.Model {
+    -name : String
+    -isArchived : boolean
     +addTask(Task)
     +deleteTask(Task)
     +isEmpty()
@@ -106,27 +95,49 @@ package Task {
     +[getter]()
   }
 
-  Task "1" <-- "1" DependencieList : dependencies
+  class TaskNameObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskDescObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskArchiveObs extends javaFX.CheckBox implements MVC.Observator {
+
+  }
+
+  class TaskCollaboratorsObs extends javaFX.HBox implements MVC.Observator {
+
+  }
+
+  class TaskDependenciesObs extends javaFX.HBox implements MVC.Observator {
+
+  }
+
+
+  class TaskListNameObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskListArchiveObs extends javaFX.CheckBox implements MVC.Observator {
+
+  }
+
   Task "*" <-up- "1" Task : parentTask
   Task "*" <-- "1" TaskList : parentTaskList
   Task o-- Task : subTasks
-  Task "*" <-- "1" Collaborator.CollaboratorList : collaborators
-  Task "1" <-- "1" javaFX.TextField : name
-  Task "1" <-- "1" javaFX.TextField : description
-  Task "1" <-- "1" javaFX.CheckBox : archive
+  Task "*" <-- "*" MVC.Observator : observators
 
   TaskList o-- Task : tasks
-  TaskList "1" <-- "1" javaFX.TextField : name
-  TaskList "1" <-- "1" javaFX.CheckBox : archive
-  TaskList "1" <-- "1" javaFX.Button : addTask
-
-  DependencieList o-- javaFX.TextField : dependenciesId
+  TaskList "*" <-- "*" MVC.Observator : observators
 }
 
 package App {
   class Treulo implements MVC.Model{
     -displayArchive : boolean
     -displayMode : String
+    -editedTaskList : TaskList
     +loadFile(String fileName)
     +saveAsFile(String fileName)
     +exportAsImage(String fileName)
@@ -162,9 +173,13 @@ package Display {
   ListDisplay "*" <-- "*" Task.TaskList : taskLists
 
   class GanttDisplay implements Display {
-    +GanttDisplay(Task finalTask)
-  }
-  GanttDisplay "*" <-- "1" Task.Task : finalTask
+      +GanttDisplay()
+    }
+
+  class CreateTaskDisplay implements Display {
+      +CreateTaskDisplay(TaskList)
+    }
+  CreateTaskDisplay "*" <-- "1" Task.TaskList : taskList
 
   package DisplayFactory {
     abstract class DisplayFactory {
@@ -185,8 +200,12 @@ package Display {
     class GanttDisplayFactory extends DisplayFactory{
       GanttDisplayFactory(Treulo)
     }
-
     GanttDisplayFactory "*" <-- "1" Treulo : model
+
+    class CreateTaskDisplayFactory extends DisplayFactory{
+          CreateTaskDisplayFactory(Treulo)
+        }
+    CreateTaskDisplayFactory "*" <-- "1" Treulo : model
   }
 }
 
@@ -231,19 +250,19 @@ package Controler {
   }
   DeleteTaskListControl "*" <-- "1" Treulo : model
 
-  class EditCollaboratorListControl {
+  class EditCollaboratorControl {
     EditCollaboratorListControl(Treulo, CollaboratorList)
     Handle(ActionEvent)
   }
-  EditCollaboratorListControl "*" <-- "1" Collaborator.CollaboratorList : collaboratorList
-  EditCollaboratorListControl "*" <-- "1" Treulo : model
+  EditCollaboratorControl "*" <-- "1" Task.Task : task
+  EditCollaboratorControl "*" <-- "1" Treulo : model
 
-  class EditDependencieListControl {
+  class EditDependencieControl {
     EditDependencieList(Treulo, DependencieList)
     Handle(ActionEvent)
   }
-  EditDependencieListControl "*" <-- "1" Task.DependencieList : dependencieList
-  EditDependencieListControl "*" <-- "1" Treulo : model
+  EditDependencieControl "*" <-- "1" Task.Task : dependencies
+  EditDependencieControl "*" <-- "1" Treulo : model
 
   class OpenFileControl {
     OpenFileControl(Treulo)
