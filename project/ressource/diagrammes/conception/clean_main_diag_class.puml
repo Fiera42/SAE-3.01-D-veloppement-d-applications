@@ -65,6 +65,7 @@ package Task {
   class Task implements MVC.Model{
     -name : string
     -description : string
+    -duration : float
     -isArchive : boolean
     -collaborators : arrayList<String>
     -dependencies : arrayList<Task>

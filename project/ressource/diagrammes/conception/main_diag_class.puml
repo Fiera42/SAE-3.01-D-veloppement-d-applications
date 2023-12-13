@@ -66,6 +66,7 @@ package Task {
     -name : string
     -description : string
     -isArchive : boolean
+    -duration : float
     -collaborators : arrayList<String>
     -dependencies : arrayList<Task>
     -{static} allTasks : list<Task>

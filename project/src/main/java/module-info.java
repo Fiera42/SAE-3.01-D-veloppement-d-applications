@@ -2,6 +2,6 @@ module trello.project {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens trello.src to javafx.fxml;
-    exports trello.src;
+    opens treulo.src to javafx.fxml;
+    exports treulo.src;
 }
