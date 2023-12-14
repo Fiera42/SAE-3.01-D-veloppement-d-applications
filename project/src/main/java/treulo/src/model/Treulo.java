@@ -3,6 +3,7 @@ package treulo.src.model;
 import treulo.src.view.Observator;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Treulo implements  Model{
     protected ArrayList<Observator> observators;
@@ -10,8 +11,15 @@ public class Treulo implements  Model{
     protected boolean displayArchive;
     protected String displayMode;
 
-    protected ArrayList <TaskList> tasks;
+    protected LinkedList<TaskList> tasks;
     protected TaskList editedTaskList;
+
+    public Treulo() {
+        this.observators = new ArrayList<>();
+        this.displayArchive = false;
+        this.displayMode = "default";
+        this.tasks = new LinkedList<>();
+    }
 
     public void loadFile(String fileName)
     {
@@ -58,7 +66,15 @@ public class Treulo implements  Model{
         }
     }
 
-    public ArrayList<TaskList> getTasks() {
+    public LinkedList<TaskList> getTasks() {
         return tasks;
+    }
+
+    public void addTaskList(TaskList taskList) {
+        tasks.add(taskList);
+    }
+
+    public void removeTaskList(TaskList taskList) {
+        tasks.remove(taskList);
     }
 }

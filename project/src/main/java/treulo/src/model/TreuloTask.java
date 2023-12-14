@@ -4,6 +4,7 @@ import treulo.src.view.Observator;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TreuloTask implements Model{
@@ -13,7 +14,7 @@ public class TreuloTask implements Model{
     private float duration ;
     private ArrayList<String> collaborators ;
     private ArrayList<TreuloTask> dependencies ;
-    private ArrayList<TreuloTask> subtasks ;
+    private LinkedList<TreuloTask> subtasks ;
 
     private ArrayList<Observator> observators ;
     private static List<TreuloTask> alltasks ;
@@ -26,7 +27,7 @@ public class TreuloTask implements Model{
         this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
-        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
     }
@@ -37,29 +38,29 @@ public class TreuloTask implements Model{
         this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
-        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks = new ArrayList<TreuloTask>() ;
     }
 
-    public TreuloTask (String d , String n){
+    public TreuloTask (String n , String d){
         this.name = n ;
         this.description = d ;
         this.duration = 0 ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
-        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks = new ArrayList<TreuloTask>() ;
     }
 
-    public TreuloTask (String d , String n , float f){
+    public TreuloTask (String n , String d , float f){
         this.name = n ;
         this.description = d ;
         this.duration = f ;
         this.collaborators = new ArrayList<String>();
         this.dependencies = new ArrayList<TreuloTask>() ;
-        this.subtasks = new ArrayList<TreuloTask>() ;
+        this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks = new ArrayList<TreuloTask>() ;
     }
@@ -74,7 +75,7 @@ public class TreuloTask implements Model{
     }
 
     public ArrayList<TreuloTask> getDependencies(){
-        return this.subtasks ;
+        return this.dependencies ;
     }
 
     public void addSubTask(TreuloTask task){
@@ -85,7 +86,7 @@ public class TreuloTask implements Model{
         this.subtasks.remove(task);
     }
 
-    public ArrayList<TreuloTask> getSubtasks(){
+    public LinkedList<TreuloTask> getSubtasks(){
         return this.subtasks ;
     }
 

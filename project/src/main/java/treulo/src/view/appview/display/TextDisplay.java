@@ -5,17 +5,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import treulo.src.model.TaskList;
 import treulo.src.model.TreuloTask;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class TextDisplay implements Display {
 
-    private ArrayList<TaskList> taskLists;
+    private LinkedList<TaskList> taskLists;
 
-    public TextDisplay(ArrayList<TaskList> taskLists) {
+    public TextDisplay(LinkedList<TaskList> taskLists) {
         this.taskLists = taskLists;
     }
 
@@ -24,7 +27,7 @@ public class TextDisplay implements Display {
         VBox vBox = new VBox();
 
         for(TaskList taskList : taskLists) {
-            VBox listVbox = new VBox();
+            VBox listVbox = new VBox(new Label("-" + taskList.getName()));
             for(TreuloTask task : taskList) {
                 listVbox.getChildren().add(getTaskDisplay(task, new VBox()));
             }

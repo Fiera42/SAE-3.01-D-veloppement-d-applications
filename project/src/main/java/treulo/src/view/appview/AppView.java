@@ -1,6 +1,8 @@
 package treulo.src.view.appview;
 
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.view.Observator;

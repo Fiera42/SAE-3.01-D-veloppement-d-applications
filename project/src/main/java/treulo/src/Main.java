@@ -1,79 +1,100 @@
 package treulo.src;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import treulo.src.model.Treulo;
+import treulo.src.view.appview.AppView;
+import treulo.test.DummieTreuloGenerator;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class Main extends Application {
 
+    private static final String applicationName = "Treulo";
+    private static final int appWidth = 768;
+    private static final int appHeight = 432;
+
     public static void main(String[] args) {
         launch(args);
     }
+    public void start(Stage stage) {
+        //nom, largeur et hauteur
+        stage.setTitle(applicationName);
 
-        public void start(Stage stage) {
-            BorderPane borderP = new BorderPane();
+        BorderPane scene = new BorderPane();
 
+        Treulo model = DummieTreuloGenerator.generateDummie();
 
-            //Le Top
+        //-------------------- BARRE DU HAUT
+        BorderPane nav = new BorderPane();
+        nav.setPadding(new Insets(10));
+        nav.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
+        scene.setTop(nav);
 
-            StackPane stpT = new StackPane();
-            Rectangle rtt=new Rectangle(500,100);
-            rtt.setFill(Color.WHITE);
+        //-----titre
+        Label title = new Label("Treulo");
+        title.setAlignment(Pos.CENTER);
+        title.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR, 35));
+        nav.setCenter(title);
 
-            Button buttonFile= new Button("File");
-            Button buttonGantt= new Button("GANTT");
-            Button buttonListe= new Button("Liste");
-            Button buttontableau= new Button("Tableau");
-            Button ajoutTache= new Button("AjouterTache");
+        //-----boutons gauche
+        Button buttonFile= new Button("File");
 
-            BorderPane bpTop = new BorderPane();
-            //topLeft
-            HBox hbLTB = new HBox();
-            hbLTB.getChildren().addAll(buttonGantt,buttonListe,buttontableau);
-            VBox vbLT = new VBox();
-            vbLT.getChildren().addAll(buttonFile,hbLTB);
+        //permet d'avoir des boutons normaux avec des propriétés de radio button
+        ToggleGroup displayMode = new ToggleGroup();
 
-            bpTop.setLeft(vbLT);
-            //top top
+        RadioButton buttonGantt = new RadioButton("GANTT");
+        buttonGantt.getStyleClass().remove("radio-button");
+        buttonGantt.getStyleClass().add("toggle-button");
+        buttonGantt.setToggleGroup(displayMode);
 
-            Text txtT= new Text("Organisateur de tâches");
-            HBox hbtt = new HBox(txtT);
-            hbtt.setAlignment(Pos.CENTER);
-            hbtt.setBorder(Border.stroke(Color.BLACK));
-            bpTop.setTop(hbtt);
-            //top Right
-            HBox hbTR =new HBox();
-            CheckBox archive = new CheckBox();
-            Label txtTR = new Label("Afficher les archives");
-            hbTR.getChildren().addAll(txtTR,archive);
-            bpTop.setRight(hbTR);
+        RadioButton buttonListe = new RadioButton("Liste");
+        buttonListe.getStyleClass().remove("radio-button");
+        buttonListe.getStyleClass().add("toggle-button");
+        buttonListe.setToggleGroup(displayMode);
 
-            //top center
-            Text titre = new Text("Projet 1");
-            bpTop.setCenter(titre);
-            bpTop.setBorder(Border.stroke(Color.BLACK));
+        RadioButton buttontableau = new RadioButton("Tableau");
+        buttontableau.getStyleClass().remove("radio-button");
+        buttontableau.getStyleClass().add("toggle-button");
+        buttontableau.setToggleGroup(displayMode);
 
+        HBox displayModeButtons = new HBox(buttontableau, buttonListe, buttonGantt);
+        displayModeButtons.setSpacing(10);
+        VBox leftButtons = new VBox(buttonFile, displayModeButtons);
+        leftButtons.setSpacing(5);
+        nav.setLeft(leftButtons);
 
+        //-----boutons droite (archive)
+        CheckBox archive = new CheckBox();
+        Label archiveText = new Label("Afficher les archives : ");
+        HBox archiveBox = new HBox(archiveText, archive);
+        archiveBox.setAlignment(Pos.CENTER);
+        nav.setRight(archiveBox);
 
-            borderP.setTop(bpTop);
+        //-------------------- AFFICHAGE TACHE
 
-            /*
-            borderP.setBottom();
-            */
-            Scene scene = new Scene(borderP, 350, 350);
-            stage.setScene(scene);
-            stage.setTitle("Treulo");
-            stage.show();
+        AppView appView = new AppView();
+        appView.update(model);
+        scene.setCenter(appView);
+
+        //--------------------
+        Scene stageScene = new Scene(scene, appWidth, appHeight);
+        stageScene.getStylesheets().add("treuloStyle.css");
+        stage.setScene(stageScene);
+        stage.show();
     }
 }
