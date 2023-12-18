@@ -90,6 +90,7 @@ public class Main extends Application {
         AppView appView = new AppView();
         appView.update(model);
         scene.setCenter(appView);
+        model.addObservator(appView);
 
         //--------------------
         Scene stageScene = new Scene(scene, appWidth, appHeight);

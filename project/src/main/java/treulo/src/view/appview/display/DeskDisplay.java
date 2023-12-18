@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import treulo.src.Controler.AddTaskListControl;
 import treulo.src.Controler.EditTaskListControl;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
@@ -33,19 +34,20 @@ public class DeskDisplay implements Display {
             hBox.getChildren().add(getTaskListDisplay(taskList));
         }
 
-        
-
+        Button button = new Button("Nouvelle liste");
+        button.setOnAction(new AddTaskListControl(model));
         return hBox;
     }
 
     public Node getTaskListDisplay(TaskList taskList) {
         VBox vBox = new VBox();
         TextField listName = new TextField(taskList.getName());
-        listName.setOnAction(new EditTaskListControl(model, taskList));
+        //listName.setOnAction(new EditTaskListControl(model, taskList));
 
+        /*
         for(TreuloTask task : taskList) {
             listVbox.getChildren().add(getTaskDisplay(task, new VBox()));
-        }
+        }*/
         return null;
     }
 
