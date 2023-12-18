@@ -8,6 +8,8 @@ public abstract class DisplayFactory {
 
     public static DisplayFactory getDisplayFactory(Treulo model, String displayMode) {
         switch (displayMode) {
+            case "Nouvelle tache":
+                return new CreateTaskDisplayFactory(model);
             case "Nouvelle Liste":
                 return new CreateTaskListDisplayFactory(model);
             case "Tableau" :
