@@ -19,8 +19,8 @@ public class DummieTreuloGenerator {
         task3.addSubTask(task6);
         task5.addSubTask(task7);
 
-        TaskList list1 = new TaskList("liste 1" , treulo);
-        TaskList list2 = new TaskList("liste 2" , treulo);
+        TaskList list1 = new TaskList("liste 1");
+        TaskList list2 = new TaskList("liste 2");
 
         list1.addTask(task1);
         list1.addTask(task2);

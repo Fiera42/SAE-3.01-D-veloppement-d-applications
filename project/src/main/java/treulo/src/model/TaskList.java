@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class TaskList implements Model , Iterable<TreuloTask>{
+public class TaskList implements Model, Observator, Iterable<TreuloTask> {
 
     private String name ;
     private boolean isArchived ;
@@ -14,37 +14,36 @@ public class TaskList implements Model , Iterable<TreuloTask>{
     private ArrayList<Observator> observators ;
 
 
-    public TaskList(String name , Treulo t) {
+    public TaskList(String name) {
         this.name = name;
         this.isArchived = false;
         this.tasks = new LinkedList();
         this.observators = new ArrayList<>();
-        this.addObservator(t);
     }
 
     public void addTask (TreuloTask task){
         this.tasks.add(task);
+        task.addObservator(this);
         this.updateObservator();
     }
 
     public void deleteTask (TreuloTask task){
         this.tasks.remove(task);
+        task.deleteObservator(this);
         this.updateObservator();
     }
 
     public boolean isEmpty(){
-        return this.name.isEmpty();
+        return tasks.isEmpty();
     }
     @Override
     public void addObservator(Observator o) {
         this.observators.add(o);
-        this.updateObservator();
     }
 
     @Override
     public void deleteObservator(Observator o) {
         this.observators.remove(o);
-        this.updateObservator();
     }
 
     @Override
@@ -52,6 +51,11 @@ public class TaskList implements Model , Iterable<TreuloTask>{
         for (Observator o: this.observators) {
             o.update(this);
         }
+    }
+
+    @Override
+    public void update(Model model) {
+        updateObservator();
     }
 
     @Override

@@ -5,7 +5,7 @@ import treulo.src.view.Observator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Treulo implements  Model , Observator{
+public class Treulo implements Model, Observator {
     protected ArrayList<Observator> observators;
 
     protected boolean displayArchive;
@@ -73,11 +73,13 @@ public class Treulo implements  Model , Observator{
 
     public void addTaskList(TaskList taskList) {
         tasks.add(taskList);
+        taskList.addObservator(this);
         this.updateObservator();
     }
 
     public void removeTaskList(TaskList taskList) {
         tasks.remove(taskList);
+        taskList.deleteObservator(this);
         this.updateObservator();
     }
 
