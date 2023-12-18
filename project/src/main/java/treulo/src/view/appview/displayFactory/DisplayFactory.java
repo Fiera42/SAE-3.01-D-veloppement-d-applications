@@ -7,6 +7,8 @@ public abstract class DisplayFactory {
 
     public static DisplayFactory getDisplayFactory(Treulo model, String displayMode) {
         switch (displayMode) {
+            case "Tableau" :
+                return new DeskDisplayFactory(model);
             default :
                 return new TextDisplayFactory(model);
         }

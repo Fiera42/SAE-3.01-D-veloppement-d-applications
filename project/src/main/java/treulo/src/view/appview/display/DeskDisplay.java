@@ -2,6 +2,7 @@ package treulo.src.view.appview.display;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -31,6 +32,8 @@ public class DeskDisplay implements Display {
         for(TaskList taskList : taskLists) {
             hBox.getChildren().add(getTaskListDisplay(taskList));
         }
+
+        
 
         return hBox;
     }
