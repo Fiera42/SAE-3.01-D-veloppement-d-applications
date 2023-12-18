@@ -13,19 +13,23 @@ public class TaskList implements Model , Iterable<TreuloTask>{
     private LinkedList<TreuloTask> tasks ;
     private ArrayList<Observator> observators ;
 
-    public TaskList(String name) {
+
+    public TaskList(String name , Treulo t) {
         this.name = name;
         this.isArchived = false;
         this.tasks = new LinkedList();
         this.observators = new ArrayList<>();
+        this.addObservator(t);
     }
 
     public void addTask (TreuloTask task){
         this.tasks.add(task);
+        this.updateObservator();
     }
 
     public void deleteTask (TreuloTask task){
         this.tasks.remove(task);
+        this.updateObservator();
     }
 
     public boolean isEmpty(){
@@ -34,11 +38,13 @@ public class TaskList implements Model , Iterable<TreuloTask>{
     @Override
     public void addObservator(Observator o) {
         this.observators.add(o);
+        this.updateObservator();
     }
 
     @Override
     public void deleteObservator(Observator o) {
         this.observators.remove(o);
+        this.updateObservator();
     }
 
     @Override
@@ -71,9 +77,11 @@ public class TaskList implements Model , Iterable<TreuloTask>{
 
     public void setName(String name) {
         this.name = name;
+        this.updateObservator();
     }
 
     public void setArchived(boolean archived) {
         isArchived = archived;
+        this.updateObservator();
     }
 }

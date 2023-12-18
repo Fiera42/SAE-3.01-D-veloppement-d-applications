@@ -68,10 +68,12 @@ public class TreuloTask implements Model{
 
     public void addDependencie(TreuloTask task){
         this.dependencies.add(task);
+        this.updateObservator();
     }
 
     public void deleteDependencie(TreuloTask task){
         this.dependencies.remove(task);
+        this.updateObservator();
     }
 
     public ArrayList<TreuloTask> getDependencies(){
@@ -80,10 +82,13 @@ public class TreuloTask implements Model{
 
     public void addSubTask(TreuloTask task){
         this.subtasks.add(task);
+        this.updateObservator();
+
     }
 
     public void deleteSubTask(TreuloTask task){
         this.subtasks.remove(task);
+        this.updateObservator();
     }
 
     public LinkedList<TreuloTask> getSubtasks(){
@@ -125,17 +130,21 @@ public class TreuloTask implements Model{
 
     public void setName(String name) {
         this.name = name;
+        this.updateObservator();
     }
 
     public void setDescription(String description) {
         this.description = description;
+        this.updateObservator();
     }
 
     public void setArchive(boolean archive) {
         isArchive = archive;
+        this.updateObservator();
     }
 
     public void setDuration(float duration) {
         this.duration = duration;
+        this.updateObservator();
     }
 }
