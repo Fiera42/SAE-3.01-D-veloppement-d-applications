@@ -1,0 +1,41 @@
+@startuml
+
+activate Model
+Model -> AppView : update(Model)
+activate AppView
+
+    Model <- AppView : getDisplayMode()
+    Model --> AppView : "default"
+
+    AppView -> DisplayFactory : getDisplayFactory(model, "default")
+    activate DisplayFactory
+
+       create TextDisplayFactory
+       DisplayFactory -> TextDisplayFactory : new (model)
+
+       AppView <-- DisplayFactory : TextDisplayFactory
+       deactivate DisplayFactory
+
+    AppView -> TextDisplayFactory : createDisplay()
+    activate TextDisplayFactory
+
+        Model <- TextDisplayFactory : getTasks()
+        Model --> TextDisplayFactory : List<TaskList>
+
+        create TextDisplay
+        TextDisplayFactory -> TextDisplay : new(List<TaskList>)
+
+        AppView <-- TextDisplayFactory : TextDisplay
+        deactivate TextDisplayFactory
+
+    AppView -> TextDisplay : getDisplay()
+    activate TextDisplay
+    AppView <-- TextDisplay : Node
+    deactivate TextDisplay
+
+    Model <-- AppView
+    deactivate AppView
+
+
+
+@enduml
