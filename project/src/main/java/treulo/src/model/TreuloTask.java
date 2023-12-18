@@ -122,4 +122,20 @@ public class TreuloTask implements Model{
     public List<TreuloTask> getAlltasks(){
         return alltasks;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setArchive(boolean archive) {
+        isArchive = archive;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
 }
