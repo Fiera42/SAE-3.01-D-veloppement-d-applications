@@ -26,6 +26,8 @@ public class CreateTaskDisplay implements Display{
 
     @Override
     public Node getDisplay() {
+        VBox HboxMain =new VBox();
+
         BorderPane bP = new BorderPane();
         //Top
         HBox hbTOP = new HBox();
@@ -80,16 +82,20 @@ public class CreateTaskDisplay implements Display{
         gP.add(VBoxCenter3,4,2);
         bP.setCenter(gP);
 
+
+
         //le Bas
 
-        HBox HBBottom = new HBox();
+        VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        HBBottom.setAlignment(Pos.BOTTOM_RIGHT);
+        HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
         bP.setBottom(HBBottom);
-        bP.setBorder(Border.stroke(Color.BLACK));
-        return bP;
+
+        HboxMain.getChildren().add(bP);
+        HboxMain.setAlignment(Pos.TOP_CENTER);
+        return HboxMain;
     }
 
     // cette methode est inutile pour cette classe
