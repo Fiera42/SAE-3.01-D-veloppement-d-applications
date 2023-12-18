@@ -7,20 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
-import treulo.test.Oui;
-
-import java.io.File;
-import java.io.IOException;
 
 
 public class Main extends Application {
@@ -39,7 +32,7 @@ public class Main extends Application {
         BorderPane scene = new BorderPane();
 
         Treulo model = DummieTreuloGenerator.generateDummie();
-        model.setDisplayMode("Tableau");
+        model.setDisplayMode("Nouvelle Liste");
 
         //-------------------- BARRE DU HAUT
         BorderPane nav = new BorderPane();

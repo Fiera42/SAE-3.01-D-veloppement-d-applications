@@ -3,12 +3,13 @@ package treulo.src.view.appview.display;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import treulo.src.Controler.AddTaskListControl;
 import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
@@ -22,13 +23,22 @@ public class CreateTaskListDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-
+        BorderPane bp = new BorderPane();
+        VBox vb = new VBox();
         HBox hb = new HBox();
         Label ta = new Label("Nom de la liste : ");
         TextField tf = new TextField("Tabouret");
-        hb.getChildren().addAll(ta , tf);
+        hb.getChildren().addAll(ta, tf);
         hb.setAlignment(Pos.CENTER);
-        return hb;
+
+        Button b = new Button("Ajouter la Liste");
+        b.setOnAction(new AddTaskListControl(this.model));
+
+        vb.getChildren().addAll(hb, b);
+        vb.setAlignment(Pos.CENTER);
+
+
+        return vb;
     }
 
     @Override
