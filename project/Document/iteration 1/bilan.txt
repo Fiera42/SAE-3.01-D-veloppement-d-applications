@@ -1,0 +1,8 @@
+Pour cette itération, nous avons pu ajouté toutes les fonctionnalité que nous avions prévu.
+
+Ainsi nous disposons d'une application graphique de base (avec affichage en texte) et des boutons sans fonction,
+Nous avons notamment mis en place toutes les interfaces dont nous aurons besoin par la suite, comme AppView et les factory associée.
+
+
+Note : Nous avons ajouté une feuille de style css dans ressources/treuloStyle.css, ceci afin de pouvoir rendre les boutons radio moins sensible
+au focus
