@@ -56,6 +56,7 @@ public class Treulo implements  Model , Observator{
     @Override
     public void deleteObservator(Observator o) {
         observators.remove(o);
+        
     }
 
     @Override
@@ -72,10 +73,12 @@ public class Treulo implements  Model , Observator{
 
     public void addTaskList(TaskList taskList) {
         tasks.add(taskList);
+        this.updateObservator();
     }
 
     public void removeTaskList(TaskList taskList) {
         tasks.remove(taskList);
+        this.updateObservator();
     }
 
     @Override
@@ -85,5 +88,6 @@ public class Treulo implements  Model , Observator{
 
     public void setDisplayMode(String displayMode) {
         this.displayMode = displayMode;
+        this.updateObservator();
     }
 }
