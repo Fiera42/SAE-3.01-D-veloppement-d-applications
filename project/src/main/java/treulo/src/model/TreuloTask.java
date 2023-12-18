@@ -124,7 +124,7 @@ public class TreuloTask implements Model{
         return this.isArchive;
     }
 
-    public List<TreuloTask> getAlltasks(){
+    public static List<TreuloTask> getAlltasks(){
         return alltasks;
     }
 
