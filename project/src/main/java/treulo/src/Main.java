@@ -32,7 +32,7 @@ public class Main extends Application {
         BorderPane scene = new BorderPane();
 
         Treulo model = DummieTreuloGenerator.generateDummie();
-        model.setDisplayMode("Nouvelle Liste");
+        model.setDisplayMode("Tableau");
 
         //-------------------- BARRE DU HAUT
         BorderPane nav = new BorderPane();
