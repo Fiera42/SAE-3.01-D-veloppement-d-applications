@@ -1,0 +1,214 @@
+@startuml
+
+package javaFX {
+  class TextField {
+    -text : String
+    +TextField()
+    +TextField(String)
+    +setText(String)
+    +setOnAction(EventHandler)
+  }
+
+  class CheckBox {
+    -isChecked : boolean
+
+    +CheckBox()
+    +CheckBox(String)
+    +setSelected(boolean)
+    +fire()
+    +isSelected()
+    +setOnAction(EventHandler)
+  }
+
+  class Label {
+    -text : String
+    +Label(String text)
+    +getText() : String
+    +setText(String)
+  }
+
+  class Button {
+    +Button(String)
+    +setOnAction(EventHandler)
+  }
+
+  class BorderPane {
+    BorderPane()
+    setTop(Node)
+    setCenter(Node)
+    setLeft(Node)
+    setRight(Node)
+    setBottom(Node)
+  }
+}
+
+package java {
+  interface Iterable<T> {
+    iterator() : Iterator<T>
+  }
+}
+
+package MVC {
+  interface Model {
+    addObservator(Observator)
+    deleteObservator(Observator)
+    updateObservator()
+  }
+
+  interface Observator {
+    update(Model)
+  }
+}
+
+package Task {
+
+  class Task implements MVC.Model{
+    -name : string
+    -description : string
+    -duration : float
+    -isArchive : boolean
+    -collaborators : arrayList<String>
+    -dependencies : arrayList<Task>
+    -{static} allTasks : list<Task>
+    +Task() //taskId = ++maxId && add it to "allTask"
+    +Task(String) //taskId = ++maxId && add it to "allTask"
+    +Task(String, String) //taskId = ++maxId && add it to "allTask"
+    +{static}getTaskById(int) : Task
+
+    +addSubTask(Task)
+    +deleteSubTask(Task)
+    +getSubTasks()
+
+    +addDependencie(Task)
+    +deleteDependencie(Task)
+    +getDependencies()
+
+    +[getter]()
+  }
+
+  class TaskList implements java.Iterable, MVC.Model {
+    -name : String
+    -isArchived : boolean
+    +addTask(Task)
+    +deleteTask(Task)
+    +isEmpty()
+
+    +[getter]()
+  }
+
+  class TaskNameObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskDescObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskArchiveObs extends javaFX.CheckBox implements MVC.Observator {
+
+  }
+
+  class TaskCollaboratorsObs extends javaFX.HBox implements MVC.Observator {
+
+  }
+
+  class TaskDependenciesObs extends javaFX.HBox implements MVC.Observator {
+
+  }
+
+
+  class TaskListNameObs extends javaFX.TextField implements MVC.Observator {
+
+  }
+
+  class TaskListArchiveObs extends javaFX.CheckBox implements MVC.Observator {
+
+  }
+
+  Task "*" <-up- "1" Task : parentTask
+  Task "*" <-- "1" TaskList : parentTaskList
+  Task o-- Task : subTasks
+  Task "*" <-- "*" MVC.Observator : observators
+
+  TaskList o-- Task : tasks
+  TaskList "*" <-- "*" MVC.Observator : observators
+}
+
+package App {
+  class Treulo implements MVC.Model{
+    -displayArchive : boolean
+    -displayMode : String
+    -editedTaskList : TaskList
+    +loadFile(String fileName)
+    +saveAsFile(String fileName)
+    +exportAsImage(String fileName)
+    +[getter]()
+  }
+
+  Treulo "1" <-- "*" MVC.Observator : observators
+  Treulo "1" <-- "*" Task.TaskList : Tasks
+  Treulo "1" <-- "1" javaFX.Button : addTaskList
+
+  class AppView extends javaFX.BorderPane implements MVC.Observator {
+    "//update use DisplayFactory.getDisplayFactory()\nto display the tasks"
+  }
+}
+
+
+package Display {
+  interface Display {
+    +getDisplay() : Node
+    +getTaskDisplay(Task, Node) : Node //Called recursivly to display tasks
+  }
+
+  class DeskDisplay implements Display {
+    +DeskDisplay(ArrayList<TaskList>)
+    -getListDisplay(TaskList) : Node
+  }
+  DeskDisplay "*" <-- "*" Task.TaskList : taskLists
+
+  class ListDisplay implements Display {
+    +ListDisplay(ArrayList<TaskList>)
+    -getListDisplay(TaskList) : Node
+  }
+  ListDisplay "*" <-- "*" Task.TaskList : taskLists
+
+  class GanttDisplay implements Display {
+    +GanttDisplay(Task finalTask)
+  }
+  GanttDisplay "*" <-- "1" Task.Task : finalTask
+
+  class CreateTaskDisplay implements Display {
+      +CreateTaskDisplay(TaskList)
+    }
+  CreateTaskDisplay "*" <-- "1" Task.TaskList : taskList
+
+  package DisplayFactory {
+    abstract class DisplayFactory {
+      +{abstract} createDisplay() : Display
+      +{static} getDisplayFactory(Treulo, String) : DisplayFactory
+    }
+
+    class DeskDisplayFactory extends DisplayFactory{
+      DeskDisplayFactory(Treulo)
+    }
+    DeskDisplayFactory "*" <-- "1" Treulo : model
+
+    class ListDisplayFactory extends DisplayFactory{
+      ListDisplayFactory(Treulo)
+    }
+    ListDisplayFactory "*" <-- "1" Treulo : model
+
+    class GanttDisplayFactory extends DisplayFactory{
+      GanttDisplayFactory(Treulo)
+    }
+    GanttDisplayFactory "*" <-- "1" Treulo : model
+
+    class CreateTaskDisplayFactory extends DisplayFactory{
+          CreateTaskDisplayFactory(Treulo)
+        }
+    CreateTaskDisplayFactory "*" <-- "1" Treulo : model
+  }
+}
+
+@enduml

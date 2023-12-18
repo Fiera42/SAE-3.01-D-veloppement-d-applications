@@ -1,0 +1,58 @@
+@startuml
+
+package Display {
+  interface Display {
+    +getDisplay() : Node
+    +getTaskDisplay(Task, Node) : Node //Called recursivly to display tasks
+  }
+
+  class DeskDisplay implements Display {
+    +DeskDisplay(ArrayList<TaskList>)
+    -getListDisplay(TaskList) : Node
+  }
+  DeskDisplay "*" <-- "*" Task.TaskList : taskLists
+
+  class ListDisplay implements Display {
+    +ListDisplay(ArrayList<TaskList>)
+    -getListDisplay(TaskList) : Node
+  }
+  ListDisplay "*" <-- "*" Task.TaskList : taskLists
+
+  class GanttDisplay implements Display {
+    +GanttDisplay()
+  }
+
+  class CreateTaskDisplay implements Display {
+      +CreateTaskDisplay(TaskList)
+    }
+  CreateTaskDisplay "*" <-- "1" Task.TaskList : taskList
+
+  package DisplayFactory {
+    abstract class DisplayFactory {
+      +{abstract} createDisplay() : Display
+      +{static} getDisplayFactory(Treulo, String) : DisplayFactory
+    }
+
+    class DeskDisplayFactory extends DisplayFactory{
+      DeskDisplayFactory(Treulo)
+    }
+    DeskDisplayFactory "*" <-- "1" Treulo : model
+
+    class ListDisplayFactory extends DisplayFactory{
+      ListDisplayFactory(Treulo)
+    }
+    ListDisplayFactory "*" <-- "1" Treulo : model
+
+    class GanttDisplayFactory extends DisplayFactory{
+      GanttDisplayFactory(Treulo)
+    }
+    GanttDisplayFactory "*" <-- "1" Treulo : model
+
+    class CreateTaskDisplayFactory extends DisplayFactory{
+          CreateTaskDisplayFactory(Treulo)
+        }
+    CreateTaskDisplayFactory "*" <-- "1" Treulo : model
+  }
+}
+
+@enduml

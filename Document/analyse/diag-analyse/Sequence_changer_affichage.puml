@@ -1,0 +1,25 @@
+@startuml
+
+User -> Application : changerAffichage(mode d'affichage A)
+activate Application
+
+Application -> Afficheur_A : demander affichage
+activate Afficheur_A
+Application <-- Afficheur_A : affichage
+deactivate Afficheur_A
+
+User <-- Application : nouvelle affichage
+deactivate Application
+
+User -> Application : changerAffichage(mode d'affichage B)
+activate Application
+
+Application -> Afficheur_B : demander affichage
+activate Afficheur_B
+Application <-- Afficheur_B : affichage
+deactivate Afficheur_B
+
+User <-- Application : nouvelle affichage
+deactivate Application
+
+@enduml
