@@ -4,11 +4,11 @@ import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
-public class oui {
+public class Oui {
     public static Treulo generateDummie() {
         Treulo treulo = new Treulo();
 
-        treulo.
+        treulo.setDisplayMode("Nouvelle Liste");
 
         return treulo;
     }

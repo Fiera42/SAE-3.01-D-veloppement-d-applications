@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
+import treulo.test.Oui;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class Main extends Application {
 
         BorderPane scene = new BorderPane();
 
-        Treulo model = DummieTreuloGenerator.generateDummie();
+        Treulo model = Oui.generateDummie();
 
         //-------------------- BARRE DU HAUT
         BorderPane nav = new BorderPane();
