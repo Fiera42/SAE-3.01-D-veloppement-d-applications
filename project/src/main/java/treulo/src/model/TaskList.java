@@ -68,4 +68,12 @@ public class TaskList implements Model , Iterable<TreuloTask>{
     public ArrayList<Observator> getObservators() {
         return observators;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
 }
