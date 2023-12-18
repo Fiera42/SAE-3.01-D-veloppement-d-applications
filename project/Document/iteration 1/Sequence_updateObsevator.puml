@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Main -> Treulo: updateObservator(Observator o)
+activate Treulo
+loop observator.size()
+activate Observator
+Treulo -> Observator : observators.get(i).actualiser
+Observator --> Treulo
+deactivate Observator
+end loop
+Treulo --> Main
+deactivate Treulo
+
+@enduml
