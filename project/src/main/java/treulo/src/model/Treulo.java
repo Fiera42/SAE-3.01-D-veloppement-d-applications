@@ -82,4 +82,8 @@ public class Treulo implements  Model , Observator{
     public void update(Model model) {
         this.updateObservator();
     }
+
+    public void setDisplayMode(String displayMode) {
+        this.displayMode = displayMode;
+    }
 }

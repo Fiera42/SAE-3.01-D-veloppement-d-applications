@@ -1,6 +1,7 @@
 package treulo.src.view.appview.display;
 
 import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
@@ -14,7 +15,9 @@ public class CreateTaskListDisplay implements Display {
 
     @Override
     public Node getDisplay() {
+        VBox vbox = new VBox() ;
 
+        return vbox;
     }
 
     @Override
