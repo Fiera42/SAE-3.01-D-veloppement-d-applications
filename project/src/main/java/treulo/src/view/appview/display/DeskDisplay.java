@@ -1,12 +1,15 @@
 package treulo.src.view.appview.display;
 
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import treulo.src.Controler.AddTaskListControl;
 import treulo.src.Controler.EditTaskListControl;
 import treulo.src.model.TaskList;
@@ -28,7 +31,8 @@ public class DeskDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-        HBox hBox = new HBox();
+                HBox hBox = new HBox(10);
+        hBox.setPadding(new Insets(10));
 
         for(TaskList taskList : taskLists) {
             hBox.getChildren().add(getTaskListDisplay(taskList));
@@ -40,15 +44,28 @@ public class DeskDisplay implements Display {
     }
 
     public Node getTaskListDisplay(TaskList taskList) {
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setMaxWidth(300);
+        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
+
+        HBox titre = new HBox(10);
+        vBox.getChildren().add(titre);
+
         TextField listName = new TextField(taskList.getName());
         //listName.setOnAction(new EditTaskListControl(model, taskList));
+        titre.getChildren().add(listName);
 
-        /*
+        CheckBox archive = new CheckBox("Archiver");
+        archive.setSelected(taskList.isArchived());
+        archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        //archive.setOnAction(new EditTaskListControl(model, taskList));
+        titre.getChildren().add(archive);
+
         for(TreuloTask task : taskList) {
-            listVbox.getChildren().add(getTaskDisplay(task, new VBox()));
-        }*/
-        return null;
+            vBox.getChildren().add(getTaskDisplay(task, new VBox()));
+        }
+        return vBox;
     }
 
     @Override

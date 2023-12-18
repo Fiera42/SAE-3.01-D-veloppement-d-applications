@@ -13,6 +13,7 @@ public class AppView extends ScrollPane implements Observator {
     public AppView() {
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        setFitToWidth(true);
     }
 
     public void update(Model model) {
