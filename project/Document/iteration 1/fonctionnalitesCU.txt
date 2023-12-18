@@ -1,10 +1,10 @@
-- Interfaces MVC
+- Interfaces MVC / Tom
 
--Tâche avec sous-tâche Doryann
+-Tâche avec sous-tâche / Doryann
 
--Liste de tâche (iterable) Doryann
+-Liste de tâche (iterable) / Doryann
 
--Application (Modèle, classe Treulo)
+-Application (Modèle, classe Treulo) / Tom
 
--AppView (affichage des tâches avec classe abstraite display factory et interface Display)
+-AppView (affichage des tâches avec classe abstraite display factory et interface Display) / Adrien
 
