@@ -27,14 +27,14 @@ public class CreateTaskDisplay implements Display{
     @Override
     public Node getDisplay() {
         BorderPane bP = new BorderPane();
-    //Top
+        //Top
         HBox hbTOP = new HBox();
         Label lBTop = new Label("Ajouter une tache");
         hbTOP.getChildren().add(lBTop);
         hbTOP.setAlignment(Pos.CENTER);
 
         bP.setTop(hbTOP);
-     //Center
+        //Center
         GridPane gP = new GridPane();
         VBox vBoxCenter= new VBox();
 
@@ -43,13 +43,13 @@ public class CreateTaskDisplay implements Display{
         TextField tFCenter1= new TextField();
         hbCenter1.getChildren().addAll(lBCenter1,tFCenter1);
         HBox hbCenter2 = new HBox();
-        Label lBCenter2 = new Label("Description ");
+        Label lBCenter2 = new Label("Description         ");
         TextField tFCenter2= new TextField();
         hbCenter2.getChildren().addAll(lBCenter2,tFCenter2);
 
         vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2);
 
-        gP.add(vBoxCenter,1,0,2,0);
+        gP.add(vBoxCenter,2,1);
 
 
         VBox VBoxCenter2 = new VBox();
@@ -69,7 +69,7 @@ public class CreateTaskDisplay implements Display{
         hbCenter4.getChildren().addAll(lBCenter4,tFCenter4,bCenter4);
 
         VBoxCenter2.getChildren().addAll(hbCenter3,hbCenter4);
-        gP.add(VBoxCenter2,1,1);
+        gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();
 
@@ -77,15 +77,15 @@ public class CreateTaskDisplay implements Display{
         ComboBox <List<TreuloTask>> combo= new ComboBox <List<TreuloTask>>();
         VBoxCenter3.getChildren().addAll(lBCenter5,combo);
 
-        gP.add(VBoxCenter3,2,1);
-
+        gP.add(VBoxCenter3,4,2);
         bP.setCenter(gP);
 
         //le Bas
 
         HBox HBBottom = new HBox();
         Button bBottom = new Button("ajouter");
-        HBBottom.setAlignment(Pos.BOTTOM_LEFT);
+        HBBottom.setAlignment(Pos.BOTTOM_RIGHT);
+        HBBottom.getChildren().add(bBottom);
 
         bP.setBottom(HBBottom);
         bP.setBorder(Border.stroke(Color.BLACK));
