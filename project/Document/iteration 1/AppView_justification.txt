@@ -1,0 +1,3 @@
+Nous avons réalisé une factory pour la visualisation de l'application afin de pouvoir ajouter des fonctionnalité de façon facile et rapide.
+
+Les différentes interfaces nous permettent ainsi de rapidement saisir quelle partie du code est responsable de quoi, utile pour debug
