@@ -1,12 +1,10 @@
 - Interfaces MVC
 
--Tâche avec sous-tâche
+-Tâche avec sous-tâche Doryann
 
--Liste de tâche (iterable)
+-Liste de tâche (iterable) Doryann
 
 -Application (Modèle, classe Treulo)
 
 -AppView (affichage des tâches avec classe abstraite display factory et interface Display)
 
-Doryann : J'ai pour ma part créer les classes de Tâche et de Liste de Tâche sous le nom de TreuloTask pour les tache et TaskListe
-pour les liste. Il s'agissait de créer la structure générale des classes qui seront étoffé au file des itération.
