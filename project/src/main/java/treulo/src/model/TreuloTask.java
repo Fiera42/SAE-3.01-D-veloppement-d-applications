@@ -17,7 +17,7 @@ public class TreuloTask implements Model {
     private LinkedList<TreuloTask> subtasks ;
 
     private ArrayList<Observator> observators ;
-    private static List<TreuloTask> alltasks ;
+    private static List<TreuloTask> alltasks = new LinkedList<TreuloTask>();
 
 
 
@@ -40,7 +40,7 @@ public class TreuloTask implements Model {
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
-        alltasks = new ArrayList<TreuloTask>() ;
+        alltasks.add(this) ;
     }
 
     public TreuloTask (String n , String d){
@@ -51,7 +51,7 @@ public class TreuloTask implements Model {
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
-        alltasks = new ArrayList<TreuloTask>() ;
+        alltasks.add(this) ;
     }
 
     public TreuloTask (String n , String d , float f){
@@ -62,7 +62,7 @@ public class TreuloTask implements Model {
         this.dependencies = new ArrayList<TreuloTask>() ;
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
-        alltasks = new ArrayList<TreuloTask>() ;
+        alltasks.add(this) ;
     }
 
 
@@ -146,5 +146,11 @@ public class TreuloTask implements Model {
     public void setDuration(float duration) {
         this.duration = duration;
         this.updateObservator();
+    }
+
+    @Override
+    public String toString() {
+        return
+                "'" + name + '\'';
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import treulo.src.Controler.AddTaskControl;
 import treulo.src.Controler.AddTaskListMenuControl;
 import treulo.src.model.Model;
@@ -19,6 +20,8 @@ import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static treulo.src.model.TreuloTask.getAlltasks;
 
 public class CreateTaskDisplay implements Display{
 
@@ -82,7 +85,13 @@ public class CreateTaskDisplay implements Display{
         VBox VBoxCenter3 = new VBox();
 
         Label lBCenter5 =new Label("est une sous tache de :");
-        ComboBox <List<TreuloTask>> combo= new ComboBox <List<TreuloTask>>();
+        ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
+        combo.getItems().add(null);
+        for (int i=0;i<getAlltasks().size();i++)
+        {
+        combo.getItems().add(getAlltasks().get(i));
+        }
+
         VBoxCenter3.getChildren().addAll(lBCenter5,combo);
 
         gP.add(VBoxCenter3,4,2);
@@ -94,7 +103,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 

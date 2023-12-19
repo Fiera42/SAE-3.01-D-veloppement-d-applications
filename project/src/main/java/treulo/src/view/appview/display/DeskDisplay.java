@@ -1,5 +1,6 @@
 package treulo.src.view.appview.display;
 
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -59,9 +60,11 @@ public class DeskDisplay implements Display {
         HBox titre = new HBox(10);
         vBox.getChildren().add(titre);
 
+
         TextArea listName = new TextArea(taskList.getName());
         listName.setWrapText(true);
         //listName.setOnAction(new EditTaskListControl(model, taskList));
+
         titre.getChildren().add(listName);
         HBox.setHgrow(listName, Priority.ALWAYS);
 
