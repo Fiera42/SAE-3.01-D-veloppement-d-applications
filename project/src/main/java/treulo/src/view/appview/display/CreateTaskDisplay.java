@@ -86,7 +86,7 @@ public class CreateTaskDisplay implements Display{
 
         Label lBCenter5 =new Label("est une sous tache de :");
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
-        System.out.println(getAlltasks().size());
+        combo.getItems().add(null);
         for (int i=0;i<getAlltasks().size();i++)
         {
         combo.getItems().add(getAlltasks().get(i));
@@ -103,7 +103,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
