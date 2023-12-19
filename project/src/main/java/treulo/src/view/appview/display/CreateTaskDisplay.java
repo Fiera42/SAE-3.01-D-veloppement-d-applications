@@ -94,7 +94,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList()));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
