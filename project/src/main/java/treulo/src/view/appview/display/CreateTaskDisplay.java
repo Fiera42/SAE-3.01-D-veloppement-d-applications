@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import treulo.src.Controler.AddTaskControl;
 import treulo.src.Controler.AddTaskListMenuControl;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
@@ -93,7 +94,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskListMenuControl(model));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList()));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
