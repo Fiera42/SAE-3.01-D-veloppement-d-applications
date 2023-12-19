@@ -30,13 +30,16 @@ public class Main extends Application {
         stage.setTitle(applicationName);
 
         BorderPane scene = new BorderPane();
+        scene.setBackground(Background.fill(Color.AQUAMARINE));
 
         Treulo model = DummieTreuloGenerator.generateDummie();
         model.setDisplayMode("Tableau");
 
         //-------------------- BARRE DU HAUT
         BorderPane nav = new BorderPane();
+        nav.setBackground(new Background(new BackgroundFill(Color.BISQUE, new CornerRadii(10), new Insets(0))));;
         nav.setPadding(new Insets(10));
+        BorderPane.setMargin(nav, new Insets(10));
         nav.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
         scene.setTop(nav);
 
@@ -91,6 +94,7 @@ public class Main extends Application {
         Scene stageScene = new Scene(scene, appWidth, appHeight);
         stageScene.getStylesheets().add("treuloStyle.css");
         stage.setScene(stageScene);
+        stage.setMaximized(true);
         stage.show();
     }
 }

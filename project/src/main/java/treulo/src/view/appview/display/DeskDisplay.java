@@ -56,6 +56,7 @@ public class DeskDisplay implements Display {
         vBox.setMinWidth(COLUMN_WIDTH);
         vBox.setMaxWidth(COLUMN_WIDTH);
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
+        vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
 
         HBox titre = new HBox(10);
         vBox.getChildren().add(titre);
@@ -98,6 +99,7 @@ public class DeskDisplay implements Display {
         VBox parent = (VBox)parentNode;
 
         VBox vBox = new VBox(10);
+        vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
         vBox.setPadding(new Insets(10));
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
