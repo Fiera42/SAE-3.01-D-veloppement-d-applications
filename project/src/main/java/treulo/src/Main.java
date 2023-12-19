@@ -19,8 +19,8 @@ import treulo.test.DummieTreuloGenerator;
 public class Main extends Application {
 
     private static final String applicationName = "Treulo";
-    private static final int appWidth = 768;
-    private static final int appHeight = 432;
+    private static final int appWidth = 854;
+    private static final int appHeight = 480;
 
     public static void main(String[] args) {
         launch(args);

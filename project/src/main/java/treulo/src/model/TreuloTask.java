@@ -18,6 +18,8 @@ public class TreuloTask implements Model {
 
     private ArrayList<Observator> observators ;
     private static List<TreuloTask> alltasks = new LinkedList<TreuloTask>();
+    private TreuloTask parentTask;
+    private TaskList parentList;
 
 
 
@@ -82,12 +84,14 @@ public class TreuloTask implements Model {
 
     public void addSubTask(TreuloTask task){
         this.subtasks.add(task);
+        task.setParentTask(this);
         this.updateObservator();
 
     }
 
     public void deleteSubTask(TreuloTask task){
         this.subtasks.remove(task);
+        task.setParentTask(null);
         this.updateObservator();
     }
 
@@ -120,7 +124,7 @@ public class TreuloTask implements Model {
         return this.description;
     }
 
-    public boolean isArchive() {
+    public boolean isArchived() {
         return this.isArchive;
     }
 
@@ -146,6 +150,22 @@ public class TreuloTask implements Model {
     public void setDuration(float duration) {
         this.duration = duration;
         this.updateObservator();
+    }
+
+    public TreuloTask getParentTask() {
+        return parentTask;
+    }
+
+    public void setParentTask(TreuloTask parentTask) {
+        this.parentTask = parentTask;
+    }
+
+    public TaskList getParentList() {
+        return parentList;
+    }
+
+    public void setParentList(TaskList parentList) {
+        this.parentList = parentList;
     }
 
     @Override

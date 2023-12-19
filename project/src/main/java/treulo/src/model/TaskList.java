@@ -24,12 +24,14 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
     public void addTask (TreuloTask task){
         this.tasks.add(task);
         task.addObservator(this);
+        task.setParentList(this);
         this.updateObservator();
     }
 
     public void deleteTask (TreuloTask task){
         this.tasks.remove(task);
         task.deleteObservator(this);
+        task.setParentList(null);
         this.updateObservator();
     }
 

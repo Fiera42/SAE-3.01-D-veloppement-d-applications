@@ -30,7 +30,7 @@ public class DeskDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(20);
         hBox.setPadding(new Insets(10));
 
         for(TaskList taskList : taskLists) {
@@ -60,10 +60,11 @@ public class DeskDisplay implements Display {
         HBox titre = new HBox(10);
         vBox.getChildren().add(titre);
 
+        TextField listName = new TextField(taskList.getName());
+        EditTaskListControl editionControl = new EditTaskListControl(model, taskList, listName);
 
-        TextArea listName = new TextArea(taskList.getName());
-        listName.setWrapText(true);
-        //listName.setOnAction(new EditTaskListControl(model, taskList));
+        listName.setOnAction(editionControl);
+        listName.focusedProperty().addListener(editionControl);
 
         titre.getChildren().add(listName);
         HBox.setHgrow(listName, Priority.ALWAYS);
@@ -102,15 +103,20 @@ public class DeskDisplay implements Display {
 
         HBox name = new HBox(10);
         vBox.getChildren().add(name);
-        TextArea nameText = new TextArea(task.getName());
-        nameText.setWrapText(true);
+        TextField nameText = new TextField(task.getName());
         //listName.setOnAction(new EditTaskControl(model, task));
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
 
         Button delete = new Button("X");
-        //delete.setOnAction(new DeleteTaskControl(model, task));
+        delete.setOnAction(new DeleteTaskControl(model, task));
         name.getChildren().add(delete);
+
+        CheckBox archive = new CheckBox("Archiver");
+        archive.setSelected(task.isArchived());
+        archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        //archive.setOnAction(new EditTaskListControl(model, taskList));
+        vBox.getChildren().add(archive);
 
         TextArea description = new TextArea(task.getDescription());
         description.setWrapText(true);
