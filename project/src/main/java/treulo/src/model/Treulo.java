@@ -56,7 +56,7 @@ public class Treulo implements  Model , Observator{
     @Override
     public void deleteObservator(Observator o) {
         observators.remove(o);
-        
+
     }
 
     @Override
