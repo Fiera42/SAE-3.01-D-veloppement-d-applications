@@ -1,40 +1,36 @@
 @startuml
 
-activate Model
-Model -> AppView : update(Model)
 activate AppView
 
-    Model <- AppView : getDisplayMode()
-    Model --> AppView : "Tableau"
+AppView -> DeskDisplay : getDisplay()
+activate DeskDisplay
 
-    AppView -> DisplayFactory : getDisplayFactory(model, "Tableau")
-    activate DisplayFactory
+    loop Taskslist
+    DeskDisplay -> Taskslist : info requests
+    activate Taskslist
+    DeskDisplay <-- Taskslist : infos
+    deactivate Taskslist
 
-       create DeskDisplayFactory
-       DisplayFactory -> DeskDisplayFactory : new (model)
+    DeskDisplay -> DeskDisplay : update of the display
 
-       AppView <-- DisplayFactory : DeskDisplayFactory
-       deactivate DisplayFactory
+    DeskDisplay -> Taskslist : getTasks()
+    activate Taskslist
+    DeskDisplay <-- Taskslist : tasks
+    deactivate Taskslist
 
-    AppView -> DeskDisplayFactory : createDisplay()
-    activate DeskDisplayFactory
+        loop Tasks
+        DeskDisplay -> TreuloTask : info requests
+        activate TreuloTask
+        DeskDisplay <-- TreuloTask : infos
+        deactivate TreuloTask
 
-        Model <- DeskDisplayFactory : getTasks()
-        Model --> DeskDisplayFactory : List<TaskList>
+        DeskDisplay -> DeskDisplay : update of the display
+        end loop
+    end loop
 
-        create DeskDisplay
-        DeskDisplayFactory -> DeskDisplay : new(List<TaskList>)
 
-        AppView <-- DeskDisplayFactory : DeskDisplay
-        deactivate DeskDisplayFactory
-
-    AppView -> DeskDisplay : getDisplay()
-    activate DeskDisplay
-    AppView <-- DeskDisplay : Node
-    deactivate DeskDisplay
-
-    Model <-- AppView
-    deactivate AppView
+AppView <-- DeskDisplay : Node
+deactivate DeskDisplay
 
 
 
