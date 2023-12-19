@@ -94,6 +94,7 @@ public class CreateTaskDisplay implements Display{
         VBoxCenter3.getChildren().addAll(lBCenter5,combo);
 
         gP.add(VBoxCenter3,4,2);
+        gP.setAlignment(Pos.CENTER);
         bP.setCenter(gP);
 
 

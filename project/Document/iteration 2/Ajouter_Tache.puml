@@ -1,0 +1,51 @@
+@startuml
+
+Main -> AddTaskControler : handle ()
+activate AddTaskControler
+loop for(int i=0;i<model.getCollaboratorTempo().size();i++)
+AddTaskControler -> Treulo : model.getCollaboratorTempo().get(i)
+activate Treulo
+Treulo --> AddTaskControler : String name
+deactivate Treulo
+AddTaskControler -> treutask :treutask.addCollaborator(name)
+activate treutask
+treutask --> AddTaskControler
+deactivate treutask
+end
+
+loop for(int i=0;i<model.getDependencieTempo().size();i++)
+AddTaskControler -> Treulo : model.getCollaboratorTempo().get(i)
+activate Treulo
+Treulo --> AddTaskControler : TreuloTask TT
+deactivate Treulo
+AddTaskControler -> treutask :treutask.addDependency(TT)
+activate treutask
+treutask --> AddTaskControler
+deactivate treutask
+end
+
+alt getSelectionItem.getSelectionedItem()!=null
+AddTaskControler -> combo : combo.getSelectionModel().getSelectedItem()
+activate combo
+
+combo --> AddTaskControler : TreuloTask t
+deactivate combo
+
+AddTaskControler ->TreuloTask : t.addsubTask(treutask)
+activate TreuloTask
+TreuloTask --> AddTaskControler
+deactivate TreuloTask
+
+else void
+AddTaskControler -> TaskList : TL.addTask((treutask))
+activate TaskList
+TaskList --> AddTaskControler
+deactivate TaskList
+end
+
+
+AddTaskControler --> Main
+deactivate AddTaskControler
+
+
+@enduml
