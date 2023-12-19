@@ -6,12 +6,12 @@ import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 
-public class EditTaskListControl implements EventHandler<ActionEvent> {
+public class EditedTaskListControl implements EventHandler<ActionEvent> {
 
     Treulo model;
     TaskList tL;
 
-    public EditTaskListControl(Model m,TaskList tl)
+    public EditedTaskListControl(Model m, TaskList tl)
     {
         model=(Treulo) m;
         tL=tl;
@@ -19,5 +19,6 @@ public class EditTaskListControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        model.setEditedTaskList(tL);
     }
 }
