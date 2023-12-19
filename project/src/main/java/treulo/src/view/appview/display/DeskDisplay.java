@@ -38,6 +38,7 @@ public class DeskDisplay implements Display {
         }
 
         Button button = new Button("Nouvelle liste");
+        button.setOnAction(new AddTaskListMenuControl(model));
         HBox buttonBox = new HBox(button);
         buttonBox.setPrefWidth(300);
         buttonBox.setAlignment(Pos.TOP_CENTER);
@@ -49,6 +50,7 @@ public class DeskDisplay implements Display {
 
     public Node getTaskListDisplay(TaskList taskList) {
         VBox vBox = new VBox(10);
+        vBox.setOnMouseEntered(new EditedTaskListControl(model,taskList));
         vBox.setPadding(new Insets(10));
         vBox.setPrefWidth(300);
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
