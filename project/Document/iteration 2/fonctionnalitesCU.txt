@@ -1,0 +1,9 @@
+-Créer tâche / Tom
+
+-Supprimé tâche /Adrien
+
+-Modifier tâche / Doryann
+
+-Modifier/créé/supprimé liste / Doryann
+
+-Affichage bureau / Adrien

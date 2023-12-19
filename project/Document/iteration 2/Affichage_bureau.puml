@@ -1,0 +1,41 @@
+@startuml
+
+activate Model
+Model -> AppView : update(Model)
+activate AppView
+
+    Model <- AppView : getDisplayMode()
+    Model --> AppView : "Tableau"
+
+    AppView -> DisplayFactory : getDisplayFactory(model, "Tableau")
+    activate DisplayFactory
+
+       create DeskDisplayFactory
+       DisplayFactory -> DeskDisplayFactory : new (model)
+
+       AppView <-- DisplayFactory : DeskDisplayFactory
+       deactivate DisplayFactory
+
+    AppView -> DeskDisplayFactory : createDisplay()
+    activate DeskDisplayFactory
+
+        Model <- DeskDisplayFactory : getTasks()
+        Model --> DeskDisplayFactory : List<TaskList>
+
+        create DeskDisplay
+        DeskDisplayFactory -> DeskDisplay : new(List<TaskList>)
+
+        AppView <-- DeskDisplayFactory : DeskDisplay
+        deactivate DeskDisplayFactory
+
+    AppView -> DeskDisplay : getDisplay()
+    activate DeskDisplay
+    AppView <-- DeskDisplay : Node
+    deactivate DeskDisplay
+
+    Model <-- AppView
+    deactivate AppView
+
+
+
+@enduml

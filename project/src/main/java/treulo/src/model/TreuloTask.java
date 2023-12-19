@@ -99,6 +99,12 @@ public class TreuloTask implements Model {
         return this.subtasks ;
     }
 
+    public void destroy() {
+        parentList.deleteTask(this);
+        parentTask.deleteSubTask(this);
+        alltasks.remove(this);
+    }
+
     @Override
     public void addObservator(Observator o) {
         this.observators.add(o);

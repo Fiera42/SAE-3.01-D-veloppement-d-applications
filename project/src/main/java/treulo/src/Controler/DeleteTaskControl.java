@@ -17,7 +17,6 @@ public class DeleteTaskControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        if(treuloTask.getParentList() != null) treuloTask.getParentList().deleteTask(treuloTask);
-        if(treuloTask.getParentTask() != null) treuloTask.getParentTask().deleteSubTask(treuloTask);
+        treuloTask.destroy();
     }
 }
