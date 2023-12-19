@@ -1,0 +1,3 @@
+Durand cette itération, nous avons ajouter toutes les fonctionnalité primaires (ajout/modification/suppression de tâche et affichage bureau)
+
+Cependant nous avons remarqué pour l'ajout de tâche, les boutons ne sont pas suffissamment clair, il faudrat donc que l'on retravaille ceci
