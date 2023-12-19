@@ -1,5 +1,6 @@
 package treulo.src.view.appview.display;
 
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -59,7 +60,8 @@ public class DeskDisplay implements Display {
         vBox.getChildren().add(titre);
 
         TextField listName = new TextField(taskList.getName());
-        //listName.setOnAction(new EditTaskListControl(model, taskList));
+        listName.setOnAction(new EditTaskListControl(model, taskList ,listName));
+        listName.focusedProperty().addListener(new EditTaskListControl(model, taskList ,listName));
         titre.getChildren().add(listName);
 
         CheckBox archive = new CheckBox("Archiver");
