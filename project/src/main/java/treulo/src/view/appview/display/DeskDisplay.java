@@ -104,7 +104,6 @@ public class DeskDisplay implements Display {
         HBox name = new HBox(10);
         vBox.getChildren().add(name);
         TextField nameText = new TextField(task.getName());
-        //listName.setOnAction(new EditTaskControl(model, task));
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
 
@@ -118,10 +117,16 @@ public class DeskDisplay implements Display {
         //archive.setOnAction(new EditTaskListControl(model, taskList));
         vBox.getChildren().add(archive);
 
+
         TextArea description = new TextArea(task.getDescription());
         description.setWrapText(true);
         HBox.setHgrow(description, Priority.ALWAYS);
         vBox.getChildren().add(description);
+
+        //Event de Modification
+        nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
+        description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
+
 
         for(TreuloTask child : task.getSubtasks()) {
             vBox.getChildren().add(getTaskDisplay(child, vBox));
