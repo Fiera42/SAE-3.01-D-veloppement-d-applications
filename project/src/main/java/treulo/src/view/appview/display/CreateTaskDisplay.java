@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import treulo.src.Controler.AddTaskCollaboratorControl;
 import treulo.src.Controler.AddTaskControl;
 import treulo.src.Controler.AddTaskListMenuControl;
 import treulo.src.model.Model;
@@ -69,6 +70,7 @@ public class CreateTaskDisplay implements Display{
         Label lBCenter3 = new Label("Collaborator ");
         TextField tFCenter3= new TextField();
         Button bCenter3 = new Button("+");
+        bCenter3.setOnAction(new AddTaskCollaboratorControl(model,tFCenter3));
         bCenter3.setGraphic(new Circle());
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
