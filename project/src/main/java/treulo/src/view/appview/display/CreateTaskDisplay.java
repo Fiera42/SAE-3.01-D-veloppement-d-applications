@@ -10,7 +10,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import treulo.src.Controler.AddTaskControl;
+import treulo.src.Controler.AddTaskListMenuControl;
+import treulo.src.model.Model;
 import treulo.src.model.TaskList;
+import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
@@ -18,14 +22,18 @@ import java.util.List;
 
 public class CreateTaskDisplay implements Display{
 
+    Treulo model;
     LinkedList <TaskList> taskLists;
 
-    public CreateTaskDisplay(LinkedList<TaskList> taskLists) {
+    public CreateTaskDisplay(Model m,LinkedList<TaskList> taskLists) {
+        this.model = (Treulo) m;
         this.taskLists = taskLists;
     }
 
     @Override
     public Node getDisplay() {
+        VBox HboxMain =new VBox();
+
         BorderPane bP = new BorderPane();
         //Top
         HBox hbTOP = new HBox();
@@ -80,16 +88,21 @@ public class CreateTaskDisplay implements Display{
         gP.add(VBoxCenter3,4,2);
         bP.setCenter(gP);
 
+
+
         //le Bas
 
-        HBox HBBottom = new HBox();
+        VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        HBBottom.setAlignment(Pos.BOTTOM_RIGHT);
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList()));
+        HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
         bP.setBottom(HBBottom);
-        bP.setBorder(Border.stroke(Color.BLACK));
-        return bP;
+
+        HboxMain.getChildren().add(bP);
+        HboxMain.setAlignment(Pos.TOP_CENTER);
+        return HboxMain;
     }
 
     // cette methode est inutile pour cette classe

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TreuloTask implements Model{
+public class TreuloTask implements Model {
     private String name , description;
     private boolean isArchive;
 

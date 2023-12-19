@@ -1,0 +1,15 @@
+@startuml
+
+class AppView {}
+
+class Treulo {}
+
+class TaskList {}
+
+class TreuloTask {}
+
+AppView --> Treulo : Observe
+Treulo --> TaskList : Observe
+TaskList --> TreuloTask : Observe
+
+@enduml

@@ -10,8 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import treulo.src.Controler.AddTaskListControl;
-import treulo.src.Controler.EditTaskListControl;
+import treulo.src.Controler.*;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -31,7 +30,7 @@ public class DeskDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-                HBox hBox = new HBox(10);
+        HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(10));
 
         for(TaskList taskList : taskLists) {
@@ -39,14 +38,19 @@ public class DeskDisplay implements Display {
         }
 
         Button button = new Button("Nouvelle liste");
-        button.setOnAction(new AddTaskListControl(model));
+        HBox buttonBox = new HBox(button);
+        buttonBox.setPrefWidth(300);
+        buttonBox.setAlignment(Pos.TOP_CENTER);
+        button.setOnAction(new AddTaskListMenuControl(model));
+        hBox.getChildren().add(buttonBox);
+
         return hBox;
     }
 
     public Node getTaskListDisplay(TaskList taskList) {
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(10));
-        vBox.setMaxWidth(300);
+        vBox.setPrefWidth(300);
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
 
         HBox titre = new HBox(10);
@@ -65,6 +69,14 @@ public class DeskDisplay implements Display {
         for(TreuloTask task : taskList) {
             vBox.getChildren().add(getTaskDisplay(task, new VBox()));
         }
+
+
+        Button button = new Button("Nouvelle tâche");
+        button.setOnAction(new AddTaskMenuControl(model));
+        HBox buttonBox = new HBox(button);
+        buttonBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(buttonBox);
+
         return vBox;
     }
 
