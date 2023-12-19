@@ -38,6 +38,10 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
                 {
                     treutask.addSubTask(combo.getSelectionModel().getSelectedItem());
                 }
+                for(int i=0;i<model.getCollaboratorTempo().size();i++)
+                {
+                    treutask.addCollaborator(model.getCollaboratorTempo().get(i));
+                }
             this.tL.addTask(treutask);
 
             }

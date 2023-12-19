@@ -116,6 +116,15 @@ public class TreuloTask implements Model {
         }
     }
 
+    public void addCollaborator(String name)
+    {
+        collaborators.add(name);
+    }
+
+    public ArrayList<String> getCollaborators() {
+        return collaborators;
+    }
+
     public String getName() {
         return this.name;
     }

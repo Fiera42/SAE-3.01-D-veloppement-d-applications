@@ -4,6 +4,7 @@ import treulo.src.view.Observator;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Treulo implements Model, Observator {
     protected ArrayList<Observator> observators;
@@ -13,6 +14,8 @@ public class Treulo implements Model, Observator {
 
     protected LinkedList<TaskList> tasks;
     protected TaskList editedTaskList;
+
+    protected List<String> collaboratorTempo = new ArrayList<String>();
 
     public Treulo() {
         this.observators = new ArrayList<>();
@@ -53,6 +56,10 @@ public class Treulo implements Model, Observator {
         observators.add(o);
     }
 
+    public void addCollaborator(String nom)
+    {
+        this.collaboratorTempo.add(nom);
+    }
     @Override
     public void deleteObservator(Observator o) {
         observators.remove(o);
@@ -81,6 +88,10 @@ public class Treulo implements Model, Observator {
         tasks.remove(taskList);
         taskList.deleteObservator(this);
         this.updateObservator();
+    }
+
+    public List<String> getCollaboratorTempo() {
+        return collaboratorTempo;
     }
 
     @Override
