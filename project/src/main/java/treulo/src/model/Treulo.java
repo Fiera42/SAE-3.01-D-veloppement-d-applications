@@ -92,4 +92,8 @@ public class Treulo implements Model, Observator {
         this.displayMode = displayMode;
         this.updateObservator();
     }
+
+    public void setEditedTaskList(TaskList editedTaskList) {
+        this.editedTaskList = editedTaskList;
+    }
 }
