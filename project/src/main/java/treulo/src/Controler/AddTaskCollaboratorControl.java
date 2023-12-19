@@ -18,7 +18,7 @@ public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        model.addCollaborator(collaborator.getText());
+        model.addCollaboratorTempo(collaborator.getText());
         collaborator.setText("");
     }
 }
