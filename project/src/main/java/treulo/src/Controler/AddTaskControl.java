@@ -13,14 +13,15 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
         public AddTaskControl(Model m,TaskList tL)
         {
             model= (Treulo)m;
-            tL=tL;
+
+            this.tL= tL;
         }
 
     @Override
     public void handle(ActionEvent event) {
-            TreuloTask treutask = new TreuloTask();
+            TreuloTask treutask = new TreuloTask("bonjour","bonsoir");
 
-            //tL.addTask();
+            this.tL.addTask(treutask);
         this.model.setDisplayMode("Tableau");
     }
 }
