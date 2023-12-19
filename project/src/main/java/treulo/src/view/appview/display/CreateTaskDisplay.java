@@ -21,6 +21,8 @@ import treulo.src.model.TreuloTask;
 import java.util.LinkedList;
 import java.util.List;
 
+import static treulo.src.model.TreuloTask.getAlltasks;
+
 public class CreateTaskDisplay implements Display{
 
     Treulo model;
@@ -84,9 +86,12 @@ public class CreateTaskDisplay implements Display{
 
         Label lBCenter5 =new Label("est une sous tache de :");
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
-        for (int i=0;i<model.getEditedTaskList().getTasks().size();i++){
-        combo.getItems().add(model.getEditedTaskList().getTasks().get(i));
+        System.out.println(getAlltasks().size());
+        for (int i=0;i<getAlltasks().size();i++)
+        {
+        combo.getItems().add(getAlltasks().get(i));
         }
+
         VBoxCenter3.getChildren().addAll(lBCenter5,combo);
 
         gP.add(VBoxCenter3,4,2);
