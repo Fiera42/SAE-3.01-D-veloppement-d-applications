@@ -34,7 +34,7 @@ public class CreateTaskListDisplay implements Display {
         hb.setAlignment(Pos.CENTER);
 
         Button b = new Button("Ajouter la Liste");
-        b.setOnAction(new AddTaskListControl(this.model , tf.getText()));
+        b.setOnAction(new AddTaskListControl(this.model , tf));
         b.setFont(Font.font(25));
 
         vb.getChildren().addAll(hb, b);
