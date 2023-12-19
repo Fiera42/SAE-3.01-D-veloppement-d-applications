@@ -26,7 +26,7 @@ public class AddTaskListControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        TaskList tl = new TaskList(this.name , this.model);
+        TaskList tl = new TaskList(this.name);
         this.model.addTaskList(tl);
         this.model.setDisplayMode("Tableau");
 
