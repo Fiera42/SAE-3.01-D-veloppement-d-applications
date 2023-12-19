@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import treulo.src.Controler.AddTaskControl;
 import treulo.src.Controler.AddTaskListMenuControl;
 import treulo.src.model.Model;
@@ -82,7 +83,10 @@ public class CreateTaskDisplay implements Display{
         VBox VBoxCenter3 = new VBox();
 
         Label lBCenter5 =new Label("est une sous tache de :");
-        ComboBox <List<TreuloTask>> combo= new ComboBox <List<TreuloTask>>();
+        ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
+        for (int i=0;i<model.getEditedTaskList().getTasks().size();i++){
+        combo.getItems().add(model.getEditedTaskList().getTasks().get(i));
+        }
         VBoxCenter3.getChildren().addAll(lBCenter5,combo);
 
         gP.add(VBoxCenter3,4,2);

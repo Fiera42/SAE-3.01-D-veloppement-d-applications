@@ -147,4 +147,10 @@ public class TreuloTask implements Model {
         this.duration = duration;
         this.updateObservator();
     }
+
+    @Override
+    public String toString() {
+        return
+                "'" + name + '\'';
+    }
 }
