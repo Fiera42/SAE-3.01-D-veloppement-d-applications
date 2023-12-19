@@ -4,10 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import treulo.src.Controler.*;
@@ -21,6 +18,8 @@ public class DeskDisplay implements Display {
 
     private LinkedList<TaskList> taskLists;
     private Treulo model;
+
+    private static final int COLUMN_WIDTH = 250;
 
 
     public DeskDisplay(Treulo treulo, LinkedList<TaskList> taskLists) {
@@ -40,7 +39,8 @@ public class DeskDisplay implements Display {
         Button button = new Button("Nouvelle liste");
         button.setOnAction(new AddTaskListMenuControl(model));
         HBox buttonBox = new HBox(button);
-        buttonBox.setPrefWidth(300);
+        buttonBox.setMinWidth(COLUMN_WIDTH);
+        buttonBox.setMaxWidth(COLUMN_WIDTH);
         buttonBox.setAlignment(Pos.TOP_CENTER);
         button.setOnAction(new AddTaskListMenuControl(model));
         hBox.getChildren().add(buttonBox);
@@ -52,21 +52,28 @@ public class DeskDisplay implements Display {
         VBox vBox = new VBox(10);
         vBox.setOnMouseEntered(new EditedTaskListControl(model,taskList));
         vBox.setPadding(new Insets(10));
-        vBox.setPrefWidth(300);
+        vBox.setMinWidth(COLUMN_WIDTH);
+        vBox.setMaxWidth(COLUMN_WIDTH);
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
 
         HBox titre = new HBox(10);
         vBox.getChildren().add(titre);
 
-        TextField listName = new TextField(taskList.getName());
+        TextArea listName = new TextArea(taskList.getName());
+        listName.setWrapText(true);
         //listName.setOnAction(new EditTaskListControl(model, taskList));
         titre.getChildren().add(listName);
+        HBox.setHgrow(listName, Priority.ALWAYS);
+
+        Button delete = new Button("X");
+        delete.setOnAction(new DeleteTaskListControl(model, taskList));
+        titre.getChildren().add(delete);
 
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(taskList.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         //archive.setOnAction(new EditTaskListControl(model, taskList));
-        titre.getChildren().add(archive);
+        vBox.getChildren().add(archive);
 
         for(TreuloTask task : taskList) {
             vBox.getChildren().add(getTaskDisplay(task, new VBox()));
@@ -85,12 +92,28 @@ public class DeskDisplay implements Display {
     @Override
     public Node getTaskDisplay(TreuloTask task, Node parentNode) {
         VBox parent = (VBox)parentNode;
-        VBox vBox = new VBox();
 
-        Insets insets = parent.getPadding();
-        vBox.setPadding(new Insets(insets.getTop(), insets.getRight(), insets.getBottom(), insets.getLeft() + 5));
+        VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
-        vBox.getChildren().add(new Label("-" + task.getName() + " (" + task.getDescription() + ")"));
+        HBox name = new HBox(10);
+        vBox.getChildren().add(name);
+        TextArea nameText = new TextArea(task.getName());
+        nameText.setWrapText(true);
+        //listName.setOnAction(new EditTaskControl(model, task));
+        name.getChildren().add(nameText);
+        HBox.setHgrow(nameText, Priority.ALWAYS);
+
+        Button delete = new Button("X");
+        //delete.setOnAction(new DeleteTaskControl(model, task));
+        name.getChildren().add(delete);
+
+        TextArea description = new TextArea(task.getDescription());
+        description.setWrapText(true);
+        HBox.setHgrow(description, Priority.ALWAYS);
+        vBox.getChildren().add(description);
+
         for(TreuloTask child : task.getSubtasks()) {
             vBox.getChildren().add(getTaskDisplay(child, vBox));
         }

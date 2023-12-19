@@ -8,7 +8,7 @@ public class DummieTreuloGenerator {
     public static Treulo generateDummie() {
         Treulo treulo = new Treulo();
         TreuloTask task1 = new TreuloTask("tache 1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum");
-        TreuloTask task2 = new TreuloTask("tache 2", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ");
+        TreuloTask task2 = new TreuloTask("liste avec un très grand nom sur plusieurs lignes", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ");
         TreuloTask task3 = new TreuloTask("tache 3", "");
         TreuloTask task4 = new TreuloTask("tache 4", "Lorem Ipsum Lorem Ipsum Lorsum Lorem Ipsum Lorem Ipsum ");
         TreuloTask task5 = new TreuloTask("tache 5", "Lorem Ipsorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ");
@@ -20,7 +20,7 @@ public class DummieTreuloGenerator {
         task5.addSubTask(task7);
 
         TaskList list1 = new TaskList("liste 1");
-        TaskList list2 = new TaskList("liste 2");
+        TaskList list2 = new TaskList("liste avec un très grand nom sur plusieurs lignes");
 
         list1.addTask(task1);
         list1.addTask(task2);
