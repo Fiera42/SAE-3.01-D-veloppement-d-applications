@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TreuloTask implements Model {
+public class TreuloTask implements Model, Observator {
     private String name , description;
     private boolean isArchive;
 
@@ -85,6 +85,7 @@ public class TreuloTask implements Model {
     public void addSubTask(TreuloTask task){
         this.subtasks.add(task);
         task.setParentTask(this);
+        task.addObservator(this);
         this.updateObservator();
 
     }
@@ -191,5 +192,24 @@ public class TreuloTask implements Model {
     public String toString() {
         return
                 "'" + name + '\'';
+    }
+
+    public boolean equals(Object obj) {
+        if(!(obj instanceof TreuloTask)) return false;
+        TreuloTask task = (TreuloTask) obj;
+
+        if(!task.name.equals(name)) return false;
+        if(!task.description.equals(description)) return false;
+        if(!task.subtasks.containsAll(subtasks)) return false;
+        if(task.isArchive != isArchive) return false;
+        if(task.parentTask != parentTask) return false;
+        if(task.parentList != parentList) return false;
+
+        return true;
+    }
+
+    @Override
+    public void update(Model model) {
+        updateObservator();
     }
 }
