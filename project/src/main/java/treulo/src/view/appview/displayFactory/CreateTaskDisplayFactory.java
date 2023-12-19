@@ -11,6 +11,6 @@ public class CreateTaskDisplayFactory extends DisplayFactory{
 
     @Override
     public Display createDisplay() {
-        return new CreateTaskDisplay(model.getTasks());
+        return new CreateTaskDisplay(model,model.getTasks());
     }
 }
