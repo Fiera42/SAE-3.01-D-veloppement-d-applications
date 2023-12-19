@@ -1,6 +1,5 @@
 package treulo.src.view.appview.display;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -8,19 +7,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import treulo.src.Controler.AddTaskCollaboratorControl;
 import treulo.src.Controler.AddTaskControl;
-import treulo.src.Controler.AddTaskListMenuControl;
+import treulo.src.Controler.AddTaskDependencyControl;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
@@ -78,6 +74,7 @@ public class CreateTaskDisplay implements Display{
         Label lBCenter4 = new Label("Dependance ");
         TextField tFCenter4= new TextField();
         Button bCenter4 = new Button("+");
+        bCenter4.setOnAction(new AddTaskDependencyControl(model,tFCenter4));
         bCenter4.setGraphic(new Circle());
         hbCenter4.getChildren().addAll(lBCenter4,tFCenter4,bCenter4);
 

@@ -5,6 +5,9 @@ import treulo.src.view.Observator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+
+import static treulo.src.model.TreuloTask.getAlltasks;
 
 public class Treulo implements Model, Observator {
     protected ArrayList<Observator> observators;
@@ -16,6 +19,8 @@ public class Treulo implements Model, Observator {
     protected TaskList editedTaskList;
 
     protected List<String> collaboratorTempo = new ArrayList<String>();
+
+    protected List<TreuloTask> dependencieTempo = new ArrayList<TreuloTask>();
 
     public Treulo() {
         this.observators = new ArrayList<>();
@@ -56,10 +61,36 @@ public class Treulo implements Model, Observator {
         observators.add(o);
     }
 
-    public void addCollaborator(String nom)
+    public void addCollaboratorTempo(String nom)
     {
         this.collaboratorTempo.add(nom);
     }
+    public List<String> getCollaboratorTempo() {
+        return collaboratorTempo;
+    }
+
+    public void addDependencyTempo(String name)
+    {
+
+        TreuloTask foundTask = null;
+
+        for(TreuloTask task : TreuloTask.getAlltasks()) {
+            if(task.getName().equals(name)) {
+                foundTask = task;
+                break;
+            }
+        }
+       if (foundTask!=null) {
+           {
+               this.dependencieTempo.add(foundTask);
+           }
+       }
+    }
+
+    public List<TreuloTask> getDependencieTempo() {
+        return dependencieTempo;
+    }
+
     @Override
     public void deleteObservator(Observator o) {
         observators.remove(o);
@@ -90,9 +121,7 @@ public class Treulo implements Model, Observator {
         this.updateObservator();
     }
 
-    public List<String> getCollaboratorTempo() {
-        return collaboratorTempo;
-    }
+
 
     @Override
     public void update(Model model) {

@@ -42,9 +42,15 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
                 {
                     treutask.addCollaborator(model.getCollaboratorTempo().get(i));
                 }
+                for(int i=0;i<model.getDependencieTempo().size();i++)
+                {
+                    treutask.addDependencie(model.getDependencieTempo().get(i));
+                }
             this.tL.addTask(treutask);
 
             }
+            this.model.getDependencieTempo().clear();
+            this.model.getCollaboratorTempo().clear();
         this.model.setDisplayMode("Tableau");
     }
 }
