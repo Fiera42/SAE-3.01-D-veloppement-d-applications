@@ -34,10 +34,8 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
             if (Objects.equals(description.getText(), "") || Objects.equals(nom.getText(), "")){}
             else {
             TreuloTask treutask = new TreuloTask(this.nom.getText(),this.description.getText());
-                if (combo.getSelectionModel().getSelectedItem()!=null)
-                {
-                    treutask.addSubTask(combo.getSelectionModel().getSelectedItem());
-                }
+
+
                 for(int i=0;i<model.getCollaboratorTempo().size();i++)
                 {
                     treutask.addCollaborator(model.getCollaboratorTempo().get(i));
@@ -46,7 +44,16 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
                 {
                     treutask.addDependencie(model.getDependencieTempo().get(i));
                 }
-            this.tL.addTask(treutask);
+
+                if (combo.getSelectionModel().getSelectedItem()!=null)
+                {
+                    combo.getSelectionModel().getSelectedItem().addSubTask(treutask);
+                }
+                else
+                {
+                    this.tL.addTask(treutask);
+                }
+
 
             }
             this.model.getDependencieTempo().clear();
