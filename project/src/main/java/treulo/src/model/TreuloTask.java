@@ -100,8 +100,12 @@ public class TreuloTask implements Model {
     }
 
     public void destroy() {
-        parentList.deleteTask(this);
-        parentTask.deleteSubTask(this);
+        if (parentList != null) {
+            parentList.deleteTask(this);
+        }
+        if (parentTask != null) {
+            parentTask.deleteSubTask(this);
+        }
         alltasks.remove(this);
     }
 

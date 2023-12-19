@@ -136,4 +136,8 @@ public class Treulo implements Model, Observator {
     public void setEditedTaskList(TaskList editedTaskList) {
         this.editedTaskList = editedTaskList;
     }
+
+    public void addCollaborator(String s){
+        this.collaboratorTempo.add(s);
+    }
 }
