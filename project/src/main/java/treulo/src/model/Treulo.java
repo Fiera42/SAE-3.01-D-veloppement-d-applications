@@ -15,6 +15,8 @@ public class Treulo implements Model, Observator {
     protected boolean displayArchive;
     protected String displayMode;
 
+    protected String displayModeOld;
+
     protected LinkedList<TaskList> tasks;
     protected TaskList editedTaskList;
 
@@ -26,6 +28,7 @@ public class Treulo implements Model, Observator {
         this.observators = new ArrayList<>();
         this.displayArchive = false;
         this.displayMode = "default";
+        this.displayModeOld=this.displayMode;
         this.tasks = new LinkedList<>();
     }
 
@@ -120,8 +123,13 @@ public class Treulo implements Model, Observator {
     }
 
     public void setDisplayMode(String displayMode) {
+        this.displayModeOld = this.displayMode;
         this.displayMode = displayMode;
         this.updateObservator();
+    }
+
+    public String getDisplayModeOld() {
+        return displayModeOld;
     }
 
     public void setEditedTaskList(TaskList editedTaskList) {

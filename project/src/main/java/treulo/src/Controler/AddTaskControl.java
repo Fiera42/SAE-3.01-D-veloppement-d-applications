@@ -58,6 +58,6 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
             }
             this.model.getDependencieTempo().clear();
             this.model.getCollaboratorTempo().clear();
-        this.model.setDisplayMode("Tableau");
+        this.model.setDisplayMode(model.getDisplayModeOld());
     }
 }

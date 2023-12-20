@@ -12,6 +12,7 @@ import javafx.scene.shape.Circle;
 import treulo.src.Controler.AddTaskCollaboratorControl;
 import treulo.src.Controler.AddTaskControl;
 import treulo.src.Controler.AddTaskDependencyControl;
+import treulo.src.Controler.BackControler;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
@@ -33,16 +34,24 @@ public class CreateTaskDisplay implements Display{
 
     @Override
     public Node getDisplay() {
-        VBox HboxMain =new VBox();
+        VBox VboxMain =new VBox();
 
         BorderPane bP = new BorderPane();
         //Top
-        HBox hbTOP = new HBox();
-        Label lBTop = new Label("Ajouter une tache");
-        hbTOP.getChildren().add(lBTop);
-        hbTOP.setAlignment(Pos.CENTER);
 
-        bP.setTop(hbTOP);
+        VBox VBoxTop =new VBox();
+        HBox hbBack =new HBox();
+        Button bBack = new Button("Retour");
+        bBack.setOnAction(new BackControler(model));
+        hbBack.getChildren().add(bBack);
+        HBox hbTitle = new HBox();
+        hbTitle.setAlignment(Pos.CENTER);
+        Label lBTop = new Label("Ajouter une tache");
+
+        hbTitle.getChildren().add(lBTop);
+        VBoxTop.getChildren().addAll(hbBack,hbTitle);
+
+        bP.setTop(VBoxTop);
         //Center
         GridPane gP = new GridPane();
         VBox vBoxCenter= new VBox();
@@ -131,9 +140,9 @@ public class CreateTaskDisplay implements Display{
 
         bP.setBottom(HBBottom);
 
-        HboxMain.getChildren().add(bP);
-        HboxMain.setAlignment(Pos.TOP_CENTER);
-        return HboxMain;
+        VboxMain.getChildren().add(bP);
+        VboxMain.setAlignment(Pos.TOP_CENTER);
+        return VboxMain;
     }
 
     // cette methode est inutile pour cette classe
