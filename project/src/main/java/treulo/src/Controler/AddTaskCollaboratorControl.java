@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
+import java.util.Objects;
+
 public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
     Treulo model;
     TextField collaborator;
@@ -18,7 +20,9 @@ public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        if (!Objects.equals(collaborator.getText(), "")){
         model.addCollaboratorTempo(collaborator.getText());
         collaborator.setText("");
+        }
     }
 }

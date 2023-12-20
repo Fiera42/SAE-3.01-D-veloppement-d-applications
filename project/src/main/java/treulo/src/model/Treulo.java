@@ -64,27 +64,18 @@ public class Treulo implements Model, Observator {
     public void addCollaboratorTempo(String nom)
     {
         this.collaboratorTempo.add(nom);
+        this.updateObservator();
     }
     public List<String> getCollaboratorTempo() {
         return collaboratorTempo;
     }
 
-    public void addDependencyTempo(String name)
+    public void addDependencyTempo(TreuloTask name)
     {
 
-        TreuloTask foundTask = null;
 
-        for(TreuloTask task : TreuloTask.getAlltasks()) {
-            if(task.getName().equals(name)) {
-                foundTask = task;
-                break;
-            }
-        }
-       if (foundTask!=null) {
-           {
-               this.dependencieTempo.add(foundTask);
-           }
-       }
+               this.dependencieTempo.add(name);
+       this.updateObservator();
     }
 
     public List<TreuloTask> getDependencieTempo() {

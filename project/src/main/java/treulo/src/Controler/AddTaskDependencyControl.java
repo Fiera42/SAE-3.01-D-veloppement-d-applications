@@ -2,15 +2,17 @@ package treulo.src.Controler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
+import treulo.src.model.TreuloTask;
 
 public class AddTaskDependencyControl implements EventHandler<ActionEvent> {
     Treulo model;
-    TextField collaborator;
+    ComboBox <TreuloTask> collaborator;
 
-    public AddTaskDependencyControl(Model m, TextField t){
+    public AddTaskDependencyControl(Model m, ComboBox <TreuloTask> t){
         model=(Treulo) m;
         collaborator=t;
     }
@@ -18,7 +20,7 @@ public class AddTaskDependencyControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        model.addDependencyTempo(collaborator.getText());
-        collaborator.setText("");
+        if(collaborator.getSelectionModel().getSelectedItem()!=null)
+        {model.addDependencyTempo(collaborator.getSelectionModel().getSelectedItem());}
     }
 }

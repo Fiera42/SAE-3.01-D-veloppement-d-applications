@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import treulo.src.Controler.AddTaskCollaboratorControl;
 import treulo.src.Controler.AddTaskControl;
@@ -62,36 +63,57 @@ public class CreateTaskDisplay implements Display{
 
         VBox VBoxCenter2 = new VBox();
 
-        HBox hbCenter3 = new HBox();
-        Label lBCenter3 = new Label("Collaborator ");
-        TextField tFCenter3= new TextField();
-        Button bCenter3 = new Button("+");
-        bCenter3.setOnAction(new AddTaskCollaboratorControl(model,tFCenter3));
-        bCenter3.setGraphic(new Circle());
-        hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
-
         HBox hbCenter4 = new HBox();
         Label lBCenter4 = new Label("Dependance ");
-        TextField tFCenter4= new TextField();
-        Button bCenter4 = new Button("+");
-        bCenter4.setOnAction(new AddTaskDependencyControl(model,tFCenter4));
-        bCenter4.setGraphic(new Circle());
-        hbCenter4.getChildren().addAll(lBCenter4,tFCenter4,bCenter4);
 
-        VBoxCenter2.getChildren().addAll(hbCenter3,hbCenter4);
+        //comboBox
+        ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
+        combo.getItems().add(null);
+        for (int i=0;i<getAlltasks().size();i++)
+        {
+            combo.getItems().add(getAlltasks().get(i));
+        }
+
+        Button bCenter4 = new Button("+");
+        bCenter4.setOnAction(new AddTaskDependencyControl(model,combo));
+
+        hbCenter4.getChildren().addAll(lBCenter4,combo,bCenter4);
+
+        HBox hbCenter3 = new HBox();
+        Label lBCenter3 = new Label("Collaborateur");
+        TextField tFCenter3= new TextField();
+
+
+        Button bCenter3 = new Button("+");
+        bCenter3.setOnAction(new AddTaskCollaboratorControl(model,tFCenter3));
+
+        String collab = "  Les collaborateurs :      "+"\n";
+        for (int i = 0;i<model.getCollaboratorTempo().size();i++)
+        {
+            collab+="  "+model.getCollaboratorTempo().get(i)+"\n";
+        }
+        Label lbCenter = new Label(collab);
+        lbCenter.setBorder(Border.stroke(Color.BLACK));
+        lbCenter.setBackground(Background.fill(Color.BISQUE));
+        lbCenter.setMaxWidth(Double.MAX_VALUE);
+        hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
+
+
+        VBoxCenter2.getChildren().addAll(hbCenter4,hbCenter3 , lbCenter);
         gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();
 
         Label lBCenter5 =new Label("est une sous tache de :");
-        ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
-        combo.getItems().add(null);
+        //comboBox
+        ComboBox <TreuloTask> combo2= new ComboBox <TreuloTask>();
+        combo2.getItems().add(null);
         for (int i=0;i<getAlltasks().size();i++)
         {
-        combo.getItems().add(getAlltasks().get(i));
+        combo2.getItems().add(getAlltasks().get(i));
         }
 
-        VBoxCenter3.getChildren().addAll(lBCenter5,combo);
+        VBoxCenter3.getChildren().addAll(lBCenter5,combo2);
 
         gP.add(VBoxCenter3,4,2);
         gP.setAlignment(Pos.CENTER);
