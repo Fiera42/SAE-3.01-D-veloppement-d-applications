@@ -60,8 +60,9 @@ public class ListDisplay implements Display {
         hBoxHead.setPadding(new Insets(10));
         //hBoxHead.setMinHeight(COLUMN_WIDTH);
         hBoxHead.setMaxHeight(COLUMN_WIDTH);
-        vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
+        hBoxHead.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
         vb.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
+        vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(0,2,0,0))));
 
 
         VBox titre = new VBox(10);
@@ -83,10 +84,11 @@ public class ListDisplay implements Display {
         hBoxHead.getChildren().add(archive);
 
         VBox vBoxTask = new VBox();
-        vBoxTask.setPadding(new Insets(0 , 50, 0, 0));
+        vBoxTask.setPadding(new Insets(10 , 10, 10, 60));
         for(TreuloTask task : taskList) {
             vBoxTask.getChildren().add(getTaskDisplay(task, new HBox()));
         }
+
 
 
         Button button = new Button("Nouvelle tâche");
@@ -108,18 +110,19 @@ public class ListDisplay implements Display {
 
     @Override
     public Node getTaskDisplay(TreuloTask task, Node parentNode) {
-        HBox parent = (HBox) parentNode;
 
-        HBox vBox = new HBox(10);
+        VBox vb = new VBox();
+        VBox vBox = new VBox(10);
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
-        vBox.setPadding(new Insets(10));
-        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
+        ;
 
-        VBox name = new VBox(10);
+        HBox name = new HBox(10);
         vBox.getChildren().add(name);
         TextField nameText = new TextField(task.getName());
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
+        name.setPadding(new Insets(10));
+        name.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
         Button delete = new Button("X");
         delete.setOnAction(new DeleteTaskControl(model, task));
@@ -141,10 +144,16 @@ public class ListDisplay implements Display {
         nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
-
-        for(TreuloTask child : task.getSubtasks()) {
-            vBox.getChildren().add(getTaskDisplay(child, vBox));
+        VBox vBoxSubTask = new VBox();
+        vBoxSubTask.setPadding(new Insets(0, 0, 0, 50));
+        if (!task.getSubtasks().isEmpty()) {
+            vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0, 0, 0, 2))));
+            vBoxSubTask.setPadding(new Insets(10));
         }
+        for(TreuloTask child : task.getSubtasks()) {
+            vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
+        }
+        vBox.getChildren().addAll(vBoxSubTask);
 
         return vBox;
     }
