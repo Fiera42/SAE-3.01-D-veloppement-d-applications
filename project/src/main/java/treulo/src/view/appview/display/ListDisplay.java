@@ -55,7 +55,7 @@ public class ListDisplay implements Display {
             hBox.setMargin(line, new Insets(0, 200, 0, 200));
             hBox.getChildren().add(line);
         }
-        hBox.getChildren().remove(hBox.getChildren().size() -1);
+        if(hBox.getChildren().size() > 0) hBox.getChildren().remove(hBox.getChildren().size() -1);
 
         Button button = new Button("Nouvelle liste");
         button.setOnAction(new AddTaskListMenuControl(model));
