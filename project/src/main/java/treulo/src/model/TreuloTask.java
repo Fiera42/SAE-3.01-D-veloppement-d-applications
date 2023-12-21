@@ -21,6 +21,9 @@ public class TreuloTask implements Model, Observator {
     private TreuloTask parentTask;
     private TaskList parentList;
 
+    private int id;
+    private static int maxId;
+
 
 
     public TreuloTask (){
@@ -32,6 +35,7 @@ public class TreuloTask implements Model, Observator {
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
+        this.id = ++maxId;
     }
 
     public TreuloTask (String n){
@@ -43,6 +47,7 @@ public class TreuloTask implements Model, Observator {
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
+        this.id = ++maxId;
     }
 
     public TreuloTask (String n , String d){
@@ -54,6 +59,7 @@ public class TreuloTask implements Model, Observator {
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
+        this.id = ++maxId;
     }
 
     public TreuloTask (String n , String d , float f){
@@ -65,6 +71,7 @@ public class TreuloTask implements Model, Observator {
         this.subtasks = new LinkedList<>() ;
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
+        this.id = ++maxId;
     }
 
 
@@ -211,5 +218,21 @@ public class TreuloTask implements Model, Observator {
     @Override
     public void update(Model model) {
         updateObservator();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static TreuloTask getTaskById(int id) {
+        for(TreuloTask task : alltasks) {
+            if(task.getId() == id) return task;
+        }
+
+        return null;
     }
 }

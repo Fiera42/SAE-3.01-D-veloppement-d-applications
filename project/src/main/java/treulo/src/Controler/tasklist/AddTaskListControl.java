@@ -1,4 +1,4 @@
-package treulo.src.Controler;
+package treulo.src.Controler.tasklist;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

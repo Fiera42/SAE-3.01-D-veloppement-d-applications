@@ -1,6 +1,5 @@
 package treulo.src.view.appview.display;
 
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -8,7 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import treulo.src.Controler.*;
+import treulo.src.Controler.dragNdrop.EndDragControl;
+import treulo.src.Controler.dragNdrop.ReceiveDragControl;
+import treulo.src.Controler.dragNdrop.StartDragControl;
+import treulo.src.Controler.task.AddTaskMenuControl;
+import treulo.src.Controler.task.DeleteTaskControl;
+import treulo.src.Controler.task.EditTreuloTaskControl;
+import treulo.src.Controler.tasklist.AddTaskListMenuControl;
+import treulo.src.Controler.tasklist.DeleteTaskListControl;
+import treulo.src.Controler.tasklist.EditTaskListControl;
+import treulo.src.Controler.tasklist.EditedTaskListControl;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -102,6 +110,9 @@ public class DeskDisplay implements Display {
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
         vBox.setPadding(new Insets(10));
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
+        vBox.setOnDragDetected(new StartDragControl(model, task));
+        vBox.setOnDragDone(new EndDragControl(model, vBox));
+        vBox.setOnDragDropped(new ReceiveDragControl(model, task));
 
         HBox name = new HBox(10);
         vBox.getChildren().add(name);
