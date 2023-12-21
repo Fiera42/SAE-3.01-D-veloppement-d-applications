@@ -65,6 +65,7 @@ public class ListDisplay implements Display {
         vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(0,2,0,0))));
 
 
+
         VBox titre = new VBox(10);
         hBoxHead.getChildren().add(titre);
 
@@ -84,7 +85,8 @@ public class ListDisplay implements Display {
         hBoxHead.getChildren().add(archive);
 
         VBox vBoxTask = new VBox();
-        vBoxTask.setPadding(new Insets(10 , 10, 10, 60));
+        vBoxTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0,0,0,2))));
+        vBoxTask.setMargin(vBoxTask , new Insets(10,0,0,25));
         for(TreuloTask task : taskList) {
             vBoxTask.getChildren().add(getTaskDisplay(task, new HBox()));
         }
@@ -114,41 +116,46 @@ public class ListDisplay implements Display {
         VBox vb = new VBox();
         VBox vBox = new VBox(10);
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
-        ;
+
 
         HBox name = new HBox(10);
-        vBox.getChildren().add(name);
+        vb.getChildren().add(name);
         TextField nameText = new TextField(task.getName());
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
-        name.setPadding(new Insets(10));
-        name.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
+        vBox.setMargin( vBox , new Insets(0,10,10,50));
+        vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
         Button delete = new Button("X");
         delete.setOnAction(new DeleteTaskControl(model, task));
-        name.getChildren().add(delete);
+        vb.getChildren().add(delete);
 
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(task.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         //archive.setOnAction(new EditTaskListControl(model, taskList));
-        vBox.getChildren().add(archive);
+        vb.getChildren().add(archive);
 
 
         TextArea description = new TextArea(task.getDescription());
         description.setWrapText(true);
         HBox.setHgrow(description, Priority.ALWAYS);
-        vBox.getChildren().add(description);
+        vb.getChildren().add(description);
+
+        vBox.getChildren().add(vb);
 
         //Event de Modification
         nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
         VBox vBoxSubTask = new VBox();
-        vBoxSubTask.setPadding(new Insets(0, 0, 0, 50));
+
+
         if (!task.getSubtasks().isEmpty()) {
-            vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0, 0, 0, 2))));
-            vBoxSubTask.setPadding(new Insets(10));
+            vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
+            //vBoxSubTask.setPadding(new Insets(50));
+            vBoxSubTask.setMargin(vBoxSubTask , new Insets(0,0,0,50));
+
         }
         for(TreuloTask child : task.getSubtasks()) {
             vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
