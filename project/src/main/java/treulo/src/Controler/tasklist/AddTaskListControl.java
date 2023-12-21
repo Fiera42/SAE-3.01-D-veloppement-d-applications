@@ -31,7 +31,7 @@ public class AddTaskListControl implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         TaskList tl = new TaskList(this.textefield.getText());
         this.model.addTaskList(tl);
-        this.model.setDisplayMode("Tableau");
+        this.model.setDisplayMode(model.getDisplayModeOld());
 
     }
 }

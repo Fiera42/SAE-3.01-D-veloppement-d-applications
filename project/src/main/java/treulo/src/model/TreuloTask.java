@@ -17,10 +17,10 @@ public class TreuloTask implements Model, Observator {
     private LinkedList<TreuloTask> subtasks ;
 
     private ArrayList<Observator> observators ;
-    private static List<TreuloTask> alltasks = new LinkedList<TreuloTask>();
+
     private TreuloTask parentTask;
     private TaskList parentList;
-
+    private static List<TreuloTask> alltasks = new LinkedList<TreuloTask>();
     private int id;
     private static int maxId;
 
@@ -93,13 +93,15 @@ public class TreuloTask implements Model, Observator {
         this.subtasks.add(task);
         task.setParentTask(this);
         task.addObservator(this);
+        task.setParentList(parentList);
         this.updateObservator();
-
     }
 
     public void deleteSubTask(TreuloTask task){
         this.subtasks.remove(task);
         task.setParentTask(null);
+        task.deleteObservator(this);
+        task.setParentList(null);
         this.updateObservator();
     }
 
@@ -193,6 +195,9 @@ public class TreuloTask implements Model, Observator {
 
     public void setParentList(TaskList parentList) {
         this.parentList = parentList;
+        for(TreuloTask subTask : subtasks) {
+            subTask.setParentList(parentList);
+        }
     }
 
     @Override
@@ -200,6 +205,8 @@ public class TreuloTask implements Model, Observator {
         return
                 "'" + name + '\'';
     }
+
+    /*
 
     public boolean equals(Object obj) {
         if(!(obj instanceof TreuloTask)) return false;
@@ -214,6 +221,7 @@ public class TreuloTask implements Model, Observator {
 
         return true;
     }
+     */
 
     @Override
     public void update(Model model) {
@@ -234,5 +242,13 @@ public class TreuloTask implements Model, Observator {
         }
 
         return null;
+    }
+
+    public ArrayList<Observator> getObservators() {
+        return observators;
+    }
+
+    public void setObservators(ArrayList<Observator> observators) {
+        this.observators = observators;
     }
 }

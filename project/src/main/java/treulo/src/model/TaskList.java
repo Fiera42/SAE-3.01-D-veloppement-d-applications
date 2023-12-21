@@ -5,6 +5,7 @@ import treulo.src.view.Observator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class TaskList implements Model, Observator, Iterable<TreuloTask> {
 
@@ -12,6 +13,10 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
     private boolean isArchived ;
     private LinkedList<TreuloTask> tasks ;
     private ArrayList<Observator> observators ;
+    private Treulo parentApp;
+    private static List<TaskList> allLists = new LinkedList<TaskList>();
+    private int id;
+    private static int maxId;
 
 
     public TaskList(String name) {
@@ -19,6 +24,8 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
         this.isArchived = false;
         this.tasks = new LinkedList();
         this.observators = new ArrayList<>();
+        allLists.add(this);
+        this.id = ++maxId;
     }
 
     public void addTask (TreuloTask task){
@@ -89,5 +96,33 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
     public void setArchived(boolean archived) {
         isArchived = archived;
         this.updateObservator();
+    }
+
+    public Treulo getParentApp() {
+        return parentApp;
+    }
+
+    public void setParentApp(Treulo parentApp) {
+        this.parentApp = parentApp;
+    }
+
+    public static TaskList getListById(int id) {
+        for(TaskList list : allLists) {
+            if(list.getId() == id) return list;
+        }
+
+        return null;
+    }
+
+    public static List<TaskList> getAllLists() {
+        return allLists;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public static int getMaxId() {
+        return maxId;
     }
 }

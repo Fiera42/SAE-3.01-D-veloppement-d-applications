@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import treulo.src.Controler.ChangeDisplayControl;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
@@ -59,8 +60,10 @@ public class Main extends Application {
         buttonGantt.getStyleClass().remove("radio-button");
         buttonGantt.getStyleClass().add("toggle-button");
         buttonGantt.setToggleGroup(displayMode);
+        buttonGantt.setOnAction(new ChangeDisplayControl(model ,buttonGantt.getText()));
 
         RadioButton buttonListe = new RadioButton("Liste");
+        buttonListe.setOnAction(new ChangeDisplayControl(model ,buttonListe.getText()));
         buttonListe.getStyleClass().remove("radio-button");
         buttonListe.getStyleClass().add("toggle-button");
         buttonListe.setToggleGroup(displayMode);
@@ -69,6 +72,7 @@ public class Main extends Application {
         buttontableau.getStyleClass().remove("radio-button");
         buttontableau.getStyleClass().add("toggle-button");
         buttontableau.setToggleGroup(displayMode);
+        buttontableau.setOnAction(new ChangeDisplayControl(model ,buttontableau.getText()));
 
         HBox displayModeButtons = new HBox(buttontableau, buttonListe, buttonGantt);
         displayModeButtons.setSpacing(10);

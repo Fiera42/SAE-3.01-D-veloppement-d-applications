@@ -1,6 +1,5 @@
 package treulo.src.view.appview.displayFactory;
 
-import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.display.Display;
 
@@ -14,6 +13,8 @@ public abstract class DisplayFactory {
                 return new CreateTaskListDisplayFactory(model);
             case "Tableau" :
                 return new DeskDisplayFactory(model);
+            case "Liste" :
+                return  new ListDisplayFactory(model);
             default :
                 return new TextDisplayFactory(model);
         }

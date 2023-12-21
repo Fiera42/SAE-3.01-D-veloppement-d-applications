@@ -15,6 +15,8 @@ public class Treulo implements Model, Observator {
     protected boolean displayArchive;
     protected String displayMode;
 
+    protected String displayModeOld;
+
     protected LinkedList<TaskList> tasks;
     protected TaskList editedTaskList;
 
@@ -26,6 +28,7 @@ public class Treulo implements Model, Observator {
         this.observators = new ArrayList<>();
         this.displayArchive = false;
         this.displayMode = "default";
+        this.displayModeOld=this.displayMode;
         this.tasks = new LinkedList<>();
     }
 
@@ -64,27 +67,18 @@ public class Treulo implements Model, Observator {
     public void addCollaboratorTempo(String nom)
     {
         this.collaboratorTempo.add(nom);
+        this.updateObservator();
     }
     public List<String> getCollaboratorTempo() {
         return collaboratorTempo;
     }
 
-    public void addDependencyTempo(String name)
+    public void addDependencyTempo(TreuloTask name)
     {
 
-        TreuloTask foundTask = null;
 
-        for(TreuloTask task : TreuloTask.getAlltasks()) {
-            if(task.getName().equals(name)) {
-                foundTask = task;
-                break;
-            }
-        }
-       if (foundTask!=null) {
-           {
-               this.dependencieTempo.add(foundTask);
-           }
-       }
+               this.dependencieTempo.add(name);
+       this.updateObservator();
     }
 
     public List<TreuloTask> getDependencieTempo() {
@@ -112,16 +106,21 @@ public class Treulo implements Model, Observator {
     public void addTaskList(TaskList taskList) {
         tasks.add(taskList);
         taskList.addObservator(this);
+        taskList.setParentApp(this);
         this.updateObservator();
     }
 
     public void removeTaskList(TaskList taskList) {
         tasks.remove(taskList);
         taskList.deleteObservator(this);
+        taskList.setParentApp(null);
         this.updateObservator();
     }
 
-
+    public void setTasks(LinkedList<TaskList> tasks) {
+        this.tasks = tasks;
+        updateObservator();
+    }
 
     @Override
     public void update(Model model) {
@@ -129,8 +128,13 @@ public class Treulo implements Model, Observator {
     }
 
     public void setDisplayMode(String displayMode) {
+        this.displayModeOld = this.displayMode;
         this.displayMode = displayMode;
         this.updateObservator();
+    }
+
+    public String getDisplayModeOld() {
+        return displayModeOld;
     }
 
     public void setEditedTaskList(TaskList editedTaskList) {

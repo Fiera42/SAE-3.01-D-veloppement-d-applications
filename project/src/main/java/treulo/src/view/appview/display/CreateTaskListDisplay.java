@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import treulo.src.Controler.tasklist.AddTaskListControl;
+import treulo.src.Controler.BackControler;
 import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
@@ -21,7 +22,7 @@ public class CreateTaskListDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-        BorderPane bp = new BorderPane();
+
         VBox vb = new VBox();
         HBox hb = new HBox();
         Label ta = new Label("Nom de la liste : ");
@@ -34,7 +35,10 @@ public class CreateTaskListDisplay implements Display {
         b.setOnAction(new AddTaskListControl(this.model , tf));
         b.setFont(Font.font(25));
 
-        vb.getChildren().addAll(hb, b);
+        Button bBack = new Button("Retour");
+        bBack.setOnAction(new BackControler(model));
+
+        vb.getChildren().addAll(hb, b , bBack);
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(20);
 

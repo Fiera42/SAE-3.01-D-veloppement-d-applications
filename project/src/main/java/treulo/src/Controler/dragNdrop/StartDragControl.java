@@ -5,16 +5,23 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import treulo.src.model.Model;
+import treulo.src.model.TaskList;
 import treulo.src.model.TreuloTask;
 
 public class StartDragControl implements EventHandler<MouseEvent> {
 
-    Model model;
-    TreuloTask treuloTask;
+    private Model model;
+    private TaskList taskList;
+    private TreuloTask treuloTask;
+
+    public StartDragControl(Model m, TaskList taskList) {
+        this.taskList = taskList;
+        model=m;
+    }
 
     public StartDragControl(Model m, TreuloTask treuloTask) {
-        model=m;
         this.treuloTask = treuloTask;
+        model=m;
     }
 
     @Override
@@ -26,11 +33,16 @@ public class StartDragControl implements EventHandler<MouseEvent> {
 
         ClipboardContent content = new ClipboardContent();
         content.putImage(dragImage);
-        content.putString(treuloTask.getId() + "");
+        if(treuloTask != null) {
+            content.putString("task " + treuloTask.getId());
+        }
+
+        else {
+            content.putString("list " + taskList.getId());
+        }
+
         db.setContent(content);
         draggedNode.setVisible(false);
         event.consume();
-
-        System.out.println(treuloTask.getId());
     }
 }
