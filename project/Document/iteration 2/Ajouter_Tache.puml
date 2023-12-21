@@ -1,6 +1,6 @@
 @startuml
 
-Main -> AddTaskControler : handle ()
+Main -> AddTaskControler : handle (ClickEvent)
 activate AddTaskControler
 loop for(int i=0;i<model.getCollaboratorTempo().size();i++)
 AddTaskControler -> Treulo : model.getCollaboratorTempo().get(i)

@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+Main -> BackControl:  handle(ClickEvent)
+activate BackControl
+BackControl -> Treulo : model.getDisplayModeOld()
+activate Treulo
+Treulo --> BackControl : "tableau"
+
+BackControl -> Treulo : model.setDisplay("tableau")
+Treulo --> BackControl
+deactivate Treulo
+
+BackControl --> Main
+deactivate BackControl
+
+
+
+@enduml
