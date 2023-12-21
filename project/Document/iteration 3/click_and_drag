@@ -1,0 +1,9 @@
+La fonctionnalité de click and drag ce compose en l'implémentation de 4 controlleurs :
+
+-StartDrag, qui s'occupe généré l'image affichée sous la souris pendant le drag, et qui masque l'objet choisis
+
+-DragOver, qui est chargé de détecté si l'on à le droit ou non de "drop" notre objet sur l'objet survolé
+
+-ReceiveDrag, classe s'occupant de la partie "drop", en déplaçant les objets en fonction de l'objet aillant envoyé l'événement
+
+-EndDrag, appelé quand le drag&drop est finis pour ré-affiché l'objet

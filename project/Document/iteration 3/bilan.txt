@@ -1,0 +1,3 @@
+Cette itération à principalement servie à ajouté le drag and drop ainsi que l'affichage en liste.
+
+Nous en avons également profité pour corrigé quelques détails comme par exemple l'ajout d'un bouton de retour en arrière durant l'ajout de tâche

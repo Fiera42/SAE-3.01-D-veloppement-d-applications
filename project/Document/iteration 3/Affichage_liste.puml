@@ -1,0 +1,37 @@
+@startuml
+
+activate AppView
+
+AppView -> ListDisplay : getDisplay()
+activate ListDisplay
+
+    loop Taskslist
+    ListDisplay -> Taskslist : info requests
+    activate Taskslist
+    ListDisplay <-- Taskslist : infos
+    deactivate Taskslist
+
+    ListDisplay -> ListDisplay : update of the display
+
+    ListDisplay -> Taskslist : getTasks()
+    activate Taskslist
+    ListDisplay <-- Taskslist : tasks
+    deactivate Taskslist
+
+        loop Tasks
+        ListDisplay -> TreuloTask : info requests
+        activate TreuloTask
+        ListDisplay <-- TreuloTask : infos
+        deactivate TreuloTask
+
+        ListDisplay -> ListDisplay : update of the display
+        end loop
+    end loop
+
+
+AppView <-- ListDisplay : Node
+deactivate ListDisplay
+
+
+
+@enduml

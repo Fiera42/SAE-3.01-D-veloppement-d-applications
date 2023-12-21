@@ -1,0 +1,9 @@
+-Changer mode d'affichage /Doryann
+
+-Bouton de retour en arrière /Tom
+
+-Affichage des collaborateurs à ajouté /Tom
+
+-Drag and drop /Adrien
+
+-Affichage en liste /Doryann et Adrien

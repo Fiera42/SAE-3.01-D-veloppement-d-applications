@@ -1,0 +1,28 @@
+@startuml
+
+
+  interface Display {
+    +getDisplay() : Node
+    +getTaskDisplay(Task, Node) : Node //Called recursivly to display tasks
+  }
+
+  class ListDisplay implements Display {
+    +ListDisplay(ArrayList<TaskList>)
+    -getTaskDisplay(TaskList) : Node
+  }
+  ListDisplay "*" <-- "*" Task.TaskList : taskLists
+
+
+    abstract class DisplayFactory {
+      +{abstract} createDisplay() : Display
+      +{static} getDisplayFactory(Treulo, String) : DisplayFactory
+    }
+
+    class ListDisplayFactory extends DisplayFactory{
+      ListDisplayFactory(Treulo)
+    }
+    ListDisplayFactory "*" <-- "1" Treulo : model
+  }
+
+
+@enduml
