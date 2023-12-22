@@ -103,9 +103,23 @@ public class ListDisplay implements Display {
 
         VBox vBoxTask = new VBox();
         vBoxTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0,0,0,2))));
+
+        if (taskList.getdeploy()){
+
         vBoxTask.setMargin(vBoxTask , new Insets(10,0,0,25));
         for(TreuloTask task : taskList) {
             vBoxTask.getChildren().add(getTaskDisplay(task, new HBox()));
+        }
+            Button deploy = new Button("roulé");
+            deploy.setOnAction(new DeployListControl(model,taskList,deploy));
+            hBoxHead.getChildren().add(deploy);
+        }
+
+        else
+        {
+            Button deploy = new Button("déroulé");
+            deploy.setOnAction(new DeployListControl(model,taskList,deploy));
+            hBoxHead.getChildren().add(deploy);
         }
 
 
@@ -122,6 +136,9 @@ public class ListDisplay implements Display {
         delete.setOnAction(new DeleteTaskListControl(model, taskList));
         hBoxHead.getChildren().add(delete);
         delete.setAlignment(Pos.TOP_RIGHT );
+
+
+
 
         vb.getChildren().addAll(hBoxHead , vBoxTask);
 
