@@ -111,14 +111,14 @@ public class ListDisplay implements Display {
             vBoxTask.getChildren().add(getTaskDisplay(task, new HBox()));
         }
             Button deploy = new Button("roulé");
-            deploy.setOnAction(new DeployListControl(model,taskList,deploy));
+            deploy.setOnAction(new DeployListControl(model,taskList));
             hBoxHead.getChildren().add(deploy);
         }
 
         else
         {
             Button deploy = new Button("déroulé");
-            deploy.setOnAction(new DeployListControl(model,taskList,deploy));
+            deploy.setOnAction(new DeployListControl(model,taskList));
             hBoxHead.getChildren().add(deploy);
         }
 
@@ -190,16 +190,27 @@ public class ListDisplay implements Display {
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
         VBox vBoxSubTask = new VBox();
+        if (task.getDeploy()) {
 
+            if (!task.getSubtasks().isEmpty()) {
+                vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
+                //vBoxSubTask.setPadding(new Insets(50));
+                vBoxSubTask.setMargin(vBoxSubTask, new Insets(0, 0, 0, 50));
 
-        if (!task.getSubtasks().isEmpty()) {
-            vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
-            //vBoxSubTask.setPadding(new Insets(50));
-            vBoxSubTask.setMargin(vBoxSubTask , new Insets(0,0,0,50));
+            }
+            for (TreuloTask child : task.getSubtasks()) {
+                vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
+            }
 
+            Button deploy = new Button("roulé");
+            deploy.setOnAction(new DeployTaskControl(model,task));
+            name.getChildren().add(deploy);
         }
-        for(TreuloTask child : task.getSubtasks()) {
-            vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
+        else
+        {
+            Button deploy = new Button("déroulé");
+            deploy.setOnAction(new DeployTaskControl(model,task));
+            name.getChildren().add(deploy);
         }
         vBox.getChildren().addAll(vBoxSubTask);
 

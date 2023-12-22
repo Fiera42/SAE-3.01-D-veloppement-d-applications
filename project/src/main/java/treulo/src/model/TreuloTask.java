@@ -24,7 +24,7 @@ public class TreuloTask implements Model, Observator {
     private int id;
     private static int maxId;
 
-
+    private boolean deploy=false;
 
     public TreuloTask (){
         this.name = "" ;
@@ -198,6 +198,16 @@ public class TreuloTask implements Model, Observator {
         for(TreuloTask subTask : subtasks) {
             subTask.setParentList(parentList);
         }
+    }
+
+    public void setDeploy(boolean deploy) {
+        this.deploy = deploy;
+        this.updateObservator();
+    }
+
+    public boolean getDeploy()
+    {
+        return this.deploy;
     }
 
     @Override

@@ -4,35 +4,31 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import treulo.src.model.Model;
-import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
-import java.util.Objects;
+public class DeployTaskControl implements EventHandler<ActionEvent> {
 
-public class DeployListControl implements EventHandler <ActionEvent> {
     Treulo model;
-    TaskList treuloList;
+    TreuloTask treuloTask;
 
     Button state;
 
-    public DeployListControl (Model m,TaskList tt)
+
+    public DeployTaskControl(Model m,TreuloTask t)
     {
-        model=(Treulo) m;
-        treuloList =tt;
+    this.model=(Treulo) m;
+    this.treuloTask=t;
     }
 
-    @Override
     public void handle(ActionEvent event) {
-        if (!treuloList.getdeploy())
+        if (!treuloTask.getDeploy())
         {
-
-            treuloList.setDeploy(true);
+            treuloTask.setDeploy(true);
         }
         else
         {
-
-            treuloList.setDeploy(false);
+            treuloTask.setDeploy(false);
         }
     }
 }
