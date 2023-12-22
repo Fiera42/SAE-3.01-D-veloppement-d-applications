@@ -164,7 +164,7 @@ public class ListDisplay implements Display {
         TextField nameText = new TextField(task.getName());
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
-        vBox.setMargin( vBox , new Insets(0,10,10,50));
+        vBox.setMargin( vBox , new Insets(0,0,10,50));
         vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
         CheckBox archive = new CheckBox("Archiver");
