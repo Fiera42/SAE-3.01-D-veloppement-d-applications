@@ -238,6 +238,10 @@ public class TreuloTask implements Model, Observator {
         updateObservator();
     }
 
+    public float getDuration() {
+        return duration;
+    }
+
     public int getId() {
         return id;
     }
