@@ -83,15 +83,6 @@ public class GanttDisplay implements Display{
 
         SP.getChildren().addAll(r,l);
 
-        System.out.println("r");
-        System.out.println(r.getX());
-        System.out.println(r.getY());
-
-        System.out.println("l");
-        System.out.println(l.getStartX());
-        System.out.println(l.getEndX());
-        System.out.println(l.getStartY());
-        System.out.println(l.getEndY());
         for (int i=0;i<task.getDependencies().size();i++)
         {
             SP.getChildren().add(getRectangleDisplay(task.getDependencies().get(i),r.getX()+r.getWidth(),r.getY()+ r.getHeight()+20*i));
@@ -108,16 +99,10 @@ public class GanttDisplay implements Display{
         r.setX(x);
         r.setY(y);
 
-        System.out.println("r");
-        System.out.println(r.getX());
-        System.out.println(r.getY());
+
         Line l = new Line(r.getX()+r.getWidth(),r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+r.getHeight()+20*task.getDependencies().size());
         l.setFill(Color.BLACK);
-        System.out.println("l");
-        System.out.println(l.getStartX());
-        System.out.println(l.getEndX());
-        System.out.println(l.getStartY());
-        System.out.println(l.getEndY());
+
 
         SP.getChildren().addAll(r,l);
         for (int i=0;i<task.getDependencies().size();i++)
