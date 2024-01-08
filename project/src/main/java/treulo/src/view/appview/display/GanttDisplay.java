@@ -74,7 +74,7 @@ public class GanttDisplay implements Display{
 
 
         Pane SP =new Pane();
-        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.color(1, Math.random(),1));
+        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHEAT);
         Line l = new Line(r.getX()+r.getWidth(),r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+ r.getHeight()+20*task.getDependencies().size());
         l.setFill(Color.BLACK);
 
@@ -101,8 +101,7 @@ public class GanttDisplay implements Display{
 
 
         Pane SP =new Pane();
-        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.color(1, Math.random(),1));
-
+        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHITESMOKE);
         r.setX(x);
         r.setY(y);
 
