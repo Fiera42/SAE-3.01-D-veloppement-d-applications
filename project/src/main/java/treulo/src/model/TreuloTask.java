@@ -36,6 +36,7 @@ public class TreuloTask implements Model, Observator {
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
         this.id = ++maxId;
+        deploy = true;
     }
 
     public TreuloTask (String n){
@@ -48,6 +49,7 @@ public class TreuloTask implements Model, Observator {
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
         this.id = ++maxId;
+        deploy = true;
     }
 
     public TreuloTask (String n , String d){
@@ -60,6 +62,7 @@ public class TreuloTask implements Model, Observator {
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
         this.id = ++maxId;
+        deploy = true;
     }
 
     public TreuloTask (String n , String d , float f){
@@ -72,6 +75,7 @@ public class TreuloTask implements Model, Observator {
         this.observators = new ArrayList<Observator>();
         alltasks.add(this) ;
         this.id = ++maxId;
+        deploy = true;
     }
 
 

@@ -72,6 +72,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 TreuloTask parentTask = draggedTask.getParentTask();
                 TaskList parentList = draggedTask.getParentList();
 
+                //Si le déplacement est fait au sein d'une même liste de tâche, on effectue des corrections
                 boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
 
                 if(!uhh_problem) {
@@ -91,6 +92,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
 
+                    //Correction de l'index dans le cas d'un déplacement dans une même liste
                     if(!uhh_problem) treuloTask.addSubTask(draggedTask, taskIndex);
                     else {
                         int pb_index = treuloTask.getSubtasks().indexOf(draggedTask);
@@ -136,6 +138,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 TreuloTask parentTask = draggedTask.getParentTask();
                 TaskList parentList = draggedTask.getParentList();
 
+                //Si le déplacement est fait au sein d'une même liste de tâche, on effectue des corrections
                 boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
 
                 if(!uhh_problem) {
@@ -154,6 +157,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
 
+                    //Correction de l'index dans le cas d'un déplacement dans une même liste
                     if(!uhh_problem) taskList.addTask(draggedTask, taskIndex);
                     else {
                         int pb_index = taskList.getTasks().indexOf(draggedTask);

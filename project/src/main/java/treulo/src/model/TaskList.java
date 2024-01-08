@@ -2,6 +2,7 @@ package treulo.src.model;
 
 import treulo.src.view.Observator;
 
+import java.security.IdentityScope;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -28,6 +29,7 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
         this.observators = new ArrayList<>();
         allLists.add(this);
         this.id = ++maxId;
+        deploy = true;
     }
 
     public void addTask (TreuloTask task){
