@@ -18,6 +18,8 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
     private int id;
     private static int maxId;
 
+    private boolean deploy=false;
+
 
     public TaskList(String name) {
         this.name = name;
@@ -124,5 +126,15 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
 
     public static int getMaxId() {
         return maxId;
+    }
+
+    public void setDeploy(boolean deploy) {
+        this.deploy = deploy;
+        this.updateObservator();
+    }
+
+    public boolean getdeploy()
+    {
+        return this.deploy;
     }
 }

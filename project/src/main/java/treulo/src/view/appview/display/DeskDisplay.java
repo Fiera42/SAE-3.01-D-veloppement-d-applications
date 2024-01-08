@@ -25,6 +25,8 @@ import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
 
+
+//afficheur bureau
 public class DeskDisplay implements Display {
 
     private LinkedList<TaskList> taskLists;
@@ -44,10 +46,12 @@ public class DeskDisplay implements Display {
         HBox hBox = new HBox(20);
         hBox.setPadding(new Insets(10));
 
+        //Pour chaque liste de tâche, crée une colonne
         for(TaskList taskList : taskLists) {
             hBox.getChildren().add(getTaskListDisplay(taskList));
         }
 
+        //Bouton de création de tâche
         Button button = new Button("Nouvelle liste");
         button.setOnAction(new AddTaskListMenuControl(model));
         button.setPrefWidth(COLUMN_WIDTH);
@@ -62,9 +66,11 @@ public class DeskDisplay implements Display {
         return hBox;
     }
 
+    //Méthode pour récupérer l'affichage d'une liste en desk display
     public Node getTaskListDisplay(TaskList taskList) {
         //System.out.println("TASKLIST - Tasks : " + taskList.getTasks().size() + " Observators : " + taskList.getObservators().size());
 
+        //Mise en page de la colonne
         VBox vBox = new VBox(10);
         vBox.setOnMouseEntered(new EditedTaskListControl(model,taskList));
         vBox.setPadding(new Insets(10));
@@ -77,6 +83,7 @@ public class DeskDisplay implements Display {
         vBox.setOnDragDropped(new ReceiveDragControl(model, taskList));
         vBox.setOnDragOver(new DragOverControl(model, taskList));
 
+        //Affichage des informations relatives à la liste
         HBox titre = new HBox(10);
         vBox.getChildren().add(titre);
 
@@ -99,11 +106,12 @@ public class DeskDisplay implements Display {
         //archive.setOnAction(new EditTaskListControl(model, taskList));
         vBox.getChildren().add(archive);
 
+        //Pour chaque tâche de la liste, on récupère son affichage
         for(TreuloTask task : taskList) {
             vBox.getChildren().add(getTaskDisplay(task, new VBox()));
         }
 
-
+        //Bouton d'ajout de nouvelle tâche
         Button button = new Button("Nouvelle tâche");
         button.setOnAction(new AddTaskMenuControl(model));
         button.setAlignment(Pos.CENTER);
@@ -114,12 +122,15 @@ public class DeskDisplay implements Display {
         return vBox;
     }
 
+    //Affichage récursif des tâches
     @Override
     public Node getTaskDisplay(TreuloTask task, Node parentNode) {
         //System.out.println("TASK - SubTasks : " + task.getSubtasks().size() + " Observators : " + task.getObservators().size());
 
+        //Déprécié
         VBox parent = (VBox)parentNode;
 
+        //Affichage des informations de la tâche
         VBox vBox = new VBox(10);
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
         vBox.setPadding(new Insets(10));
@@ -157,7 +168,7 @@ public class DeskDisplay implements Display {
         nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
-
+        //Affichage récursif des sous-tâches
         for(TreuloTask child : task.getSubtasks()) {
             vBox.getChildren().add(getTaskDisplay(child, vBox));
         }

@@ -6,6 +6,8 @@ import treulo.src.view.appview.display.Display;
 public abstract class DisplayFactory {
 
     public static DisplayFactory getDisplayFactory(Treulo model, String displayMode) {
+
+        //Création de l'afficheur en fonction du mode d'affichage
         switch (displayMode) {
             case "Nouvelle tache":
                 return new CreateTaskDisplayFactory(model);

@@ -9,6 +9,7 @@ import treulo.src.model.Treulo;
 import treulo.src.view.Observator;
 import treulo.src.view.appview.displayFactory.DisplayFactory;
 
+//Observateur du modèle, permet d'afficher la partie tâche de l'application
 public class AppView extends ScrollPane implements Observator {
 
     public AppView() {
@@ -24,8 +25,10 @@ public class AppView extends ScrollPane implements Observator {
 
         Treulo treulo = (Treulo)model;
 
+        //Récupèration du bon afficheur en fonction du mode d'afficahge du modèle
         DisplayFactory factory = DisplayFactory.getDisplayFactory(treulo, treulo.getDisplayMode());
 
+        //Modification de la vue pour refléter les changements dans le modèle
         setContent(factory.createDisplay().getDisplay());
         ((Pane) getContent()).setBackground(Background.fill(Color.AQUAMARINE));
     }
