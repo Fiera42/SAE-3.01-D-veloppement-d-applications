@@ -20,6 +20,8 @@ public class Treulo implements Model, Observator {
     protected LinkedList<TaskList> tasks;
     protected TaskList editedTaskList;
 
+    protected TreuloTask tache;
+
     protected List<String> collaboratorTempo = new ArrayList<String>();
 
     protected List<TreuloTask> dependencieTempo = new ArrayList<TreuloTask>();
@@ -30,6 +32,7 @@ public class Treulo implements Model, Observator {
         this.displayMode = "default";
         this.displayModeOld=this.displayMode;
         this.tasks = new LinkedList<>();
+
     }
 
     public void loadFile(String fileName)
@@ -143,5 +146,13 @@ public class Treulo implements Model, Observator {
 
     public void addCollaborator(String s){
         this.collaboratorTempo.add(s);
+    }
+
+    public void setTache(TreuloTask task){
+        this.tache = task ;
+    }
+
+    public  TreuloTask getTache(){
+        return this.tache;
     }
 }
