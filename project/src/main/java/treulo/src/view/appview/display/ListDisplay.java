@@ -174,9 +174,12 @@ public class ListDisplay implements Display {
         vb.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
         vBox.setOnDragDetected(new StartDragControl(model, task));
         vBox.setOnDragDone(new EndDragControl(model, vBox));
-        vBox.setOnDragDropped(new ReceiveDragControl(model, task));
-        vBox.setOnDragOver(new DragOverControl(model, task));
 
+        ArrayList<VBox> tasks = new ArrayList<>();
+        ReceiveDragControl receiveControl = new ReceiveDragControl(model, task, tasks);
+        vBox.setOnDragDropped(receiveControl);
+
+        vBox.setOnDragOver(new DragOverControl(model, task));
 
         HBox name = new HBox(10);
         vb.getChildren().add(name);
@@ -198,8 +201,10 @@ public class ListDisplay implements Display {
 
 
         TextArea description = new TextArea(task.getDescription());
+        description.setMinHeight(100);
+        description.setMaxHeight(100);
         description.setWrapText(true);
-        HBox.setHgrow(description, Priority.ALWAYS);
+        //HBox.setHgrow(description, Priority.ALWAYS);
         vb.getChildren().add(description);
 
         vBox.getChildren().add(vb);
@@ -209,17 +214,20 @@ public class ListDisplay implements Display {
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
         if (task.getDeploy() && !task.getSubtasks().isEmpty()) {
-            VBox vBoxSubTask = new VBox();
+            VBox vBoxSubTask = new VBox(10);
 
             Button deploy = new Button("▲");
             deploy.setOnAction(new DeployTaskControl(model,task));
             name.getChildren().add(deploy);
             vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
             //vBoxSubTask.setPadding(new Insets(50));
+            vBoxSubTask.setPadding(new Insets(10,0,0,10));
             vBoxSubTask.setMargin(vBoxSubTask, new Insets(0, 0, 0, 50));
 
             for (TreuloTask child : task.getSubtasks()) {
-                vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
+                Node taskDisplay = getTaskDisplay(child, vBox);
+                vBoxSubTask.getChildren().add(taskDisplay);
+                tasks.add((VBox)taskDisplay);
             }
 
             vBox.getChildren().addAll(vBoxSubTask);

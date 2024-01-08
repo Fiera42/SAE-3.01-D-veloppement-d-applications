@@ -146,7 +146,11 @@ public class DeskDisplay implements Display {
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
         vBox.setOnDragDetected(new StartDragControl(model, task));
         vBox.setOnDragDone(new EndDragControl(model, vBox));
-        vBox.setOnDragDropped(new ReceiveDragControl(model, task));
+
+        ArrayList<VBox> tasks = new ArrayList<>();
+        ReceiveDragControl receiveControl = new ReceiveDragControl(model, task, tasks);
+        vBox.setOnDragDropped(receiveControl);
+
         vBox.setOnDragOver(new DragOverControl(model, task));
 
         vBox.setOnMouseClicked(new DetailTaskControl(model , task));
@@ -157,18 +161,18 @@ public class DeskDisplay implements Display {
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
 
-        Button delete = new Button("X");
-        delete.setOnAction(new DeleteTaskControl(model, task));
-        name.getChildren().add(delete);
-
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(task.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         //archive.setOnAction(new EditTaskListControl(model, taskList));
-        vBox.getChildren().add(archive);
+        name.getChildren().add(archive);
 
+        Button delete = new Button("X");
+        delete.setOnAction(new DeleteTaskControl(model, task));
+        name.getChildren().add(delete);
 
         TextArea description = new TextArea(task.getDescription());
+        description.setPrefHeight(100);
         description.setWrapText(true);
         HBox.setHgrow(description, Priority.ALWAYS);
         vBox.getChildren().add(description);
@@ -179,7 +183,9 @@ public class DeskDisplay implements Display {
 
         //Affichage récursif des sous-tâches
         for(TreuloTask child : task.getSubtasks()) {
-            vBox.getChildren().add(getTaskDisplay(child, vBox));
+            Node taskDisplay = getTaskDisplay(child, vBox);
+            vBox.getChildren().add(taskDisplay);
+            tasks.add((VBox)taskDisplay);
         }
 
         return vBox;

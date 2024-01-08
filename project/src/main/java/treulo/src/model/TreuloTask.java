@@ -97,6 +97,14 @@ public class TreuloTask implements Model, Observator {
         this.updateObservator();
     }
 
+    public void addSubTask(TreuloTask task, int index){
+        this.subtasks.add(index, task);
+        task.setParentTask(this);
+        task.addObservator(this);
+        task.setParentList(parentList);
+        this.updateObservator();
+    }
+
     public void deleteSubTask(TreuloTask task){
         this.subtasks.remove(task);
         task.setParentTask(null);

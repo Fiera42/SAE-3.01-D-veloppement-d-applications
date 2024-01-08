@@ -17,12 +17,15 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
     //App model
     private Treulo model;
+
     //liste de tâche cible, null si il y a déjà une tâche
     private TaskList taskList;
-    //tâches physique de la liste de tâche, null si non liste
-    private ArrayList<VBox> tasks;
+
     //tâche cible, null si il y a déjà une liste de tâche
     private TreuloTask treuloTask;
+
+    //affichage physique des tâches dans la liste / des sous tâches de la tâche
+    private ArrayList<VBox> tasks;
 
     public ReceiveDragControl(Treulo model, TaskList taskList, ArrayList<VBox> tasks) {
         this.taskList = taskList;
@@ -30,9 +33,10 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         this.model=model;
     }
 
-    public ReceiveDragControl(Treulo model, TreuloTask treuloTask) {
+    public ReceiveDragControl(Treulo model, TreuloTask treuloTask, ArrayList<VBox> tasks) {
         this.treuloTask = treuloTask;
         this.model=model;
+        this.tasks = tasks;
     }
 
     @Override
@@ -67,10 +71,36 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 TreuloTask parentTask = draggedTask.getParentTask();
                 TaskList parentList = draggedTask.getParentList();
-                if(parentTask != null) parentTask.deleteSubTask(draggedTask);
-                if(parentList != null) parentList.deleteTask(draggedTask);
 
-                treuloTask.addSubTask(draggedTask);
+                boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
+
+                if(!uhh_problem) {
+                    if(parentTask != null) parentTask.deleteSubTask(draggedTask);
+                    if(parentList != null) parentList.deleteTask(draggedTask);
+                }
+
+                //Récupération de l'emplacement de drop
+                if(tasks.size() > 0){
+                    double dropY = event.getY();
+                    VBox physicalList = (VBox) event.getGestureTarget();
+                    double currentY = (model.getDisplayMode().equals("Tableau"))?145:177;
+                    int taskIndex = 0;
+                    System.out.println(dropY);
+
+                    while(currentY < dropY && taskIndex < treuloTask.getSubtasks().size()) {
+                        currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
+                    }
+
+                    if(!uhh_problem) treuloTask.addSubTask(draggedTask, taskIndex);
+                    else {
+                        int pb_index = treuloTask.getSubtasks().indexOf(draggedTask);
+                        if(taskIndex > pb_index && taskIndex > 0) taskIndex--;
+                        if(parentTask != null) parentTask.deleteSubTask(draggedTask);
+                        if(parentList != null) parentList.deleteTask(draggedTask);
+                        treuloTask.addSubTask(draggedTask, taskIndex);
+                    }
+                }
+                else treuloTask.addSubTask(draggedTask);
                 break;
 
             //Cible tâche, objet liste
@@ -105,26 +135,35 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 TreuloTask parentTask = draggedTask.getParentTask();
                 TaskList parentList = draggedTask.getParentList();
-                if(parentTask != null) parentTask.deleteSubTask(draggedTask);
-                if(parentList != null) parentList.deleteTask(draggedTask);
+
+                boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
+
+                if(!uhh_problem) {
+                    if(parentTask != null) parentTask.deleteSubTask(draggedTask);
+                    if(parentList != null) parentList.deleteTask(draggedTask);
+                }
 
                 //Récupération de l'emplacement de drop
                 if(tasks.size() > 0){
                     double dropY = event.getY();
                     VBox physicalList = (VBox) event.getGestureTarget();
-                    double currentY = (model.getDisplayMode().equals("Tableau"))?44:58;
+                    double currentY = (model.getDisplayMode().equals("Tableau"))?47:65;
                     int taskIndex = 0;
 
                     while(currentY < dropY && taskIndex < taskList.getTasks().size()) {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
-                    System.out.println("Height : " + currentY + "/" + dropY);
-                    System.out.println("taskIndex : " + taskIndex);
-                    taskList.addTask(draggedTask, taskIndex);
+
+                    if(!uhh_problem) taskList.addTask(draggedTask, taskIndex);
+                    else {
+                        int pb_index = taskList.getTasks().indexOf(draggedTask);
+                        if(taskIndex > pb_index && taskIndex > 0) taskIndex--;
+                        if(parentTask != null) parentTask.deleteSubTask(draggedTask);
+                        if(parentList != null) parentList.deleteTask(draggedTask);
+                        taskList.addTask(draggedTask, taskIndex);
+                    }
                 }
                 else taskList.addTask(draggedTask);
-
-                //System.out.println(physicalList.getHeight() / event.getY() + "/" + taskList.getTasks().size());
                 break;
             //Cible liste, objet liste
             case "list" :
@@ -154,7 +193,5 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         list.add(highPos, lowList);
 
         model.setTasks(list);
-
-        //System.out.println("switched list id " + highList.getId() + " with list id " + lowList.getId());
     }
 }
