@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.FloatStringConverter;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
@@ -17,9 +19,11 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
     TextField nom ;
     TextField description;
 
+    TextField duration;
+
     ComboBox<TreuloTask> combo;
 
-        public AddTaskControl(Model m, TaskList tL , TextField nom , TextField description , ComboBox<TreuloTask> combo)
+        public AddTaskControl(Model m, TaskList tL , TextField nom , TextField description ,TextField duree, ComboBox<TreuloTask> combo)
         {
             model= (Treulo)m;
 
@@ -27,13 +31,16 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
             this.description=description;
             this.nom=nom;
             this.combo=combo;
+            this.duration= duree;
+            duration.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
         }
 
     @Override
     public void handle(ActionEvent event) {
-            if (Objects.equals(description.getText(), "") || Objects.equals(nom.getText(), "")){}
+            if (Objects.equals(description.getText(), "") || Objects.equals(nom.getText(), "") || Objects.equals(duration.getText(),"")){}
             else {
-            TreuloTask treutask = new TreuloTask(this.nom.getText(),this.description.getText());
+
+            TreuloTask treutask = new TreuloTask(this.nom.getText(),this.description.getText(),Float.parseFloat(this.duration.getText()));
 
 
                 for(int i=0;i<model.getCollaboratorTempo().size();i++)

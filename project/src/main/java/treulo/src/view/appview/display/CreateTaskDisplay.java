@@ -2,12 +2,10 @@ package treulo.src.view.appview.display;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.converter.FloatStringConverter;
 import treulo.src.Controler.task.AddTaskCollaboratorControl;
 import treulo.src.Controler.task.AddTaskControl;
 import treulo.src.Controler.task.AddTaskDependencyControl;
@@ -66,7 +64,12 @@ public class CreateTaskDisplay implements Display{
         TextField tFCenter2= new TextField();
         hbCenter2.getChildren().addAll(lBCenter2,tFCenter2);
 
-        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2);
+        HBox hDuree = new HBox();
+        Label lDuree = new Label("Duree (en Heure)");
+        TextField tFDuree = new TextField("1");
+        tFDuree.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
+        hDuree.getChildren().addAll(lDuree,tFDuree);
+        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree);
 
         gP.add(vBoxCenter,2,1);
 
@@ -135,7 +138,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,tFDuree,combo));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 
