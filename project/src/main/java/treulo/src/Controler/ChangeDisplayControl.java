@@ -18,5 +18,7 @@ public class ChangeDisplayControl implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         this.model.setDisplayMode(nameButton);
+        this.model.getCollaboratorTempo().clear();
+        this.model.getDependencieTempo().clear();
     }
 }

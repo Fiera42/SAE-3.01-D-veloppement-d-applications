@@ -10,17 +10,17 @@ import treulo.src.model.TreuloTask;
 
 public class AddTaskDependencyControl implements EventHandler<ActionEvent> {
     Treulo model;
-    ComboBox <TreuloTask> collaborator;
+    ComboBox <TreuloTask> dependency;
 
     public AddTaskDependencyControl(Model m, ComboBox <TreuloTask> t){
         model=(Treulo) m;
-        collaborator=t;
+        dependency=t;
     }
 
 
     @Override
     public void handle(ActionEvent event) {
-        if(collaborator.getSelectionModel().getSelectedItem()!=null)
-        {model.addDependencyTempo(collaborator.getSelectionModel().getSelectedItem());}
+        if(dependency.getSelectionModel().getSelectedItem()!=null)
+        {model.addDependencyTempo(dependency.getSelectionModel().getSelectedItem());}
     }
 }
