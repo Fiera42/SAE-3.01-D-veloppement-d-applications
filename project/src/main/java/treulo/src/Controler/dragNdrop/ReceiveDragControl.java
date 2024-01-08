@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class ReceiveDragControl implements EventHandler<DragEvent> {
 
     //App model
-    private Model model;
+    private Treulo model;
     //liste de tâche cible, null si il y a déjà une tâche
     private TaskList taskList;
     //tâches physique de la liste de tâche, null si non liste
@@ -24,15 +24,15 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
     //tâche cible, null si il y a déjà une liste de tâche
     private TreuloTask treuloTask;
 
-    public ReceiveDragControl(Model m, TaskList taskList, ArrayList<VBox> tasks) {
+    public ReceiveDragControl(Treulo model, TaskList taskList, ArrayList<VBox> tasks) {
         this.taskList = taskList;
         this.tasks = tasks;
-        model=m;
+        this.model=model;
     }
 
-    public ReceiveDragControl(Model m, TreuloTask treuloTask) {
+    public ReceiveDragControl(Treulo model, TreuloTask treuloTask) {
         this.treuloTask = treuloTask;
-        model=m;
+        this.model=model;
     }
 
     @Override
@@ -110,15 +110,16 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 //Récupération de l'emplacement de drop
                 if(tasks.size() > 0){
-                    System.out.println(tasks.size());
                     double dropY = event.getY();
                     VBox physicalList = (VBox) event.getGestureTarget();
-                    double currentY = 44;
+                    double currentY = (model.getDisplayMode().equals("Tableau"))?44:58;
                     int taskIndex = 0;
 
                     while(currentY < dropY && taskIndex < taskList.getTasks().size()) {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
+                    System.out.println("Height : " + currentY + "/" + dropY);
+                    System.out.println("taskIndex : " + taskIndex);
                     taskList.addTask(draggedTask, taskIndex);
                 }
                 else taskList.addTask(draggedTask);

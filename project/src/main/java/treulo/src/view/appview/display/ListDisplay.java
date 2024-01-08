@@ -81,7 +81,7 @@ public class ListDisplay implements Display {
     //Méthode pour obtenir l'affichage d'une liste
     public Node getTaskListDisplay(TaskList taskList) {
         //Affichage des informations de la tâche
-        VBox vb = new VBox();
+        VBox vb = new VBox(10);
         HBox hBoxHead = new HBox(10);
         hBoxHead.setOnMouseEntered(new EditedTaskListControl(model,taskList));
         hBoxHead.setPadding(new Insets(10));
@@ -121,23 +121,28 @@ public class ListDisplay implements Display {
         vBoxTask.setPadding(new Insets(10,0,0,0));
 
         //Gestion du déroulement de la liste
-        if (taskList.getdeploy()){
+        if (taskList.getdeploy() && !taskList.getTasks().isEmpty()){
             //Récupèration de l'affichage des tâches
             for(TreuloTask task : taskList) {
                 Node taskDisplay = getTaskDisplay(task, new VBox());
                 vBoxTask.getChildren().add(taskDisplay);
                 tasks.add((VBox)taskDisplay);
             }
-                Button deploy = new Button("roulé");
-                deploy.setOnAction(new DeployListControl(model,taskList));
-                hBoxHead.getChildren().add(deploy);
+
+            Button deploy = new Button("▲");
+            deploy.setOnAction(new DeployListControl(model,taskList));
+            hBoxHead.getChildren().add(deploy);
+
         }
 
         else
         {
-            Button deploy = new Button("déroulé");
-            deploy.setOnAction(new DeployListControl(model,taskList));
-            hBoxHead.getChildren().add(deploy);
+            if(taskList.getTasks().size() > 0) {
+                Button deploy = new Button("▼");
+                deploy.setOnAction(new DeployListControl(model,taskList));
+                hBoxHead.getChildren().add(deploy);
+            }
+
         }
 
         //Bouton de nouvelle tâche
@@ -203,29 +208,29 @@ public class ListDisplay implements Display {
         nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
-        if (task.getDeploy()) {
+        if (task.getDeploy() && !task.getSubtasks().isEmpty()) {
             VBox vBoxSubTask = new VBox();
 
-            if (!task.getSubtasks().isEmpty()) {
-                vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
-                //vBoxSubTask.setPadding(new Insets(50));
-                vBoxSubTask.setMargin(vBoxSubTask, new Insets(0, 0, 0, 50));
+            Button deploy = new Button("▲");
+            deploy.setOnAction(new DeployTaskControl(model,task));
+            name.getChildren().add(deploy);
+            vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
+            //vBoxSubTask.setPadding(new Insets(50));
+            vBoxSubTask.setMargin(vBoxSubTask, new Insets(0, 0, 0, 50));
 
-            }
             for (TreuloTask child : task.getSubtasks()) {
                 vBoxSubTask.getChildren().add(getTaskDisplay(child, vBox));
             }
 
-            Button deploy = new Button("roulé");
-            deploy.setOnAction(new DeployTaskControl(model,task));
-            name.getChildren().add(deploy);
             vBox.getChildren().addAll(vBoxSubTask);
         }
         else
         {
-            Button deploy = new Button("déroulé");
-            deploy.setOnAction(new DeployTaskControl(model,task));
-            name.getChildren().add(deploy);
+            if(task.getSubtasks().size() > 0) {
+                Button deploy = new Button("▼");
+                deploy.setOnAction(new DeployTaskControl(model,task));
+                name.getChildren().add(deploy);
+            }
         }
 
 
