@@ -2,12 +2,10 @@ package treulo.src.view.appview.display;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.converter.FloatStringConverter;
 import treulo.src.Controler.BackControler;
 import treulo.src.Controler.task.AddTaskCollaboratorControl;
 import treulo.src.Controler.task.AddTaskDependencyControl;
@@ -62,7 +60,14 @@ public class DetailTaskDisplay implements Display {
         TextField tFCenter2= new TextField(this.task.getDescription());
         hbCenter2.getChildren().addAll(lBCenter2,tFCenter2);
 
-        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2);
+        HBox hDuree = new HBox();
+        Label lDuree = new Label("Duree (en Heure)");
+
+        TextField tFDuree = new TextField();
+        tFDuree.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
+        tFDuree.setText(String.valueOf(this.task.getDuration()));
+        hDuree.getChildren().addAll(lDuree,tFDuree);
+        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree);
 
         gP.add(vBoxCenter,2,1);
 
@@ -134,7 +139,7 @@ public class DetailTaskDisplay implements Display {
         gP.setAlignment(Pos.CENTER);
         bP.setCenter(gP);
 
-        bBack.setOnAction(new EditTaskDetailControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo , task));
+        bBack.setOnAction(new EditTaskDetailControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo , task , tFDuree));
 
         VboxMain.getChildren().add(bP);
         VboxMain.setAlignment(Pos.TOP_CENTER);

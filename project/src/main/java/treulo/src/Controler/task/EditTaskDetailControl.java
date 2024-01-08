@@ -15,19 +15,21 @@ public class EditTaskDetailControl implements EventHandler<ActionEvent> {
     TaskList tL;
     TextField nom ;
     TextField description;
+    TextField Duree;
 
     ComboBox<TreuloTask> combo;
     public EditTaskDetailControl(Treulo model) {
         this.model = model ;
     }
 
-    public EditTaskDetailControl(Treulo model, TaskList editedTaskList, TextField name, TextField des, ComboBox<TreuloTask> combo , TreuloTask tt) {
+    public EditTaskDetailControl(Treulo model, TaskList editedTaskList, TextField name, TextField des, ComboBox<TreuloTask> combo , TreuloTask tt , TextField duree) {
         this.model = model ;
         this.tL = editedTaskList;
         this.nom = name ;
         this.description = des;
         this.combo = combo ;
         this.treutask = tt ;
+        this.Duree = duree ;
         
     }
 
@@ -36,6 +38,9 @@ public class EditTaskDetailControl implements EventHandler<ActionEvent> {
         
         this.treutask.setName(this.nom.getText());
         this.treutask.setDescription(this.description.getText());
+        if(!this.Duree.getText().isEmpty()) {
+            this.treutask.setDuration(Float.parseFloat(this.Duree.getText()));
+        }
         
         for(int i=0;i<model.getCollaboratorTempo().size();i++)
         {
