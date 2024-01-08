@@ -10,7 +10,7 @@ import treulo.src.model.TreuloTask;
 
 public class EditTaskDetailControl implements EventHandler<ActionEvent> {
     Treulo model ;
-
+    
     TreuloTask treutask ;
     TaskList tL;
     TextField nom ;
@@ -28,15 +28,15 @@ public class EditTaskDetailControl implements EventHandler<ActionEvent> {
         this.description = des;
         this.combo = combo ;
         this.treutask = tt ;
-
+        
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-
+        
         this.treutask.setName(this.nom.getText());
         this.treutask.setDescription(this.description.getText());
-
+        
         for(int i=0;i<model.getCollaboratorTempo().size();i++)
         {
             treutask.addCollaborator(model.getCollaboratorTempo().get(i));
@@ -50,8 +50,8 @@ public class EditTaskDetailControl implements EventHandler<ActionEvent> {
         {
             combo.getSelectionModel().getSelectedItem().addSubTask(treutask);
         }
-        
 
+        
         DetailTaskControl.setBoolean(true);
         this.model.getDependencieTempo().clear();
         this.model.getCollaboratorTempo().clear();
