@@ -250,6 +250,20 @@ public class TreuloTask implements Model, Observator {
         return duration;
     }
 
+    public boolean isIndependent()
+    {
+        boolean res=true;
+        int i=0;
+        while (i<TreuloTask.getAlltasks().size() && res)
+        {
+            if (TreuloTask.getAlltasks().get(i).getDependencies().contains(this))
+            {
+                res=false;
+            }
+            i++;
+        }
+        return res;
+    }
     public int getId() {
         return id;
     }
