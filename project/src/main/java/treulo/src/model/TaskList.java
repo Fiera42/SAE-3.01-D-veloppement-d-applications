@@ -37,6 +37,13 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
         this.updateObservator();
     }
 
+    public void addTask (TreuloTask task, int index){
+        this.tasks.add(index, task);
+        task.addObservator(this);
+        task.setParentList(this);
+        this.updateObservator();
+    }
+
     public void deleteTask (TreuloTask task){
         this.tasks.remove(task);
         task.deleteObservator(this);

@@ -22,6 +22,7 @@ import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -79,7 +80,11 @@ public class DeskDisplay implements Display {
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
         vBox.setOnDragDetected(new StartDragControl(model, taskList));
         vBox.setOnDragDone(new EndDragControl(model, vBox));
-        vBox.setOnDragDropped(new ReceiveDragControl(model, taskList));
+
+        ArrayList<VBox> tasks = new ArrayList<>();
+        ReceiveDragControl receiveControl = new ReceiveDragControl(model, taskList, tasks);
+        vBox.setOnDragDropped(receiveControl);
+
         vBox.setOnDragOver(new DragOverControl(model, taskList));
 
         //Affichage des informations relatives à la liste
@@ -95,19 +100,23 @@ public class DeskDisplay implements Display {
         titre.getChildren().add(listName);
         HBox.setHgrow(listName, Priority.ALWAYS);
 
-        Button delete = new Button("X");
-        delete.setOnAction(new DeleteTaskListControl(model, taskList));
-        titre.getChildren().add(delete);
-
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(taskList.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         //archive.setOnAction(new EditTaskListControl(model, taskList));
-        vBox.getChildren().add(archive);
+        titre.getChildren().add(archive);
+
+        Button delete = new Button("X");
+        delete.setOnAction(new DeleteTaskListControl(model, taskList));
+        titre.getChildren().add(delete);
+
+
 
         //Pour chaque tâche de la liste, on récupère son affichage
         for(TreuloTask task : taskList) {
-            vBox.getChildren().add(getTaskDisplay(task, new VBox()));
+            Node taskDisplay = getTaskDisplay(task, new VBox());
+            vBox.getChildren().add(taskDisplay);
+            tasks.add((VBox)taskDisplay);
         }
 
         //Bouton d'ajout de nouvelle tâche

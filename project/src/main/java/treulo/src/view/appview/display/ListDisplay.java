@@ -28,6 +28,7 @@ import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -88,7 +89,11 @@ public class ListDisplay implements Display {
         hBoxHead.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
         vb.setOnDragDetected(new StartDragControl(model, taskList));
         vb.setOnDragDone(new EndDragControl(model, vb));
-        vb.setOnDragDropped(new ReceiveDragControl(model, taskList));
+
+        ArrayList<VBox> tasks = new ArrayList<>();
+        ReceiveDragControl receiveControl = new ReceiveDragControl(model, taskList, tasks);
+        vb.setOnDragDropped(receiveControl);
+
         vb.setOnDragOver(new DragOverControl(model, taskList));
 
 
@@ -110,17 +115,18 @@ public class ListDisplay implements Display {
         //archive.setOnAction(new EditTaskListControl(model, taskList));
         hBoxHead.getChildren().add(archive);
 
-        VBox vBoxTask = new VBox();
+        VBox vBoxTask = new VBox(10);
         vBoxTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0,0,0,2))));
+        //vBoxTask.setMargin(vBoxTask , new Insets(10,0,0,25));
+        vBoxTask.setPadding(new Insets(10,0,0,0));
 
         //Gestion du déroulement de la liste
         if (taskList.getdeploy()){
-
-            vBoxTask.setMargin(vBoxTask , new Insets(10,0,0,25));
-
             //Récupèration de l'affichage des tâches
             for(TreuloTask task : taskList) {
-                vBoxTask.getChildren().add(getTaskDisplay(task, new HBox()));
+                Node taskDisplay = getTaskDisplay(task, new VBox());
+                vBoxTask.getChildren().add(taskDisplay);
+                tasks.add((VBox)taskDisplay);
             }
                 Button deploy = new Button("roulé");
                 deploy.setOnAction(new DeployListControl(model,taskList));
@@ -172,7 +178,7 @@ public class ListDisplay implements Display {
         TextField nameText = new TextField(task.getName());
         name.getChildren().add(nameText);
         HBox.setHgrow(nameText, Priority.ALWAYS);
-        vBox.setMargin( vBox , new Insets(0,0,10,50));
+        vBox.setMargin( vBox , new Insets(0,0,0,50));
         vb.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
 
         CheckBox archive = new CheckBox("Archiver");
@@ -197,8 +203,8 @@ public class ListDisplay implements Display {
         nameText.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
         description.setOnKeyPressed(new EditTreuloTaskControl(model, task , nameText , description));
 
-        VBox vBoxSubTask = new VBox();
         if (task.getDeploy()) {
+            VBox vBoxSubTask = new VBox();
 
             if (!task.getSubtasks().isEmpty()) {
                 vBoxSubTask.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 0, 2))));
@@ -213,6 +219,7 @@ public class ListDisplay implements Display {
             Button deploy = new Button("roulé");
             deploy.setOnAction(new DeployTaskControl(model,task));
             name.getChildren().add(deploy);
+            vBox.getChildren().addAll(vBoxSubTask);
         }
         else
         {
@@ -220,7 +227,7 @@ public class ListDisplay implements Display {
             deploy.setOnAction(new DeployTaskControl(model,task));
             name.getChildren().add(deploy);
         }
-        vBox.getChildren().addAll(vBoxSubTask);
+
 
         return vBox;
     }

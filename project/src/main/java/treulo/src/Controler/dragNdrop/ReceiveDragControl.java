@@ -4,21 +4,29 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.layout.VBox;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ReceiveDragControl implements EventHandler<DragEvent> {
 
+    //App model
     private Model model;
+    //liste de tâche cible, null si il y a déjà une tâche
     private TaskList taskList;
+    //tâches physique de la liste de tâche, null si non liste
+    private ArrayList<VBox> tasks;
+    //tâche cible, null si il y a déjà une liste de tâche
     private TreuloTask treuloTask;
 
-    public ReceiveDragControl(Model m, TaskList taskList) {
+    public ReceiveDragControl(Model m, TaskList taskList, ArrayList<VBox> tasks) {
         this.taskList = taskList;
+        this.tasks = tasks;
         model=m;
     }
 
@@ -32,6 +40,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         Dragboard dragboard = event.getDragboard();
         boolean success = false;
 
+        //Handle différent en fonction du type de cible
         if(dragboard.hasString()) {
             String[] info = dragboard.getString().split(" ");
 
@@ -46,8 +55,12 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         event.consume();
     }
 
+    //Handle si la cible est une tâche
     public boolean taskHandle(DragEvent event, String[] info) {
+
+        //Handler différent en fonction de l'objet déplacé
         switch (info[0]) {
+            //Cible tâche, objet tâche
             case "task" :
                 TreuloTask draggedTask = TreuloTask.getTaskById(Integer.valueOf(info[1]));
                 if(draggedTask == null) return false;
@@ -59,6 +72,8 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 treuloTask.addSubTask(draggedTask);
                 break;
+
+            //Cible tâche, objet liste
             case "list" :
                 TaskList draggedList = TaskList.getListById(Integer.valueOf(info[1]));
                 if(draggedList == null) return false;
@@ -78,8 +93,12 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         return true;
     }
 
+    //Handle si la cible est une liste de tâche
     public boolean taskListHandle(DragEvent event, String[] info) {
+
+        //Handler différent en fonction de l'objet déplacé
         switch (info[0]) {
+            //Cible liste, objet tâche
             case "task" :
                 TreuloTask draggedTask = TreuloTask.getTaskById(Integer.valueOf(info[1]));
                 if(draggedTask == null) return false;
@@ -89,8 +108,24 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 if(parentTask != null) parentTask.deleteSubTask(draggedTask);
                 if(parentList != null) parentList.deleteTask(draggedTask);
 
-                taskList.addTask(draggedTask);
+                //Récupération de l'emplacement de drop
+                if(tasks.size() > 0){
+                    System.out.println(tasks.size());
+                    double dropY = event.getY();
+                    VBox physicalList = (VBox) event.getGestureTarget();
+                    double currentY = 44;
+                    int taskIndex = 0;
+
+                    while(currentY < dropY && taskIndex < taskList.getTasks().size()) {
+                        currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
+                    }
+                    taskList.addTask(draggedTask, taskIndex);
+                }
+                else taskList.addTask(draggedTask);
+
+                //System.out.println(physicalList.getHeight() / event.getY() + "/" + taskList.getTasks().size());
                 break;
+            //Cible liste, objet liste
             case "list" :
                 TaskList draggedList = TaskList.getListById(Integer.valueOf(info[1]));
                 if(draggedList == null) return false;
@@ -99,7 +134,6 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 int draggedPos = draggedList.getParentApp().getTasks().indexOf(draggedList);
 
                 if(draggedList.getParentApp() == null) return false;
-
                 if(listPos > draggedPos) switchList(taskList.getParentApp(), taskList, draggedList);
                 else switchList(taskList.getParentApp(), draggedList, taskList);
                 break;
