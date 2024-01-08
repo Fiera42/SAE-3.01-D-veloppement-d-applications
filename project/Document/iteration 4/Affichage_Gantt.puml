@@ -15,7 +15,7 @@ activate GanttDisplay
 
     GanttDisplay -> Taskslist : getTasks()
     activate Taskslist
-    GanttDisplay <-- GanttDisplay : tasks
+    GanttDisplay <-- Taskslist : tasks
     deactivate Taskslist
 
         loop Tasks
