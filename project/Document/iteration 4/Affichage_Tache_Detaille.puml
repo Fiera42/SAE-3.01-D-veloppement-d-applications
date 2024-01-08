@@ -1,0 +1,27 @@
+@startuml
+
+activate AppView
+
+AppView -> DetailleTaskDisplay : getDisplay()
+
+DetailleTaskDisplay -> Treulo : getTache()
+activate Treulo
+Treulo --> DetailleTaskDisplay : TreuloTache Afficher
+deactivate Treulo
+
+    DetailleTaskDisplay -> TreuloTask : info requests
+    activate TreuloTask
+    DetailleTaskDisplay <-- TreuloTask : infos
+    deactivate TreuloTask
+
+    DetailleTaskDisplay -> DetailleTaskDisplay : update of the display
+
+
+
+
+AppView <-- DetailleTaskDisplay : Node
+deactivate DetailleTaskDisplay
+
+
+
+@enduml
