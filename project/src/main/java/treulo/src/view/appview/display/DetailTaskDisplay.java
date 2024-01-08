@@ -2,33 +2,31 @@ package treulo.src.view.appview.display;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.util.converter.FloatStringConverter;
-import treulo.src.Controler.task.AddTaskCollaboratorControl;
-import treulo.src.Controler.task.AddTaskControl;
-import treulo.src.Controler.task.AddTaskDependencyControl;
 import treulo.src.Controler.BackControler;
+import treulo.src.Controler.task.AddTaskCollaboratorControl;
+import treulo.src.Controler.task.AddTaskDependencyControl;
+import treulo.src.Controler.task.EditTaskDetailControl;
 import treulo.src.model.Model;
-import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
-
-//Affichage pour ajouté une tâche
-public class CreateTaskDisplay implements Display{
-
+public class DetailTaskDisplay implements Display {
     Treulo model;
-    LinkedList <TaskList> taskLists;
+    TreuloTask task;
 
-    public CreateTaskDisplay(Model m,LinkedList<TaskList> taskLists) {
+    public DetailTaskDisplay(Model m) {
         this.model = (Treulo) m;
-        this.taskLists = taskLists;
+        this.task = this.model.getTache();
     }
 
     @Override
@@ -41,11 +39,11 @@ public class CreateTaskDisplay implements Display{
         VBox VBoxTop =new VBox();
         HBox hbBack =new HBox();
         Button bBack = new Button("Retour");
-        bBack.setOnAction(new BackControler(model));
+
         hbBack.getChildren().add(bBack);
         HBox hbTitle = new HBox();
         hbTitle.setAlignment(Pos.CENTER);
-        Label lBTop = new Label("Ajouter une tache");
+        Label lBTop = new Label("Affichage tache");
 
         hbTitle.getChildren().add(lBTop);
         VBoxTop.getChildren().addAll(hbBack,hbTitle);
@@ -57,19 +55,14 @@ public class CreateTaskDisplay implements Display{
 
         HBox hbCenter1 = new HBox();
         Label lBCenter1 = new Label("Nom de la tache ");
-        TextField tFCenter1= new TextField();
+        TextField tFCenter1= new TextField(this.task.getName());
         hbCenter1.getChildren().addAll(lBCenter1,tFCenter1);
         HBox hbCenter2 = new HBox();
         Label lBCenter2 = new Label("Description         ");
-        TextField tFCenter2= new TextField();
+        TextField tFCenter2= new TextField(this.task.getDescription());
         hbCenter2.getChildren().addAll(lBCenter2,tFCenter2);
 
-        HBox hDuree = new HBox();
-        Label lDuree = new Label("Duree (en Heure)");
-        TextField tFDuree = new TextField("1");
-        tFDuree.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
-        hDuree.getChildren().addAll(lDuree,tFDuree);
-        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree);
+        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2);
 
         gP.add(vBoxCenter,2,1);
 
@@ -78,6 +71,10 @@ public class CreateTaskDisplay implements Display{
 
         HBox hbCenter4 = new HBox();
         Label lBCenter4 = new Label("Dependance ");
+        ArrayList<TreuloTask> array = this.task.getDependencies();
+        for(TreuloTask tt : array){
+            lBCenter4.setText(lBCenter4.getText()+"\n"+tt.getName());
+        }
 
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
@@ -109,6 +106,11 @@ public class CreateTaskDisplay implements Display{
         lbCenter.setBorder(Border.stroke(Color.BLACK));
         lbCenter.setBackground(Background.fill(Color.BISQUE));
         lbCenter.setMaxWidth(Double.MAX_VALUE);
+        ArrayList<String> arrayString =  this.task.getCollaborators();
+        for(String s : arrayString){
+            lbCenter.setText(lbCenter.getText()+"\n"+s);
+        }
+
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
 
@@ -123,7 +125,7 @@ public class CreateTaskDisplay implements Display{
         combo2.getItems().add(null);
         for (int i=0;i<getAlltasks().size();i++)
         {
-        combo2.getItems().add(getAlltasks().get(i));
+            combo2.getItems().add(getAlltasks().get(i));
         }
 
         VBoxCenter3.getChildren().addAll(lBCenter5,combo2);
@@ -132,22 +134,13 @@ public class CreateTaskDisplay implements Display{
         gP.setAlignment(Pos.CENTER);
         bP.setCenter(gP);
 
-
-
-        //le Bas
-
-        VBox HBBottom = new VBox();
-        Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,tFDuree,combo));
-        HBBottom.setAlignment(Pos.TOP_CENTER);
-        HBBottom.getChildren().add(bBottom);
-
-        bP.setBottom(HBBottom);
+        bBack.setOnAction(new EditTaskDetailControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo , task));
 
         VboxMain.getChildren().add(bP);
         VboxMain.setAlignment(Pos.TOP_CENTER);
         return VboxMain;
     }
+
 
     // cette methode est inutile pour cette classe
     @Override

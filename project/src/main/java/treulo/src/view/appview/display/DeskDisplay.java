@@ -13,6 +13,7 @@ import treulo.src.Controler.dragNdrop.ReceiveDragControl;
 import treulo.src.Controler.dragNdrop.StartDragControl;
 import treulo.src.Controler.task.AddTaskMenuControl;
 import treulo.src.Controler.task.DeleteTaskControl;
+import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.Controler.task.EditTreuloTaskControl;
 import treulo.src.Controler.tasklist.AddTaskListMenuControl;
 import treulo.src.Controler.tasklist.DeleteTaskListControl;
@@ -147,6 +148,8 @@ public class DeskDisplay implements Display {
         vBox.setOnDragDone(new EndDragControl(model, vBox));
         vBox.setOnDragDropped(new ReceiveDragControl(model, task));
         vBox.setOnDragOver(new DragOverControl(model, task));
+
+        vBox.setOnMouseClicked(new DetailTaskControl(model , task));
 
         HBox name = new HBox(10);
         vBox.getChildren().add(name);
