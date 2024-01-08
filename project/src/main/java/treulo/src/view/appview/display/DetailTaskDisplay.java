@@ -1,5 +1,6 @@
 package treulo.src.view.appview.display;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import treulo.src.Controler.BackControler;
 import treulo.src.Controler.task.AddTaskCollaboratorControl;
 import treulo.src.Controler.task.AddTaskDependencyControl;
 import treulo.src.Controler.task.EditTaskDetailControl;
+import treulo.src.Controler.task.SetParentTaskControl;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -76,10 +78,22 @@ public class DetailTaskDisplay implements Display {
 
         HBox hbCenter4 = new HBox();
         Label lBCenter4 = new Label("Dependance ");
-        ArrayList<TreuloTask> array = this.task.getDependencies();
-        for(TreuloTask tt : array){
-            lBCenter4.setText(lBCenter4.getText()+"\n"+tt.getName());
+
+        String sas = "Dépendance :"+"\n";
+        for (TreuloTask tt : this.model.getDependencieTempo()){
+            sas+= tt.getName() + "\n";
         }
+
+        Label label = new Label(sas);
+
+        ArrayList<TreuloTask> al = this.task.getDependencies();
+        for (TreuloTask tt : al){
+            label.setText(label.getText()+"\n"+tt.getName());
+        }
+
+        label.setBorder(Border.stroke(Color.BLACK));
+        label.setBackground(Background.fill(Color.BISQUE));
+        label.setMaxWidth(Double.MAX_VALUE);
 
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
@@ -119,7 +133,7 @@ public class DetailTaskDisplay implements Display {
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
 
-        VBoxCenter2.getChildren().addAll(hbCenter4,hbCenter3 , lbCenter);
+        VBoxCenter2.getChildren().addAll(hbCenter4,label,hbCenter3 , lbCenter);
         gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();
@@ -133,7 +147,15 @@ public class DetailTaskDisplay implements Display {
             combo2.getItems().add(getAlltasks().get(i));
         }
 
-        VBoxCenter3.getChildren().addAll(lBCenter5,combo2);
+        combo2.setValue(this.task.getParentTask());
+
+        Button set = new Button("Set");
+        set.setOnAction(new SetParentTaskControl(this.model , combo2 , task));
+
+        HBox hb = new HBox();
+        hb.getChildren().addAll(combo2 , set);
+
+        VBoxCenter3.getChildren().addAll(lBCenter5,hb);
 
         gP.add(VBoxCenter3,4,2);
         gP.setAlignment(Pos.CENTER);

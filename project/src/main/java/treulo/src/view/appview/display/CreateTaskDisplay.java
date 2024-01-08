@@ -15,6 +15,7 @@ import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
@@ -79,6 +80,16 @@ public class CreateTaskDisplay implements Display{
         HBox hbCenter4 = new HBox();
         Label lBCenter4 = new Label("Dependance ");
 
+        String sas = "Dépendance :"+"\n";
+        for (TreuloTask tt : this.model.getDependencieTempo()){
+            sas+= tt.getName() + "\n";
+        }
+
+        Label label = new Label(sas);
+        label.setBorder(Border.stroke(Color.BLACK));
+        label.setBackground(Background.fill(Color.BISQUE));
+        label.setMaxWidth(Double.MAX_VALUE);
+
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
         combo.getItems().add(null);
@@ -112,7 +123,7 @@ public class CreateTaskDisplay implements Display{
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
 
-        VBoxCenter2.getChildren().addAll(hbCenter4,hbCenter3 , lbCenter);
+        VBoxCenter2.getChildren().addAll(hbCenter4,label,hbCenter3 , lbCenter);
         gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();

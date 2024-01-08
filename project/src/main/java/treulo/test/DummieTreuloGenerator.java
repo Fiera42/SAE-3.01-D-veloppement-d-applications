@@ -7,13 +7,17 @@ import treulo.src.model.TreuloTask;
 public class DummieTreuloGenerator {
     public static Treulo generateDummie() {
         Treulo treulo = new Treulo();
-        TreuloTask task1 = new TreuloTask("tache 1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum");
-        TreuloTask task2 = new TreuloTask("liste avec un très grand nom sur plusieurs lignes", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ");
-        TreuloTask task3 = new TreuloTask("tache 3", "");
-        TreuloTask task4 = new TreuloTask("tache 4", "Lorem Ipsum Lorem Ipsum Lorsum Lorem Ipsum Lorem Ipsum ");
+        TreuloTask task1 = new TreuloTask("tache 1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",10);
+        TreuloTask task2 = new TreuloTask("liste avec un très grand nom sur plusieurs lignes", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ",30);
+        TreuloTask task3 = new TreuloTask("tache 3", "",40);
+        TreuloTask task4 = new TreuloTask("tache 4", "Lorem Ipsum Lorem Ipsum Lorsum Lorem Ipsum Lorem Ipsum ",20);
         TreuloTask task5 = new TreuloTask("tache 5", "Lorem Ipsorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ");
         TreuloTask task6 = new TreuloTask("tache 6", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum");
         TreuloTask task7 = new TreuloTask("tache 7", "ye");
+
+        task1.addDependencie(task2);
+        task1.addDependencie(task3);
+        task3.addDependencie(task4);
 
         task2.addSubTask(task5);
         task3.addSubTask(task6);
