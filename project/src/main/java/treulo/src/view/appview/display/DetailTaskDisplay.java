@@ -1,5 +1,6 @@
 package treulo.src.view.appview.display;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import treulo.src.Controler.BackControler;
 import treulo.src.Controler.task.AddTaskCollaboratorControl;
 import treulo.src.Controler.task.AddTaskDependencyControl;
 import treulo.src.Controler.task.EditTaskDetailControl;
+import treulo.src.Controler.task.SetParentTaskControl;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -145,7 +147,15 @@ public class DetailTaskDisplay implements Display {
             combo2.getItems().add(getAlltasks().get(i));
         }
 
-        VBoxCenter3.getChildren().addAll(lBCenter5,combo2);
+        combo2.setValue(this.task.getParentTask());
+
+        Button set = new Button("Set");
+        set.setOnAction(new SetParentTaskControl(this.model , combo2 , task));
+
+        HBox hb = new HBox();
+        hb.getChildren().addAll(combo2 , set);
+
+        VBoxCenter3.getChildren().addAll(lBCenter5,hb);
 
         gP.add(VBoxCenter3,4,2);
         gP.setAlignment(Pos.CENTER);
