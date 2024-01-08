@@ -22,5 +22,6 @@ public class AddTaskDependencyControl implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if(dependency.getSelectionModel().getSelectedItem()!=null)
         {model.addDependencyTempo(dependency.getSelectionModel().getSelectedItem());}
+
     }
 }
