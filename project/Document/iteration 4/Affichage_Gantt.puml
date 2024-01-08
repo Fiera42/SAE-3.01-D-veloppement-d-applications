@@ -11,26 +11,26 @@ activate GanttDisplay
     GanttDisplay <-- Taskslist : infos
     deactivate Taskslist
 
-    ListDisplay -> ListDisplay : update of the display
+    GanttDisplay -> GanttDisplay : update of the display
 
-    ListDisplay -> Taskslist : getTasks()
+    GanttDisplay -> Taskslist : getTasks()
     activate Taskslist
-    ListDisplay <-- Taskslist : tasks
+    GanttDisplay <-- GanttDisplay : tasks
     deactivate Taskslist
 
         loop Tasks
-        ListDisplay -> TreuloTask : info requests
+        GanttDisplay -> TreuloTask : info requests
         activate TreuloTask
-        ListDisplay <-- TreuloTask : infos
+        GanttDisplay <-- TreuloTask : infos
         deactivate TreuloTask
 
-        ListDisplay -> ListDisplay : update of the display
+        GanttDisplay -> GanttDisplay : update of the display
         end loop
     end loop
 
 
-AppView <-- ListDisplay : Node
-deactivate ListDisplay
+AppView <-- GanttDisplay : Node
+deactivate GanttDisplay
 
 
 
