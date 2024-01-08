@@ -17,6 +17,8 @@ public abstract class DisplayFactory {
                 return new DeskDisplayFactory(model);
             case "Liste" :
                 return  new ListDisplayFactory(model);
+            case "GANTT" :
+                return new GanttDisplayFactory(model);
             case "Detaille Tache" :
                 return new DetailTaskDisplayFactory(model);
             default :
