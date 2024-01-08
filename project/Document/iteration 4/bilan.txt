@@ -1,0 +1,4 @@
+Durant cette itération nous avons apporté des améliorations qualitative à l'application, ainsi que débuté l'implémentation de Gantt
+
+Nous avons notamment ameliorer le drag and drop pour permettre à l'utilisateur de placer la tâche où il le souhaite et nous avons également
+améliorer diverses affichages

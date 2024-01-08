@@ -48,6 +48,9 @@ public class GanttDisplay implements Display{
         }
         }
 
+        GridPane gridPane = new GridPane();
+
+
 
         bP.setLeft(vBoxTasks);
         bP.setCenter(hBoxRectangle);

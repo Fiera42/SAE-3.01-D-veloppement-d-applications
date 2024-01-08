@@ -1,0 +1,1 @@
+L'amélioration du click and drag à été réalisée en modifiant les classes existantes, notamment "ReceiveDragControl"

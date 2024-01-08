@@ -1,0 +1,9 @@
+-Display Gantt / Tom
+
+-Tâche en détail / Doryann
+
+-Durée des tâches / Tom
+
+-Affichage liste de dépendance / Doryann
+
+-Finition drag & drop / Adrien
