@@ -36,9 +36,9 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
             String[] info = dragboard.getString().split(" ");
 
             if (treuloTask != null) {
-                success = taskHandle(dragboard, info);
+                success = taskHandle(event, info);
             } else {
-                success = taskListHandle(dragboard, info);
+                success = taskListHandle(event, info);
             }
         }
 
@@ -46,7 +46,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         event.consume();
     }
 
-    public boolean taskHandle(Dragboard dragboard, String[] info) {
+    public boolean taskHandle(DragEvent event, String[] info) {
         switch (info[0]) {
             case "task" :
                 TreuloTask draggedTask = TreuloTask.getTaskById(Integer.valueOf(info[1]));
@@ -78,7 +78,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         return true;
     }
 
-    public boolean taskListHandle(Dragboard dragboard, String[] info) {
+    public boolean taskListHandle(DragEvent event, String[] info) {
         switch (info[0]) {
             case "task" :
                 TreuloTask draggedTask = TreuloTask.getTaskById(Integer.valueOf(info[1]));
