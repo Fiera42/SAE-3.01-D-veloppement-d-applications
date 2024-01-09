@@ -6,9 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.converter.FloatStringConverter;
-import treulo.src.Controler.task.AddTaskCollaboratorControl;
-import treulo.src.Controler.task.AddTaskControl;
-import treulo.src.Controler.task.AddTaskDependencyControl;
+import treulo.src.Controler.task.*;
 import treulo.src.Controler.BackControler;
 import treulo.src.model.Model;
 import treulo.src.model.TaskList;
@@ -81,14 +79,21 @@ public class CreateTaskDisplay implements Display{
         Label lBCenter4 = new Label("Dependance ");
 
         String sas = "Dépendance :"+"\n";
+        Label label = new Label(sas);
+        VBox test = new VBox();
+        test.getChildren().add(label);
         for (TreuloTask tt : this.model.getDependencieTempo()){
-            sas+= tt.getName() + "\n";
+            HBox hb = new HBox();
+            Label l = new Label (tt.getName() + "\n");
+            Button b = new Button("-");
+            b.setOnAction(new DeleteDependencyControle(model,tt));
+            hb.getChildren().addAll(l , b);
+            test.getChildren().add(hb);
         }
 
-        Label label = new Label(sas);
-        label.setBorder(Border.stroke(Color.BLACK));
-        label.setBackground(Background.fill(Color.BISQUE));
-        label.setMaxWidth(Double.MAX_VALUE);
+        test.setBorder(Border.stroke(Color.BLACK));
+        test.setBackground(Background.fill(Color.BISQUE));
+        test.setMaxWidth(Double.MAX_VALUE);
 
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
@@ -112,18 +117,26 @@ public class CreateTaskDisplay implements Display{
         bCenter3.setOnAction(new AddTaskCollaboratorControl(model,tFCenter3));
 
         String collab = "  Les collaborateurs :      "+"\n";
-        for (int i = 0;i<model.getCollaboratorTempo().size();i++)
-        {
-            collab+="  "+model.getCollaboratorTempo().get(i)+"\n";
-        }
         Label lbCenter = new Label(collab);
-        lbCenter.setBorder(Border.stroke(Color.BLACK));
-        lbCenter.setBackground(Background.fill(Color.BISQUE));
-        lbCenter.setMaxWidth(Double.MAX_VALUE);
+        VBox vb = new VBox();
+        vb.getChildren().add(lbCenter);
+        for (String s :model.getCollaboratorTempo())
+        {
+            HBox hb = new HBox();
+            Label l = new Label(s);
+            Button b = new Button("-");
+            b.setOnAction(new DeleteCollaboratorControle(model , s ));
+            hb.getChildren().addAll(l,b);
+            vb.getChildren().add(hb);
+        }
+
+        vb.setBorder(Border.stroke(Color.BLACK));
+        vb.setBackground(Background.fill(Color.BISQUE));
+        vb.setMaxWidth(Double.MAX_VALUE);
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
 
-        VBoxCenter2.getChildren().addAll(hbCenter4,label,hbCenter3 , lbCenter);
+        VBoxCenter2.getChildren().addAll(hbCenter4,test,hbCenter3 , vb);
         gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();
