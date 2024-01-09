@@ -155,4 +155,13 @@ public class Treulo implements Model, Observator {
     public  TreuloTask getTache(){
         return this.tache;
     }
+
+    public boolean getDisplayArchive() {
+        return displayArchive;
+    }
+
+    public void setDisplayArchive(boolean displayArchive) {
+        this.displayArchive = displayArchive;
+        updateObservator();
+    }
 }
