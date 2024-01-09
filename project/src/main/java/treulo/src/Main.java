@@ -13,7 +13,10 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import treulo.src.Controler.ChangeDisplayControl;
 import treulo.src.Controler.ToggleArchiveControl;
+import treulo.src.Controler.file_management.FileControlDispatcher;
+import treulo.src.Controler.file_management.NewFileControl;
 import treulo.src.model.Treulo;
+import treulo.src.view.FilenameObservor;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
 
@@ -52,7 +55,23 @@ public class Main extends Application {
         nav.setCenter(title);
 
         //-----boutons gauche
-        Button buttonFile= new Button("File");
+        MenuButton buttonFile= new MenuButton("Fichier");
+        {
+            MenuItem nouveau = new MenuItem("Nouveau...");
+            nouveau.setOnAction(new NewFileControl(model));
+            MenuItem ouvrir = new MenuItem("Ouvrir...");
+            MenuItem enregistrer = new MenuItem("Enregistrer...");
+            MenuItem enregistrer_sous = new MenuItem("Enregistrer sous...");
+            MenuItem exporter_img = new MenuItem("Exporter en image...");
+            buttonFile.getItems().addAll(nouveau, ouvrir, enregistrer, enregistrer_sous, exporter_img);
+        }
+
+        FilenameObservor filenameObservor = new FilenameObservor(model.getFilename());
+        model.addObservator(filenameObservor);
+        HBox file_box = new HBox(buttonFile, filenameObservor);
+        file_box.setSpacing(10);
+        file_box.setAlignment(Pos.CENTER_LEFT);
+        buttonFile.setOnAction(new FileControlDispatcher(model));
 
         //permet d'avoir des boutons normaux avec des propriétés de radio button
         ToggleGroup displayMode = new ToggleGroup();
@@ -77,7 +96,7 @@ public class Main extends Application {
 
         HBox displayModeButtons = new HBox(buttontableau, buttonListe, buttonGantt);
         displayModeButtons.setSpacing(10);
-        VBox leftButtons = new VBox(buttonFile, displayModeButtons);
+        VBox leftButtons = new VBox(file_box, displayModeButtons);
         leftButtons.setSpacing(5);
         nav.setLeft(leftButtons);
 

@@ -34,6 +34,8 @@ public class DummieTreuloGenerator {
         treulo.addTaskList(list1);
         treulo.addTaskList(list2);
 
+        treulo.setFilename("test_filename.txt");
+
         return treulo;
     }
 }

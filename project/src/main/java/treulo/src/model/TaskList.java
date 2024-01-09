@@ -53,6 +53,14 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
         this.updateObservator();
     }
 
+    public void destroy() {
+        for(TreuloTask task : tasks) {
+            task.destroy();
+        }
+        parentApp.removeTaskList(this);
+        allLists.remove(this);
+    }
+
     public boolean isEmpty(){
         return tasks.isEmpty();
     }

@@ -18,6 +18,6 @@ public class DeleteTaskListControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        model.removeTaskList(taskList);
+        taskList.destroy();
     }
 }

@@ -2,6 +2,7 @@ package treulo.src.model;
 
 import treulo.src.view.Observator;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
-public class Treulo implements Model, Observator {
+public class Treulo implements Model, Observator, Serializable {
     protected ArrayList<Observator> observators;
 
     protected boolean displayArchive;
@@ -21,6 +22,7 @@ public class Treulo implements Model, Observator {
     protected TaskList editedTaskList;
 
     protected TreuloTask tache;
+    private String filename;
 
     protected List<String> collaboratorTempo = new ArrayList<String>();
 
@@ -35,19 +37,30 @@ public class Treulo implements Model, Observator {
 
     }
 
-    public void loadFile(String fileName)
-    {
-
+    public void loadFile(String fileName) {
+        setFilename(filename);
     }
 
-    public void SaveAsFile (String Filename)
-    {
+    public void saveAsFile (String filename) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(filename);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
+        objectOutputStream.writeObject(this);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+        setFilename(filename);
     }
 
-    public void ExportAsImage (String Filename)
-    {
+    public void exportAsImage (String filename) {
+        setFilename(filename);
+    }
 
+    public void newFile() {
+        LinkedList<TaskList> listes = new LinkedList<>(tasks);
+        for(TaskList list : listes) {
+            list.destroy();
+        }
+        setFilename("");
     }
 
     public ArrayList<Observator> getObservators() {
@@ -162,6 +175,15 @@ public class Treulo implements Model, Observator {
 
     public void setDisplayArchive(boolean displayArchive) {
         this.displayArchive = displayArchive;
+        updateObservator();
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
         updateObservator();
     }
 }

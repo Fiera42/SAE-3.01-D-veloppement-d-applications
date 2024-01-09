@@ -1,0 +1,24 @@
+@startuml
+
+main -> Treulo : nouveauFichier()
+activate Treulo
+
+loop listes
+    Treulo -> TaskList : Destroy()
+    activate TaskList
+
+    loop tâches
+        TaskList -> Task : Destroy()
+        activate Task
+        TaskList <-- Task
+        deactivate Task
+    end loop
+
+    Treulo <-- TaskList
+    deactivate TaskList
+end loop
+
+main <-- Treulo
+deactivate Treulo
+
+@enduml

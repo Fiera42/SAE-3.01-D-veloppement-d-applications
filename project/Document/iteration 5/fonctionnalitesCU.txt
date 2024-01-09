@@ -1,0 +1,7 @@
+-Archivage / Adrien
+
+-Créé un fichier vide / Adrien
+
+-Display Gantt / Doryann
+
+-Améliorations graphiques (édition de collaborateur/dépendance, tâche en détail sur list display...) / doryann
