@@ -8,12 +8,12 @@ public class DummieTreuloGenerator {
     public static Treulo generateDummie() {
         Treulo treulo = new Treulo();
         TreuloTask task1 = new TreuloTask("tache 1", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",10);
-        TreuloTask task2 = new TreuloTask("liste avec un très grand nom sur plusieurs lignes", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ",30);
-        TreuloTask task3 = new TreuloTask("tache 3", "",40);
-        TreuloTask task4 = new TreuloTask("tache 4", "Lorem Ipsum Lorem Ipsum Lorsum Lorem Ipsum Lorem Ipsum ",20);
-        TreuloTask task5 = new TreuloTask("tache 5", "Lorem Ipsorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ");
-        TreuloTask task6 = new TreuloTask("tache 6", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum");
-        TreuloTask task7 = new TreuloTask("tache 7", "ye");
+        TreuloTask task2 = new TreuloTask("liste avec un très grand nom sur plusieurs lignes", "Lorem Ipsum Lorem Ipsum Lpsum Lorem Ipsum ",20);
+        TreuloTask task3 = new TreuloTask("tache 3", "",30);
+        TreuloTask task4 = new TreuloTask("tache 4", "Lorem Ipsum Lorem Ipsum Lorsum Lorem Ipsum Lorem Ipsum ",40);
+        TreuloTask task5 = new TreuloTask("tache 5", "Lorem Ipsorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ",10);
+        TreuloTask task6 = new TreuloTask("tache 6", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",20);
+        TreuloTask task7 = new TreuloTask("tache 7", "ye",15);
 
         task1.addDependencie(task2);
         task1.addDependencie(task3);

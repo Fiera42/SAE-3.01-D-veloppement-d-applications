@@ -3,6 +3,8 @@ package treulo.src.view.appview.display;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -10,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import treulo.src.Controler.DeployTaskControl;
+import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -31,46 +35,52 @@ public class GanttDisplay implements Display{
 
     @Override
     public Node getDisplay() {
-        BorderPane bP = new BorderPane();
+        GridPane gridPane = new GridPane();
+
         VBox vBoxTasks = new VBox();
+
         vBoxTasks.setBorder(Border.stroke(Color.BLACK));
         vBoxTasks.setPadding(new Insets(50));
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
-        HBox hBoxRectangle= new HBox();
+        VBox hBoxRectangle= new VBox();
+        gridPane.add(vBoxTasks,1,1,1,50);
 
-        for (int i=0;i<taskList.size();i++){
-        for( TreuloTask task : taskList.get(i).getTasks()) {
-           if (task.getDependencies().size()>0 && task.isIndependent())
-        {
-            vBoxTasks.getChildren().add(getTaskDisplay(task, new VBox()));
-            hBoxRectangle.getChildren().add(getRectangleDisplay(task));
-           }
-        }
-        }
+        for (int i=0;i<TreuloTask.getAlltasks().size();i++){
+                    gridPane.add(getTaskDisplay(TreuloTask.getAlltasks().get(i),new HBox()),1,i+1);
+                    if (TreuloTask.getAlltasks().get(i).isIndependent())
+                    {
+                        gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i)),2,1+i);
+                    }
+                else
+                {
+                    for (int y=0;y<TreuloTask.getAlltasks().size();y++)
+                    {
+                     if (TreuloTask.getAlltasks().get(y).getDependencies().contains(TreuloTask.getAlltasks().get(i)))
+                        {
+                            gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i),TreuloTask.getAlltasks().get(y).getDuration()*10),2,1+i);
+                        }
+                    }
 
-        GridPane gridPane = new GridPane();
+                }
+            }
 
 
+        return gridPane;
 
-        bP.setLeft(vBoxTasks);
-        bP.setCenter(hBoxRectangle);
-        return bP;
     }
 
     @Override
     public Node getTaskDisplay(TreuloTask task, Node parentNode) {
 
-        VBox vBox = new VBox(10);
-        vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
-        vBox.setPadding(new Insets(10));
-        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
-        HBox name = new HBox(10);
-        vBox.getChildren().add(name);
-        TextField nameText = new TextField(task.getName());
-        name.getChildren().add(nameText);
-        HBox.setHgrow(nameText, Priority.ALWAYS);
+        HBox  hb =(HBox) parentNode;
+        Button bDetail = new Button(task.getName());
+        bDetail.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
+        bDetail.setPadding(new Insets(10));
+        bDetail.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
+        bDetail.setOnMouseClicked(new DetailTaskControl(model,task));
 
-        return vBox;
+        hb.getChildren().addAll(bDetail);
+        return hb;
     }
 
     public Node getRectangleDisplay(TreuloTask task) {
@@ -78,38 +88,34 @@ public class GanttDisplay implements Display{
 
         Pane SP =new Pane();
         Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHEAT);
+
         Line l = new Line(r.getX()+r.getWidth(),r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+ r.getHeight()+20*task.getDependencies().size());
         l.setFill(Color.BLACK);
 
-        SP.getChildren().addAll(r,l);
+        Label lab = new Label(task.getName(),r);
+        lab.setOnMouseClicked(new DetailTaskControl(model,task));
 
-        for (int i=0;i<task.getDependencies().size();i++)
-        {
-            SP.getChildren().add(getRectangleDisplay(task.getDependencies().get(i),r.getX()+r.getWidth(),r.getY()+ r.getHeight()+20*i));
-        }
-
+        SP.getChildren().addAll(r,lab,l);
 
         return SP;
     }
-    public Node getRectangleDisplay(TreuloTask task ,double x, double y) {
+    public Node getRectangleDisplay(TreuloTask task ,double x) {
 
 
         Pane SP =new Pane();
         Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHITESMOKE);
         r.setX(x);
-        r.setY(y);
-
 
         Line l = new Line(r.getX()+r.getWidth(),r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+r.getHeight()+20*task.getDependencies().size());
         l.setFill(Color.BLACK);
 
 
-        SP.getChildren().addAll(r,l);
-        for (int i=0;i<task.getDependencies().size();i++)
-        {
-            SP.getChildren().add(getRectangleDisplay(task.getDependencies().get(i),r.getX()+r.getWidth(),r.getY()+ r.getHeight()+20*i));
-        }
+        Label lab = new Label(task.getName(),r);
+        lab.setLayoutX(r.getX());
+        lab.setLayoutY(r.getY());
 
+        lab.setOnMouseClicked(new DetailTaskControl(model,task));
+        SP.getChildren().addAll(r,lab,l);
 
         return SP;
     }
