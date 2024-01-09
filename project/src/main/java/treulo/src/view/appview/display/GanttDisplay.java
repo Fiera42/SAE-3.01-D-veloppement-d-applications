@@ -138,7 +138,6 @@ public class GanttDisplay implements Display{
         }
         return SP;
     }
-
     public void displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
     {
         GridPane grid =(GridPane) parentNode;
