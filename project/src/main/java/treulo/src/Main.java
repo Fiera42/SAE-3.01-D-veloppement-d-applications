@@ -12,6 +12,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import treulo.src.Controler.ChangeDisplayControl;
+import treulo.src.Controler.ToggleArchiveControl;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
@@ -83,9 +84,12 @@ public class Main extends Application {
         //-----boutons droite (archive)
         CheckBox archive = new CheckBox();
         Label archiveText = new Label("Afficher les archives : ");
+        archiveText.setFont(new Font(17));
         HBox archiveBox = new HBox(archiveText, archive);
         archiveBox.setAlignment(Pos.CENTER);
         nav.setRight(archiveBox);
+
+        archive.setOnAction(new ToggleArchiveControl(model));
 
         //-------------------- AFFICHAGE TACHE
 

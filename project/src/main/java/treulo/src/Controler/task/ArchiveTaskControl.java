@@ -1,16 +1,20 @@
-package treulo.src.Controler;
+package treulo.src.Controler.task;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
+import treulo.src.model.TreuloTask;
 
-public class ToggleArchiveControl implements EventHandler<ActionEvent> {
-    Treulo model;
+public class ArchiveTaskControl implements EventHandler<ActionEvent> {
+    private Treulo model;
+    private TreuloTask treuloTask;
 
-    public ToggleArchiveControl(Treulo model) {
+    public ArchiveTaskControl(Treulo model, TreuloTask treuloTask) {
         this.model = model;
+        this.treuloTask = treuloTask;
     }
 
     @Override
@@ -19,6 +23,6 @@ public class ToggleArchiveControl implements EventHandler<ActionEvent> {
         if(!(source instanceof CheckBox)) return;
 
         CheckBox checkBox = (CheckBox) source;
-        model.setDisplayArchive(checkBox.isSelected());
+        treuloTask.setArchive(checkBox.isSelected());
     }
 }

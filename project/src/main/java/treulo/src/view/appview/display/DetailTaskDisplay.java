@@ -1,17 +1,16 @@
 package treulo.src.view.appview.display;
 
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.converter.FloatStringConverter;
 import treulo.src.Controler.BackControler;
-import treulo.src.Controler.task.AddTaskCollaboratorControl;
-import treulo.src.Controler.task.AddTaskDependencyControl;
-import treulo.src.Controler.task.EditTaskDetailControl;
-import treulo.src.Controler.task.SetParentTaskControl;
+import treulo.src.Controler.task.*;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -44,6 +43,7 @@ public class DetailTaskDisplay implements Display {
         HBox hbTitle = new HBox();
         hbTitle.setAlignment(Pos.CENTER);
         Label lBTop = new Label("Affichage tache");
+        lBTop.setFont(new Font(30));
 
         hbTitle.getChildren().add(lBTop);
         VBoxTop.getChildren().addAll(hbBack,hbTitle);
@@ -69,7 +69,14 @@ public class DetailTaskDisplay implements Display {
         tFDuree.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
         tFDuree.setText(String.valueOf(this.task.getDuration()));
         hDuree.getChildren().addAll(lDuree,tFDuree);
-        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree);
+
+        CheckBox archivage = new CheckBox("Archivé");
+        archivage.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        archivage.setSelected(task.isArchived());
+        archivage.setOnAction(new ArchiveTaskControl(model, task));
+
+        vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree, archivage);
+        vBoxCenter.setAlignment(Pos.CENTER);
 
         gP.add(vBoxCenter,2,1);
 

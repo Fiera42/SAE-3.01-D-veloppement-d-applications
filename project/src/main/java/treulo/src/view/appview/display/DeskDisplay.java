@@ -11,14 +11,8 @@ import treulo.src.Controler.dragNdrop.DragOverControl;
 import treulo.src.Controler.dragNdrop.EndDragControl;
 import treulo.src.Controler.dragNdrop.ReceiveDragControl;
 import treulo.src.Controler.dragNdrop.StartDragControl;
-import treulo.src.Controler.task.AddTaskMenuControl;
-import treulo.src.Controler.task.DeleteTaskControl;
-import treulo.src.Controler.task.DetailTaskControl;
-import treulo.src.Controler.task.EditTreuloTaskControl;
-import treulo.src.Controler.tasklist.AddTaskListMenuControl;
-import treulo.src.Controler.tasklist.DeleteTaskListControl;
-import treulo.src.Controler.tasklist.EditTaskListControl;
-import treulo.src.Controler.tasklist.EditedTaskListControl;
+import treulo.src.Controler.task.*;
+import treulo.src.Controler.tasklist.*;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
@@ -49,7 +43,9 @@ public class DeskDisplay implements Display {
 
         //Pour chaque liste de tâche, crée une colonne
         for(TaskList taskList : taskLists) {
-            hBox.getChildren().add(getTaskListDisplay(taskList));
+            if(model.getDisplayArchive() || !taskList.isArchived()) {
+                hBox.getChildren().add(getTaskListDisplay(taskList));
+            }
         }
 
         //Bouton de création de tâche
@@ -78,7 +74,10 @@ public class DeskDisplay implements Display {
         vBox.setMinWidth(COLUMN_WIDTH);
         vBox.setMaxWidth(COLUMN_WIDTH);
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(2))));
-        vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
+        if(taskList.isArchived()) {
+            vBox.setBackground(new Background(new BackgroundFill(Color.THISTLE, new CornerRadii(10), new Insets(0))));
+        }
+        else vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(10), new Insets(0))));
         vBox.setOnDragDetected(new StartDragControl(model, taskList));
         vBox.setOnDragDone(new EndDragControl(model, vBox));
 
@@ -104,7 +103,7 @@ public class DeskDisplay implements Display {
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(taskList.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        //archive.setOnAction(new EditTaskListControl(model, taskList));
+        archive.setOnAction(new ArchiveTaskListControl(model, taskList));
         titre.getChildren().add(archive);
 
         Button delete = new Button("X");
@@ -115,9 +114,11 @@ public class DeskDisplay implements Display {
 
         //Pour chaque tâche de la liste, on récupère son affichage
         for(TreuloTask task : taskList) {
-            Node taskDisplay = getTaskDisplay(task, new VBox());
-            vBox.getChildren().add(taskDisplay);
-            tasks.add((VBox)taskDisplay);
+            if(model.getDisplayArchive() || !task.isArchived()) {
+                Node taskDisplay = getTaskDisplay(task, new VBox());
+                vBox.getChildren().add(taskDisplay);
+                tasks.add((VBox)taskDisplay);
+            }
         }
 
         //Bouton d'ajout de nouvelle tâche
@@ -141,7 +142,11 @@ public class DeskDisplay implements Display {
 
         //Affichage des informations de la tâche
         VBox vBox = new VBox(10);
-        vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
+        if(task.isArchived()) {
+            vBox.setBackground(new Background(new BackgroundFill(Color.THISTLE, new CornerRadii(10), new Insets(0))));
+        }
+        else vBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(5), new Insets(0))));
+
         vBox.setPadding(new Insets(10));
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
         vBox.setOnDragDetected(new StartDragControl(model, task));
@@ -164,7 +169,7 @@ public class DeskDisplay implements Display {
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(task.isArchived());
         archive.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        //archive.setOnAction(new EditTaskListControl(model, taskList));
+        archive.setOnAction(new ArchiveTaskControl(model, task));
         name.getChildren().add(archive);
 
         Button delete = new Button("X");
@@ -184,9 +189,11 @@ public class DeskDisplay implements Display {
 
         //Affichage récursif des sous-tâches
         for(TreuloTask child : task.getSubtasks()) {
-            Node taskDisplay = getTaskDisplay(child, vBox);
-            vBox.getChildren().add(taskDisplay);
-            tasks.add((VBox)taskDisplay);
+            if(model.getDisplayArchive() || !child.isArchived()) {
+                Node taskDisplay = getTaskDisplay(child, vBox);
+                vBox.getChildren().add(taskDisplay);
+                tasks.add((VBox) taskDisplay);
+            }
         }
 
         return vBox;
