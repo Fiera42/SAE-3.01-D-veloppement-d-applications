@@ -81,26 +81,38 @@ public class DetailTaskDisplay implements Display {
         gP.add(vBoxCenter,2,1);
 
 
-        VBox VBoxCenter2 = new VBox();
+        VBox VBoxCenter2 = new VBox(10);
 
         HBox hbCenter4 = new HBox();
         Label lBCenter4 = new Label("Dependance ");
 
         String sas = "Dépendance :"+"\n";
-        for (TreuloTask tt : this.model.getDependencieTempo()){
-            sas+= tt.getName() + "\n";
-        }
-
         Label label = new Label(sas);
+        VBox test = new VBox();
+        test.getChildren().add(label);
+
+        for (TreuloTask tt : this.model.getDependencieTempo()){
+            HBox hb = new HBox();
+            Label l = new Label (tt.getName() + "\n");
+            Button b = new Button("-");
+            b.setOnAction(new DeleteDependencyControle(model,tt , task));
+            hb.getChildren().addAll(l , b);
+            test.getChildren().add(hb);
+        }
 
         ArrayList<TreuloTask> al = this.task.getDependencies();
         for (TreuloTask tt : al){
-            label.setText(label.getText()+"\n"+tt.getName());
+            HBox hb = new HBox();
+            Label l = new Label(tt.getName()+"\n");
+            Button b = new Button("-");
+            b.setOnAction(new DeleteDependencyControle(model,tt , task));
+            hb.getChildren().addAll(l , b);
+            test.getChildren().add(hb);
         }
 
-        label.setBorder(Border.stroke(Color.BLACK));
-        label.setBackground(Background.fill(Color.BISQUE));
-        label.setMaxWidth(Double.MAX_VALUE);
+        test.setBorder(Border.stroke(Color.BLACK));
+        test.setBackground(Background.fill(Color.BISQUE));
+        test.setMaxWidth(Double.MAX_VALUE);
 
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
@@ -124,23 +136,39 @@ public class DetailTaskDisplay implements Display {
         bCenter3.setOnAction(new AddTaskCollaboratorControl(model,tFCenter3));
 
         String collab = "  Les collaborateurs :      "+"\n";
-        for (int i = 0;i<model.getCollaboratorTempo().size();i++)
-        {
-            collab+="  "+model.getCollaboratorTempo().get(i)+"\n";
-        }
         Label lbCenter = new Label(collab);
-        lbCenter.setBorder(Border.stroke(Color.BLACK));
-        lbCenter.setBackground(Background.fill(Color.BISQUE));
-        lbCenter.setMaxWidth(Double.MAX_VALUE);
+        VBox vb = new VBox();
+        vb.getChildren().add(lbCenter);
+        for (String s :model.getCollaboratorTempo())
+        {
+            HBox hb = new HBox();
+            Label l = new Label(s);
+            Button b = new Button("-");
+            b.setOnAction(new DeleteCollaboratorControle(model , s , task));
+            hb.getChildren().addAll(l,b);
+            vb.getChildren().add(hb);
+        }
+
+        vb.setBorder(Border.stroke(Color.BLACK));
+        vb.setBackground(Background.fill(Color.BISQUE));
+        vb.setMaxWidth(Double.MAX_VALUE);
         ArrayList<String> arrayString =  this.task.getCollaborators();
+
+
         for(String s : arrayString){
-            lbCenter.setText(lbCenter.getText()+"\n"+s);
+            HBox hb = new HBox();
+            Label l = new Label(s);
+            Button b = new Button("-");
+            b.setOnAction(new DeleteCollaboratorControle(model , s , task));
+            hb.getChildren().addAll(l,b);
+            vb.getChildren().add(hb);
         }
 
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
 
 
-        VBoxCenter2.getChildren().addAll(hbCenter4,label,hbCenter3 , lbCenter);
+        VBoxCenter2.getChildren().addAll(hbCenter4,test,hbCenter3 , vb);
+
         gP.add(VBoxCenter2,1,2);
 
         VBox VBoxCenter3 = new VBox();
