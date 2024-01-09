@@ -20,6 +20,7 @@ import treulo.src.Controler.dragNdrop.StartDragControl;
 import treulo.src.Controler.task.AddTaskMenuControl;
 import treulo.src.Controler.task.ArchiveTaskControl;
 import treulo.src.Controler.task.DeleteTaskControl;
+import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.Controler.task.EditTreuloTaskControl;
 import treulo.src.Controler.tasklist.*;
 import treulo.src.model.TaskList;
@@ -193,6 +194,8 @@ public class ListDisplay implements Display {
         vBox.setOnDragDropped(receiveControl);
 
         vBox.setOnDragOver(new DragOverControl(model, task));
+
+        vBox.setOnMouseClicked(new DetailTaskControl(model , task));
 
         HBox name = new HBox(10);
         vb.getChildren().add(name);
