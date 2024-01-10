@@ -15,10 +15,12 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.net.SocketOption;
 import java.util.ArrayList;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
+//Classe gérant l'affichage en détail d'une tache
 public class DetailTaskDisplay implements Display {
     Treulo model;
     TreuloTask task;
@@ -30,29 +32,36 @@ public class DetailTaskDisplay implements Display {
 
     @Override
     public Node getDisplay() {
+        // Création de la structure principale de l'interface utilisateur
         VBox VboxMain =new VBox();
 
+        // Création d'un panneau de bord avec des zones définies (Top, Center)
         BorderPane bP = new BorderPane();
-        //Top
 
+        // Zone de retour
         VBox VBoxTop =new VBox();
         HBox hbBack =new HBox();
         Button bBack = new Button("Retour");
-
         hbBack.getChildren().add(bBack);
+
+        // Zone du titre
         HBox hbTitle = new HBox();
         hbTitle.setAlignment(Pos.CENTER);
         Label lBTop = new Label("Affichage tache");
         lBTop.setFont(new Font(30));
-
         hbTitle.getChildren().add(lBTop);
+
+        // Ajout des sections Top à VBoxTop
         VBoxTop.getChildren().addAll(hbBack,hbTitle);
 
+        // Ajout de VBoxTop à la section Top du BorderPane
         bP.setTop(VBoxTop);
-        //Center
+
+        // Section Center de l'interface
         GridPane gP = new GridPane();
         VBox vBoxCenter= new VBox();
 
+        // Détails de la tâche : nom, description, durée, archivage
         HBox hbCenter1 = new HBox();
         Label lBCenter1 = new Label("Nom de la tache ");
         TextField tFCenter1= new TextField(this.task.getName());
@@ -75,12 +84,13 @@ public class DetailTaskDisplay implements Display {
         archivage.setSelected(task.isArchived());
         archivage.setOnAction(new ArchiveTaskControl(model, task));
 
+        // Section supplémentaire du Center pour les dépendances
         vBoxCenter.getChildren().addAll(hbCenter1,hbCenter2,hDuree, archivage);
         vBoxCenter.setAlignment(Pos.CENTER);
 
         gP.add(vBoxCenter,2,1);
 
-
+        // Section supplémentaire du Center pour les dépendances
         VBox VBoxCenter2 = new VBox(10);
 
         HBox hbCenter4 = new HBox();
@@ -117,9 +127,13 @@ public class DetailTaskDisplay implements Display {
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
         combo.getItems().add(null);
-        for (int i=0;i<getAlltasks().size();i++)
+        for (TreuloTask tt : getAlltasks())
         {
-            combo.getItems().add(getAlltasks().get(i));
+            if (!this.task.getName().equals(tt.getName()) && !this.task.getDependencies().contains(tt) && !this.model.getDependencieTempo().contains(tt)) {
+                combo.getItems().add(tt);
+            }
+
+
         }
 
         Button bCenter4 = new Button("+");
@@ -164,9 +178,8 @@ public class DetailTaskDisplay implements Display {
             vb.getChildren().add(hb);
         }
 
+
         hbCenter3.getChildren().addAll(lBCenter3,tFCenter3,bCenter3);
-
-
         VBoxCenter2.getChildren().addAll(hbCenter4,test,hbCenter3 , vb);
 
         gP.add(VBoxCenter2,1,2);
@@ -196,10 +209,14 @@ public class DetailTaskDisplay implements Display {
         gP.setAlignment(Pos.CENTER);
         bP.setCenter(gP);
 
+        // Action associée au bouton de retour
         bBack.setOnAction(new EditTaskDetailControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,combo , task , tFDuree));
 
+        // Ajout du BorderPane à la VBox principale
         VboxMain.getChildren().add(bP);
         VboxMain.setAlignment(Pos.TOP_CENTER);
+
+        // Retourne la VBox principale en tant que Node
         return VboxMain;
     }
 

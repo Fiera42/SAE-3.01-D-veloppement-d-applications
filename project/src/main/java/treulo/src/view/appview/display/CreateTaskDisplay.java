@@ -100,7 +100,10 @@ public class CreateTaskDisplay implements Display{
         combo.getItems().add(null);
         for (int i=0;i<getAlltasks().size();i++)
         {
-            combo.getItems().add(getAlltasks().get(i));
+
+            if ( !this.model.getDependencieTempo().contains(getAlltasks().get(i))) {
+                combo.getItems().add(getAlltasks().get(i));
+            }
         }
 
         Button bCenter4 = new Button("+");

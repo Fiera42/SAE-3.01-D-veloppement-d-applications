@@ -34,6 +34,7 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
             this.description=description;
             this.nom=nom;
             this.combo=combo;
+
             this.duration= duree;
             duration.setTextFormatter(new TextFormatter<>(new FloatStringConverter()));
         }
@@ -43,7 +44,7 @@ public class AddTaskControl implements EventHandler <ActionEvent> {
             if (Objects.equals(description.getText(), "") || Objects.equals(nom.getText(), "") || Objects.equals(duration.getText(),"")){}
             else {
 
-            TreuloTask treutask = new TreuloTask(this.nom.getText(),this.description.getText(),Float.parseFloat(this.duration.getText()));
+            TreuloTask treutask = new TreuloTask(this.nom.getText(),this.description.getText(),Math.abs(Float.parseFloat(this.duration.getText())));
 
 
                 for(int i=0;i<model.getCollaboratorTempo().size();i++)
