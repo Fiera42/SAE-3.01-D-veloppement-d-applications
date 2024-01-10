@@ -39,7 +39,7 @@ public class EditTaskDetailControl implements EventHandler<ActionEvent> {
         this.treutask.setName(this.nom.getText());
         this.treutask.setDescription(this.description.getText());
         if(!this.Duree.getText().isEmpty()) {
-            this.treutask.setDuration(Float.parseFloat(this.Duree.getText()));
+            this.treutask.setDuration(Math.abs(Float.parseFloat(this.Duree.getText())));
         }
         
         for(int i=0;i<model.getCollaboratorTempo().size();i++)
