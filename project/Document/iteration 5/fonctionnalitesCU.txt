@@ -9,3 +9,5 @@
 -Améliorations graphiques (édition de collaborateur/dépendance, tâche en détail sur list display...) / doryann
 
 -Sous-tâche avec durée cohérante, text-Area à taille variable / doryann
+
+-Essais d'amélioration de la structure / doryann

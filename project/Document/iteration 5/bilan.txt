@@ -1,0 +1,8 @@
+Durant cette itération nous avons commencé peaufiné l'application. Que ça soit par diverse
+amélioration mineure (graphique ou système) ainsi qu'ajouté des fonctionnalité non demandée, à savoir la gestion
+des fichiers ou bien encore l'ajout de l'archivage, qui lui était demandé
+
+Nous avons également essayé de modifier la structure de l'application pour la rendre plus facile à étendre et
+la rendre plus logique, cependant nous avons préféré abandonné cette idée par manque de temps (plus de détail lors de la présentation orale)
+
+note : la documentation de gantt est disponible à l'itération 4, car c'est ici que la fonctionnalité avait été commencée
