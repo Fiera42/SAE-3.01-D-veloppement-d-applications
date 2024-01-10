@@ -7,12 +7,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import treulo.src.Controler.task.ArchiveTaskControl;
 import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -23,6 +23,8 @@ public class GanttDisplay implements Display{
     Treulo model;
 
     LinkedList<TaskList> taskList;
+
+    ArrayList <TreuloTask> taskDejaVU;
 
     /**
      * Constructeur du display permetant d'avoir le modèle et la liste des taches
@@ -43,19 +45,19 @@ public class GanttDisplay implements Display{
     @Override
     public Node getDisplay() {
         GridPane gridPane = new GridPane();
-
         VBox vBoxTasks = new VBox();
-
         vBoxTasks.setBorder(Border.stroke(Color.BLACK));
         vBoxTasks.setPadding(new Insets(50));
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
         gridPane.add(vBoxTasks,1,1,1,Integer.MAX_VALUE);
         int y=0;
+        taskDejaVU = new ArrayList<TreuloTask>();
         for (int i=0;i<TreuloTask.getAlltasks().size();i++){
 
 
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
+
                         y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y);
                     }
             }
@@ -129,10 +131,14 @@ public class GanttDisplay implements Display{
      */
     public int displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
     {
+        boolean b= taskDejaVU.contains(task);
+        if (!b){
+            taskDejaVU.add(task);
         GridPane grid =(GridPane) parentNode;
         if (task.getDependencies().size()>0){
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
             grid.add(getRectangleDisplay(task,posx),2,posy+1);
+
         int i=0;
         while (i<task.getDependencies().size())
         {
@@ -147,5 +153,7 @@ public class GanttDisplay implements Display{
             grid.add(getRectangleDisplay(task,posx),2,posy+1);
             return posy+1;
         }
+        }
+        else return posy;
     }
 }
