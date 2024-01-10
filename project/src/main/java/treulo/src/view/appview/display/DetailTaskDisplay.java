@@ -120,7 +120,7 @@ public class DetailTaskDisplay implements Display {
         combo.getItems().add(null);
         for (TreuloTask tt : getAlltasks())
         {
-            if (!this.task.getName().equals(tt.getName()) && !this.task.getDependencies().contains(tt)) {
+            if (!this.task.getName().equals(tt.getName()) && !this.task.getDependencies().contains(tt) && !this.model.getDependencieTempo().contains(tt)) {
                 combo.getItems().add(tt);
             }
 
