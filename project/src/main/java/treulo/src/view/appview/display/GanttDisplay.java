@@ -23,6 +23,12 @@ public class GanttDisplay implements Display{
     Treulo model;
 
     LinkedList<TaskList> taskList;
+
+    /**
+     * Constructeur du display permetant d'avoir le modèle et la liste des taches
+     * @param t Le modéle
+     * @param list La liste de toute les taches
+     */
     public GanttDisplay (Treulo t ,  LinkedList<TaskList> list)
     {
         model =t;
