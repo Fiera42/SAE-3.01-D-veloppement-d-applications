@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
+/**
+ * Controleur permetant de suprimer une tache ainsi que ses sous taches
+ */
 public class DeleteTaskControl implements EventHandler<ActionEvent> {
 
     private Model model;
