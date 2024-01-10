@@ -23,7 +23,7 @@ public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        if (!Objects.equals(collaborator.getText(), "")){
+        if (!Objects.equals(collaborator.getText(), "")&& !model.getCollaboratorTempo().contains(collaborator.getText())){
         model.addCollaboratorTempo(collaborator.getText());
         collaborator.setText("");
         }
