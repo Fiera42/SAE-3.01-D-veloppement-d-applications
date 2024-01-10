@@ -13,6 +13,9 @@ import treulo.src.model.TreuloTask;
 
 import java.util.Objects;
 
+/**
+ * Controleur Permetant de créer une nouvelle tache
+ */
 public class AddTaskControl implements EventHandler <ActionEvent> {
         Treulo model;
         TaskList tL;

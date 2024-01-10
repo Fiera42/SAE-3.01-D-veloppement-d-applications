@@ -8,6 +8,10 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+/**
+ * Controleur permetant d'ajouter les Dependences
+ * dans une liste temporaire qui sera utilisé par la suite pour crée une tache
+ */
 public class AddTaskDependencyControl implements EventHandler<ActionEvent> {
     Treulo model;
     ComboBox <TreuloTask> dependency;

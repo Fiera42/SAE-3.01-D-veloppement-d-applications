@@ -7,7 +7,10 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
 import java.util.Objects;
-
+/**
+* Controleur permetant d'ajouter les collaborateur
+* dans une liste temporaire qui sera utilisé par la suite pour crée une tache
+ */
 public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
     Treulo model;
     TextField collaborator;
