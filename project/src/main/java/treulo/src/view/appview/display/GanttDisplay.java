@@ -43,13 +43,15 @@ public class GanttDisplay implements Display{
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
         VBox hBoxRectangle= new VBox();
         gridPane.add(vBoxTasks,1,1,1,50);
-
+        int y=0;
         for (int i=0;i<TreuloTask.getAlltasks().size();i++){
+
 
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
-                        displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+1);
-
+                        System.out.println("posy"+y);
+                        y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y+1)+1;
+                        System.out.println("posy"+y);
                     }
             }
 
@@ -119,16 +121,18 @@ public class GanttDisplay implements Display{
         int i=0;
         while (i<task.getDependencies().size())
         {
-            posy=posy+displayDependence(grid,task.getDependencies().get(i),posx+task.getDuration()*10,posy+1+i);
+            System.out.println("posy avant "+posy);
+            posy=posy+displayDependence(grid,task.getDependencies().get(i),posx+task.getDuration()*10,posy+1+i)+1+i;
+            System.out.println("posy après"+posy);
             i++;
         }
-        return i;
+        return posy;
         }
         else
         {
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
             grid.add(getRectangleDisplay(task,posx,"fin"),2,posy+1);
-            return 1;
+            return posy+1;
         }
     }
 }
