@@ -2,6 +2,10 @@
 
 -Créé un fichier vide / Adrien
 
--Display Gantt / Doryann
+-Sauvegarde/chargement de fichier / Adrien
+
+-Display Gantt / Tom
 
 -Améliorations graphiques (édition de collaborateur/dépendance, tâche en détail sur list display...) / doryann
+
+-Sous-tâche avec durée cohérante, text-Area à taille variable / doryann

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import treulo.src.Controler.ChangeDisplayControl;
 import treulo.src.Controler.ToggleArchiveControl;
 import treulo.src.Controler.file_management.*;
+import treulo.src.Controler.to_image.ExportAsImageControl;
 import treulo.src.model.Treulo;
 import treulo.src.view.FilenameObservor;
 import treulo.src.view.appview.AppView;
@@ -55,18 +56,17 @@ public class Main extends Application {
 
         //-----boutons gauche
         MenuButton buttonFile= new MenuButton("Fichier");
-        {
-            MenuItem nouveau = new MenuItem("Nouveau...");
-            nouveau.setOnAction(new NewFileControl(model));
-            MenuItem ouvrir = new MenuItem("Ouvrir...");
-            ouvrir.setOnAction(new OpenFileControl(model, stage));
-            MenuItem enregistrer = new MenuItem("Enregistrer...");
-            enregistrer.setOnAction(new SaveFileControl(model));
-            MenuItem enregistrer_sous = new MenuItem("Enregistrer sous...");
-            enregistrer_sous.setOnAction(new SaveAsControl(model, stage));
-            MenuItem exporter_img = new MenuItem("Exporter en image...");
-            buttonFile.getItems().addAll(nouveau, ouvrir, enregistrer, enregistrer_sous, exporter_img);
-        }
+        MenuItem nouveau = new MenuItem("Nouveau...");
+        nouveau.setOnAction(new NewFileControl(model));
+        MenuItem ouvrir = new MenuItem("Ouvrir...");
+        ouvrir.setOnAction(new OpenFileControl(model, stage));
+        MenuItem enregistrer = new MenuItem("Enregistrer...");
+        enregistrer.setOnAction(new SaveFileControl(model));
+        MenuItem enregistrer_sous = new MenuItem("Enregistrer sous...");
+        enregistrer_sous.setOnAction(new SaveAsControl(model, stage));
+        MenuItem exporter_img = new MenuItem("Exporter en image...");
+        //Handler plus bas
+        buttonFile.getItems().addAll(nouveau, ouvrir, enregistrer, enregistrer_sous, exporter_img);
 
         FilenameObservor filenameObservor = new FilenameObservor(model.getFilename());
         model.addObservator(filenameObservor);
@@ -121,6 +121,7 @@ public class Main extends Application {
 
         //--------------------
         Scene stageScene = new Scene(scene, appWidth, appHeight);
+        exporter_img.setOnAction(new ExportAsImageControl(model, stage, stageScene));
         stageScene.getStylesheets().add("treuloStyle.css");
         stage.setScene(stageScene);
         stage.setMaximized(true);

@@ -1,0 +1,30 @@
+@startuml
+
+Main -> Treulo : EnregisterSous(nom de fichier)
+activate Treulo
+
+Treulo -> Treulo : modification nom de fichier\net path
+
+Treulo -> Treulo : serialize
+
+Main <-- Treulo
+deactivate Treulo
+
+Main -> Treulo : ChargerFichier(nom de fichier)
+activate Treulo
+
+create New_Treulo
+
+Treulo -> New_Treulo : dé-serialize(nom de fichier)
+
+Treulo -> New_Treulo : getInfos()
+activate New_Treulo
+Treulo <-- New_Treulo : infos
+deactivate New_Treulo
+
+Treulo -> Treulo : copyInfos()
+Main <-- Treulo
+deactivate Treulo
+
+
+@enduml
