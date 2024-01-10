@@ -160,4 +160,8 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask>, Serial
     {
         return this.deploy;
     }
+
+    public static void setMaxId(int maxId) {
+        TaskList.maxId = maxId;
+    }
 }

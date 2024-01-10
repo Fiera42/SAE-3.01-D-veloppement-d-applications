@@ -15,7 +15,6 @@ public class DetailTaskControl implements EventHandler<MouseEvent> {
     public DetailTaskControl(Model model, TreuloTask treuloTask) {
         this.model = (Treulo) model;
         this.treuloTask = treuloTask;
-
     }
 
     @Override

@@ -305,4 +305,12 @@ public class TreuloTask implements Model, Observator, Serializable {
     public void setObservators(ArrayList<Observator> observators) {
         this.observators = observators;
     }
+
+    public static int getMaxId() {
+        return maxId;
+    }
+
+    public static void setMaxId(int maxId) {
+        TreuloTask.maxId = maxId;
+    }
 }

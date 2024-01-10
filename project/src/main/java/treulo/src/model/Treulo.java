@@ -25,6 +25,8 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
     private String path;
     private List<TreuloTask> serialAllTask;
     private List<TaskList> serialAllTaskList;
+    private int serialMaxTaskId;
+    private int serialMaxListId;
     //GESTION DE FICHIER
 
     protected List<String> collaboratorTempo = new ArrayList<String>();
@@ -59,7 +61,9 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         newFile();
 
         TaskList.setAllLists(loadedModel.serialAllTaskList);
+        TaskList.setMaxId(loadedModel.serialMaxListId);
         TreuloTask.setAlltasks(loadedModel.serialAllTask);
+        TreuloTask.setMaxId(loadedModel.serialMaxTaskId);
 
         for(TaskList taskList : loadedModel) {
             addTaskList(taskList);
@@ -67,6 +71,8 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
     }
 
     public void saveAsFile () {
+        serialMaxTaskId = TreuloTask.getMaxId();
+        serialMaxListId = TreuloTask.getMaxId();
         try {
             if(path == null || path.isEmpty()) throw new IOException("File path is empty");
             FileOutputStream fileOutputStream = new FileOutputStream(path);
@@ -100,6 +106,8 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         tache = null;
         editedTaskList = null;
         displayModeOld = "";
+        TaskList.setMaxId(0);
+        TreuloTask.setMaxId(0);
     }
 
     public ArrayList<Observator> getObservators() {

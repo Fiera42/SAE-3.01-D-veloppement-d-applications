@@ -2,6 +2,7 @@ package treulo.src.Controler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
@@ -18,6 +19,7 @@ public class ChangeDisplayControl implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         this.model.setDisplayMode(nameButton);
+        DetailTaskControl.setBoolean(true);
         this.model.getCollaboratorTempo().clear();
         this.model.getDependencieTempo().clear();
     }
