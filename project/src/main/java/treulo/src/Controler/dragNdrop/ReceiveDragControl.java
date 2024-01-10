@@ -13,6 +13,9 @@ import treulo.src.model.TreuloTask;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+//Classe chargée de géré le dépôt d'une tâche sur une autre tâche ou sur une liste
+//Handler d'événement (OnDragDropped)
+//Créée par : Adrien
 public class ReceiveDragControl implements EventHandler<DragEvent> {
 
     //App model
@@ -75,6 +78,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 //Si le déplacement est fait au sein d'une même liste de tâche, on effectue des corrections
                 boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
 
+                //Pas de problème, suppression immédiate de la tâche
                 if(!uhh_problem) {
                     if(parentTask != null) parentTask.deleteSubTask(draggedTask);
                     if(parentList != null) parentList.deleteTask(draggedTask);
@@ -82,11 +86,15 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 //Récupération de l'emplacement de drop
                 if(tasks.size() > 0){
+
+                    //Partie fixe (entête)
                     double dropY = event.getY();
                     VBox physicalList = (VBox) event.getGestureTarget();
                     double currentY = (model.getDisplayMode().equals("Tableau"))?145:177;
                     int taskIndex = 0;
 
+                    //Partie mobile (tâches avec taille variable/nb de tâche différent)
+                    //+trouve l'index du drop
                     while(currentY < dropY && taskIndex < treuloTask.getSubtasks().size()) {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
@@ -105,6 +113,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 break;
 
             //Cible tâche, objet liste
+            //On échange l'emplacement de la liste de la tâche cible avec celle de la tâche dragged
             case "list" :
                 TaskList draggedList = TaskList.getListById(Integer.valueOf(info[1]));
                 if(draggedList == null) return false;
@@ -140,6 +149,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 //Si le déplacement est fait au sein d'une même liste de tâche, on effectue des corrections
                 boolean uhh_problem = !((parentTask == null || parentTask != treuloTask) && (parentList == null || parentList != taskList));
 
+                //pas de problème -> supression immédiate
                 if(!uhh_problem) {
                     if(parentTask != null) parentTask.deleteSubTask(draggedTask);
                     if(parentList != null) parentList.deleteTask(draggedTask);
@@ -147,11 +157,15 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
 
                 //Récupération de l'emplacement de drop
                 if(tasks.size() > 0){
+
+                    //partie fixe : entête
                     double dropY = event.getY();
                     VBox physicalList = (VBox) event.getGestureTarget();
                     double currentY = (model.getDisplayMode().equals("Tableau"))?47:65;
                     int taskIndex = 0;
 
+                    //partie dynamique : tâche avec taille et nombre de tâche différente
+                    //+ trouve l'index du drop
                     while(currentY < dropY && taskIndex < taskList.getTasks().size()) {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();
                     }
@@ -169,6 +183,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                 else taskList.addTask(draggedTask);
                 break;
             //Cible liste, objet liste
+            //inversion de la position des listes
             case "list" :
                 TaskList draggedList = TaskList.getListById(Integer.valueOf(info[1]));
                 if(draggedList == null) return false;
@@ -186,6 +201,7 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
         return true;
     }
 
+    //Fonction pour échangée l'emplacement de deux listes
     public void switchList(Treulo model, TaskList highList, TaskList lowList) {
         LinkedList list = model.getTasks();
 

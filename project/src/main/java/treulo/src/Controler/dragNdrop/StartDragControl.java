@@ -8,6 +8,9 @@ import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.TreuloTask;
 
+//Classe chargée de débuté l'action de drag and drop
+//Handler d'événement (OnDragDetected)
+//Créée par : Adrien
 public class StartDragControl implements EventHandler<MouseEvent> {
 
     private Model model;
@@ -26,13 +29,16 @@ public class StartDragControl implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
+        //active le drag and drop
         Node draggedNode = (Node)event.getSource();
         Dragboard db = draggedNode.startDragAndDrop(TransferMode.ANY);
 
+        //génération de l'image de drag and drop
         Image dragImage = draggedNode.snapshot(null, null);
-
         ClipboardContent content = new ClipboardContent();
         content.putImage(dragImage);
+
+        //Génére une signature pour reconnaître l'élément qui est dragged
         if(treuloTask != null) {
             content.putString("task " + treuloTask.getId());
         }
@@ -41,6 +47,7 @@ public class StartDragControl implements EventHandler<MouseEvent> {
             content.putString("list " + taskList.getId());
         }
 
+        //commit
         db.setContent(content);
         draggedNode.setVisible(false);
         event.consume();
