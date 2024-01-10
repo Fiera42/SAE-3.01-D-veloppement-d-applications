@@ -20,7 +20,9 @@ import treulo.src.view.FilenameObservor;
 import treulo.src.view.appview.AppView;
 import treulo.test.DummieTreuloGenerator;
 
-
+//Programme main pour lancer l'application
+//génère l'affichage de la partie supérieur et une appview pour la partie inférieur dynamique
+//Créée par : Adrien
 public class Main extends Application {
 
     private static final String applicationName = "Treulo";
@@ -37,7 +39,8 @@ public class Main extends Application {
         BorderPane scene = new BorderPane();
         scene.setBackground(Background.fill(Color.AQUAMARINE));
 
-        Treulo model = DummieTreuloGenerator.generateDummie();
+        Treulo model = new Treulo();
+        //Treulo model = DummieTreuloGenerator.generateDummie();
         model.setDisplayMode("Tableau");
 
         //-------------------- BARRE DU HAUT
@@ -73,7 +76,6 @@ public class Main extends Application {
         HBox file_box = new HBox(buttonFile, filenameObservor);
         file_box.setSpacing(10);
         file_box.setAlignment(Pos.CENTER_LEFT);
-        buttonFile.setOnAction(new FileControlDispatcher(model));
 
         //permet d'avoir des boutons normaux avec des propriétés de radio button
         ToggleGroup displayMode = new ToggleGroup();

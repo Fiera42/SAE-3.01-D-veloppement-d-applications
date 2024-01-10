@@ -4,6 +4,8 @@ import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+//Classe pour généré un modèle avec des données de test
+//Créée par : Adrien
 public class DummieTreuloGenerator {
     public static Treulo generateDummie() {
         Treulo treulo = new Treulo();

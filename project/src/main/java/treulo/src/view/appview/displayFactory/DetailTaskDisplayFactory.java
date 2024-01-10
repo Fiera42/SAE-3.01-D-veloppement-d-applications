@@ -5,6 +5,8 @@ import treulo.src.view.appview.display.DetailTaskDisplay;
 import treulo.src.view.appview.display.Display;
 import treulo.src.view.appview.display.ListDisplay;
 
+//Fabrique d'afficheur de tâche en détail
+//Créée par : Doryann
 public class DetailTaskDisplayFactory extends DisplayFactory{
     private Treulo model;
     public DetailTaskDisplayFactory(Treulo model) {

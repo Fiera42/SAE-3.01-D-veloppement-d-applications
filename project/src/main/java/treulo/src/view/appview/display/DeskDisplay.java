@@ -22,6 +22,7 @@ import java.util.LinkedList;
 
 
 //afficheur bureau
+//Classe : Adrien
 public class DeskDisplay implements Display {
 
     private LinkedList<TaskList> taskLists;

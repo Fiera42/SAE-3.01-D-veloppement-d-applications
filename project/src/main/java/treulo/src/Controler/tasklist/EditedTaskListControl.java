@@ -7,6 +7,9 @@ import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 
+//Controlleur chargé de mettre à jour la liste éditer
+//Handler d'événement (mousehover de la liste, onMouseOver)
+//Créée par : Tom
 public class EditedTaskListControl implements EventHandler<MouseEvent> {
 
     Treulo model;

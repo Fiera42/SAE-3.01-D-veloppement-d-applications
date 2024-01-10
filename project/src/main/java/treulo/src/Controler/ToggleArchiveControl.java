@@ -6,6 +6,9 @@ import javafx.scene.control.CheckBox;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
+//Controlleur chargé de mettre à jour l'affichage des archives par le modèle
+//Handler d'événement (checkbox d'archive, onAction)
+//Créée par : Adrien
 public class ToggleArchiveControl implements EventHandler<ActionEvent> {
     Treulo model;
 

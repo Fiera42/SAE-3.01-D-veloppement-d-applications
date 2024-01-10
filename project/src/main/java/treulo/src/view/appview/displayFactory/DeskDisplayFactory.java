@@ -5,6 +5,8 @@ import treulo.src.view.appview.display.DeskDisplay;
 import treulo.src.view.appview.display.Display;
 import treulo.src.view.appview.display.TextDisplay;
 
+//Fabrique d'afficheur bureau
+//Créée par : Adrien
 public class DeskDisplayFactory extends DisplayFactory {
 
     private Treulo model;

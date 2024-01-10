@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
+//Bouton de retour en arrière pour l'ajout de tâche
+//Handler d'événement (bouton de retour en arrière, onAction)
+//Créée par : Tom
 public class BackControler implements EventHandler<ActionEvent> {
 
     Treulo model;

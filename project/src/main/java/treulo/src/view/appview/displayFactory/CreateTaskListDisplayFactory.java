@@ -5,6 +5,8 @@ import treulo.src.view.appview.display.CreateTaskListDisplay;
 import treulo.src.view.appview.display.Display;
 import treulo.src.view.appview.display.TextDisplay;
 
+//Fabrique de créateur de liste de tâche
+//Créée par : Doryann
 public class CreateTaskListDisplayFactory extends DisplayFactory {
 
     private Treulo model;

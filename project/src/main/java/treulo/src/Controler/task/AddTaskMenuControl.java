@@ -9,6 +9,8 @@ import treulo.src.model.Treulo;
 /**
  * Controleur permetant de metre l'affichage en mode nouvelle tache
  */
+//Handler d'événement (bouton de création de tâche, onAction)
+//Créée par : Adrien
 public class AddTaskMenuControl implements EventHandler<ActionEvent> {
         Treulo model;
 

@@ -9,6 +9,9 @@ import javafx.scene.input.KeyEvent;
 import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
+//Controlleur chargé de mettre à jour les tâches dans la vue liste et bureau
+//Handler d'événement (textfield/textarea, onChange)
+//Créée par : Doryann
 public class EditTreuloTaskControl implements EventHandler<KeyEvent> {
     Model model;
     TreuloTask TrTa;

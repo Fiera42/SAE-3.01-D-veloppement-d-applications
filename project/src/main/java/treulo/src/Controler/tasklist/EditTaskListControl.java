@@ -9,6 +9,9 @@ import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 
+//Controlleur chargé de mettre à jour les listes
+//Handler d'événement (textfield de liste, onAction/onChange)
+//Créée par : Doryann
 public class EditTaskListControl implements EventHandler<ActionEvent>, ChangeListener<Boolean> {
 
     Treulo model;

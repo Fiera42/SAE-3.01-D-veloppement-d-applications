@@ -7,6 +7,9 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+//Controlleur chargé de mettre à jour le déploiement des tâches dans la vue liste
+//Handler d'événement (bouton de pliage/dépliage des tâches, onAction)
+//Créée par : Tom
 public class DeployTaskControl implements EventHandler<ActionEvent> {
 
     Treulo model;

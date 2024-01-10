@@ -8,23 +8,38 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+//Classe représentant une tâche
+//Classe originale : Doryann
+//Modification pour adaptation : Tout le monde (pour la plupart des feature)
+//Implémente modèle et observateur pour transféré les mises à jour au modèle
 public class TreuloTask implements Model, Observator, Serializable {
+
+    //attributs
     private String name , description;
     private boolean isArchive;
-
     private float duration ;
+    //collaborateurs
     private ArrayList<String> collaborators ;
+    //dépendances
     private ArrayList<TreuloTask> dependencies ;
+    //sous-tâches
     private LinkedList<TreuloTask> subtasks ;
 
     private ArrayList<Observator> observators ;
 
+    //tâche parente si sous-tâche
     private TreuloTask parentTask;
+    //Liste dans laquel se trouve la tâche
     private TaskList parentList;
+    //toutes les tâches
     private static List<TreuloTask> alltasks = new LinkedList<TreuloTask>();
+
+    //ID pour drag and drop
     private int id;
     private static int maxId;
+    //ID pour drag and drop
 
+    //déploiement des sous-tâche pour display en liste
     private boolean deploy=false;
 
     public TreuloTask (){
@@ -98,14 +113,7 @@ public class TreuloTask implements Model, Observator, Serializable {
     }
 
     public void addSubTask(TreuloTask task){
-        if (task.getDuration()>this.duration){
-            this.duration = task.getDuration();
-        }
-        this.subtasks.add(task);
-        task.setParentTask(this);
-        task.addObservator(this);
-        task.setParentList(parentList);
-        this.updateObservator();
+        addSubTask(task, subtasks.size());
     }
 
     public void addSubTask(TreuloTask task, int index){
@@ -114,6 +122,7 @@ public class TreuloTask implements Model, Observator, Serializable {
         }
         this.subtasks.add(index, task);
         task.setParentTask(this);
+        //on observe nos sous-tâches
         task.addObservator(this);
         task.setParentList(parentList);
         this.updateObservator();
@@ -122,6 +131,7 @@ public class TreuloTask implements Model, Observator, Serializable {
     public void deleteSubTask(TreuloTask task){
         this.subtasks.remove(task);
         task.setParentTask(null);
+        //on observe nos sous-tâches
         task.deleteObservator(this);
         task.setParentList(null);
         this.updateObservator();
@@ -131,6 +141,7 @@ public class TreuloTask implements Model, Observator, Serializable {
         return this.subtasks ;
     }
 
+    //réduit la tâche à néant
     public void destroy() {
         if (parentList != null) {
             parentList.deleteTask(this);
@@ -179,10 +190,11 @@ public class TreuloTask implements Model, Observator, Serializable {
         return this.isArchive;
     }
 
+    //serialization & autre
     public static List<TreuloTask> getAlltasks(){
         return alltasks;
     }
-
+    //serialization
     public static void setAlltasks(List<TreuloTask> alltasks) {
         TreuloTask.alltasks = alltasks;
     }
@@ -268,6 +280,7 @@ public class TreuloTask implements Model, Observator, Serializable {
         return duration;
     }
 
+    //est-ce que cette tâche possède des tâches dépendante d'elle ?
     public boolean isIndependent()
     {
         boolean res=true;
@@ -290,6 +303,7 @@ public class TreuloTask implements Model, Observator, Serializable {
         this.id = id;
     }
 
+    //click & drag
     public static TreuloTask getTaskById(int id) {
         for(TreuloTask task : alltasks) {
             if(task.getId() == id) return task;
@@ -310,6 +324,7 @@ public class TreuloTask implements Model, Observator, Serializable {
         return maxId;
     }
 
+    //serialization
     public static void setMaxId(int maxId) {
         TreuloTask.maxId = maxId;
     }

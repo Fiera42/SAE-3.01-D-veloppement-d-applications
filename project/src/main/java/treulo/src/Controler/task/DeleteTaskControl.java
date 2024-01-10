@@ -8,6 +8,8 @@ import treulo.src.model.TreuloTask;
 /**
  * Controleur permetant de suprimer une tache ainsi que ses sous taches
  */
+//Handler d'événement (bouton de supression de tâche, onAction)
+//Créée par : Adrien
 public class DeleteTaskControl implements EventHandler<ActionEvent> {
 
     private Model model;

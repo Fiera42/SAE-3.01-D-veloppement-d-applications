@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import static treulo.src.model.TreuloTask.getAlltasks;
 
 //Classe gérant l'affichage en détail d'une tache
+//Classe originale : Doryann
 public class DetailTaskDisplay implements Display {
     Treulo model;
     TreuloTask task;
@@ -192,6 +193,7 @@ public class DetailTaskDisplay implements Display {
         combo2.getItems().add(null);
         for (int i=0;i<getAlltasks().size();i++)
         {
+            if(getAlltasks().get(i).getId() == task.getId()) continue;
             combo2.getItems().add(getAlltasks().get(i));
         }
 

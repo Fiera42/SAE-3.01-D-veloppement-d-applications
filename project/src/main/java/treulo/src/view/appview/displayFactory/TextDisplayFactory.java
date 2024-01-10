@@ -4,6 +4,8 @@ import treulo.src.model.Treulo;
 import treulo.src.view.appview.display.Display;
 import treulo.src.view.appview.display.TextDisplay;
 
+//Fabrique d'afficheur brute en texte
+//Créée par : Adrien
 public class TextDisplayFactory extends DisplayFactory {
 
     private Treulo model;

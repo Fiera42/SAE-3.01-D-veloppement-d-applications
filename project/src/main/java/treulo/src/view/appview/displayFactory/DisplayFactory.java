@@ -3,6 +3,8 @@ package treulo.src.view.appview.displayFactory;
 import treulo.src.model.Treulo;
 import treulo.src.view.appview.display.Display;
 
+//Classe abstraire de fabrique d'afficheur
+//Créée par : Adrien
 public abstract class DisplayFactory {
 
     public static DisplayFactory getDisplayFactory(Treulo model, String displayMode) {

@@ -9,6 +9,9 @@ import treulo.src.model.Treulo;
 
 import java.io.File;
 
+//Classe chargée d'ouvrir un fichier treulo
+//Handler d'événement (bouton d'ouverture de fichier, onAction)
+//Créée par : Adrien
 public class OpenFileControl implements EventHandler<ActionEvent> {
     private Treulo model;
 
@@ -25,15 +28,12 @@ public class OpenFileControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        Object source = actionEvent.getSource();
-        if(!(source instanceof MenuItem)) return;
-
-        MenuItem menu = (MenuItem) actionEvent.getSource();
-
+        //L'utilisateur choisis son fichier
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir...");
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
+            //le modèle l'ouvre à partir du chemin
             model.openFile(file.getPath());
         }
     }

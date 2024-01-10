@@ -10,6 +10,9 @@ import treulo.src.model.Treulo;
 import java.io.File;
 import java.io.IOException;
 
+//Classe chargée d'enregister sous le fichier courant
+//Handler d'événement (bouton d'enregistrement sous, onAction)
+//Créée par : Adrien
 public class SaveAsControl implements EventHandler<ActionEvent> {
     private Treulo model;
 
@@ -26,16 +29,13 @@ public class SaveAsControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        Object source = actionEvent.getSource();
-        if(!(source instanceof MenuItem)) return;
-
-        MenuItem menu = (MenuItem) actionEvent.getSource();
-
+        //L'utilisateur choisi l'emplacement du fichier
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Sauvegarder le fichier sous...");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("treulo", "*.treulo"));
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
+            //puis le modèle sauvegarde le fichier
             model.setFilename(file.getName());
             model.setPath(file.getAbsolutePath());
             model.saveAsFile();

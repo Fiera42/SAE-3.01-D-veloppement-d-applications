@@ -7,6 +7,9 @@ import treulo.src.model.Model;
 import treulo.src.model.TaskList;
 import treulo.src.model.Treulo;
 
+//Controlleur chargé d'ajouter une liste depuis le menu d'ajout de liste
+//Handler d'événement (bouton de validation, onAction)
+//Créée par : Doryann
 public class AddTaskListControl implements EventHandler<ActionEvent> {
 
     Treulo model;

@@ -32,6 +32,7 @@ import java.util.LinkedList;
 
 
 //Afficheur sous forme de liste
+//Classe originale : Doryann et Adrien
 public class ListDisplay implements Display {
 
     private LinkedList<TaskList> taskLists;

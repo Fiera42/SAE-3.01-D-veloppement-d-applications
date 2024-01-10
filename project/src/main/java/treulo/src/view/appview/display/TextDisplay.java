@@ -14,6 +14,8 @@ import treulo.src.model.TreuloTask;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+//Affichage par défaut sous forme de texte brute
+//Classe : Adrien
 public class TextDisplay implements Display {
 
     private LinkedList<TaskList> taskLists;

@@ -19,7 +19,9 @@ import java.util.LinkedList;
 import static treulo.src.model.TreuloTask.getAlltasks;
 
 
-//Affichage pour ajouté une tâche
+//Affichage pour créé une tâche
+//Classe originale : Tom
+//Modification pour adaptation : Doryann
 public class CreateTaskDisplay implements Display{
 
     Treulo model;
@@ -165,7 +167,7 @@ public class CreateTaskDisplay implements Display{
 
         VBox HBBottom = new VBox();
         Button bBottom = new Button("ajouter");
-        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,tFDuree,combo));
+        bBottom.setOnAction(new AddTaskControl(model,model.getEditedTaskList(),tFCenter1,tFCenter2,tFDuree,combo2));
         HBBottom.setAlignment(Pos.TOP_CENTER);
         HBBottom.getChildren().add(bBottom);
 

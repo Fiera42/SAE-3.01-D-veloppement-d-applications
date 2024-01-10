@@ -18,6 +18,7 @@ import java.util.LinkedList;
 /**
 *Cette classe permet d'afficher le GANTT
  */
+//Royaume de Tom
 public class GanttDisplay implements Display{
 
     Treulo model;

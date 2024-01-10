@@ -12,6 +12,7 @@ import treulo.src.view.appview.displayFactory.DisplayFactory;
 import java.io.Serializable;
 
 //Observateur du modèle, permet d'afficher la partie tâche de l'application
+//Créée par : Adrien
 public class AppView extends ScrollPane implements Observator, Serializable {
 
     public AppView() {
@@ -32,6 +33,8 @@ public class AppView extends ScrollPane implements Observator, Serializable {
 
         //Modification de la vue pour refléter les changements dans le modèle
         setContent(factory.createDisplay().getDisplay());
+
+        // #glam
         ((Pane) getContent()).setBackground(Background.fill(Color.AQUAMARINE));
     }
 }

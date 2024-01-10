@@ -4,6 +4,8 @@ import treulo.src.model.Treulo;
 import treulo.src.view.appview.display.CreateTaskDisplay;
 import treulo.src.view.appview.display.Display;
 
+//Fabrique de créateur de tâche
+//Créée par : Tom
 public class CreateTaskDisplayFactory extends DisplayFactory{
     private Treulo model;
 

@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+//Controlleur chargé de retiré un collaborateur assigné à une tâche
+//Handler d'événement (bouton de collaborateur, onAction)
+//Créée par : Doryann
 public class DeleteCollaboratorControle implements EventHandler<ActionEvent> {
 
     Treulo model;

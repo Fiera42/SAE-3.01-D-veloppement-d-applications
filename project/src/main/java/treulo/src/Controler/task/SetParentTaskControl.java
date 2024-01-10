@@ -6,6 +6,9 @@ import javafx.scene.control.ComboBox;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+//Controlleur chargé de mettre à jour la tâche parente dans l'écran de tâche en détail
+//Handler d'événement (bouton de validation, onAction)
+//Créée par : Doryann
 public class SetParentTaskControl implements EventHandler<ActionEvent> {
 
     Treulo model;
@@ -20,9 +23,10 @@ public class SetParentTaskControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        this.tt.getParentTask().getSubtasks().remove(this.tt);
+        TreuloTask parentTask = this.tt.getParentTask();
+        if(parentTask != null) parentTask.deleteSubTask(tt);
         this.tt.setParentTask((TreuloTask) this.cb.getSelectionModel().getSelectedItem());
-        ((TreuloTask) this.cb.getSelectionModel().getSelectedItem()).getSubtasks().add(this.tt);
+        ((TreuloTask) this.cb.getSelectionModel().getSelectedItem()).addSubTask(tt);
         this.model.updateObservator();
     }
 }

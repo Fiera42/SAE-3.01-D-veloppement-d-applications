@@ -7,17 +7,26 @@ import java.util.*;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
+
+//Classe représentant l'application
+//Classe originale : Tom
+//Modification pour adaptation : Tout le monde (pour la plupart des feature)
+//Implémente modèle et observateur pour transféré les mises à jour au modèle
+//Implémente itérable
 public class Treulo implements Model, Observator, Serializable, Iterable<TaskList> {
     protected ArrayList<Observator> observators;
 
+    //afficher les tâches archivées ?
     protected boolean displayArchive;
+    //mode d'affichage
     protected String displayMode;
-
+    //mode d'affichage précédent (pour retour en arrière)
     protected String displayModeOld;
-
+    //Les listes de tâches de l'application
     protected LinkedList<TaskList> tasks;
+    //la liste de tâche en cour d'édition (pour ajout tâche notamment)
     protected TaskList editedTaskList;
-
+    //tache affichée en détail
     protected TreuloTask tache;
 
     //GESTION DE FICHIER
@@ -29,9 +38,10 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
     private int serialMaxListId;
     //GESTION DE FICHIER
 
+    //listes temporaire pour la création de tâche
     protected List<String> collaboratorTempo = new ArrayList<String>();
-
     protected List<TreuloTask> dependencieTempo = new ArrayList<TreuloTask>();
+    //listes temporaire pour la création de tâche
 
     public Treulo() {
         this.observators = new ArrayList<>();
@@ -43,9 +53,11 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         serialAllTaskList = TaskList.getAllLists();
     }
 
+    //méthode pour ouvrir un fichier
     public void openFile(String path) {
         Treulo loadedModel = null;
 
+        //lecture du fichier
         try {
             if(path == null || path.isEmpty()) throw new IllegalArgumentException("Path is empty");
             FileInputStream fileInputStream = new FileInputStream(path);
@@ -58,21 +70,30 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
 
         if(loadedModel == null) return;
 
+        //remise à zéro du modèle
         newFile();
 
+        //mise à jour des variables statiques
         TaskList.setAllLists(loadedModel.serialAllTaskList);
         TaskList.setMaxId(loadedModel.serialMaxListId);
         TreuloTask.setAlltasks(loadedModel.serialAllTask);
         TreuloTask.setMaxId(loadedModel.serialMaxTaskId);
 
+        //ajout des données
         for(TaskList taskList : loadedModel) {
             addTaskList(taskList);
         }
+        setPath(path);
+        setFilename(loadedModel.filename);
     }
 
+    //méthode de sauvegarde en tant que fichier
     public void saveAsFile () {
+        //récupèration d'attribut statique à sérialisé
         serialMaxTaskId = TreuloTask.getMaxId();
         serialMaxListId = TreuloTask.getMaxId();
+
+        //création du fichier de sauvegarde
         try {
             if(path == null || path.isEmpty()) throw new IOException("File path is empty");
             FileOutputStream fileOutputStream = new FileOutputStream(path);
@@ -85,18 +106,13 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         catch (IOException ioException) {ioException.printStackTrace();}
     }
 
-    public void exportAsImage (String filename) {
-        setFilename(filename);
-    }
-
+    //méthode pour remettre à zéro le modèle, afin de créé un nouveau fichier
     public void newFile() {
         LinkedList<TaskList> listes = new LinkedList<>(tasks);
 
         for(TaskList list : listes) {
             list.destroy();
         }
-
-        TreuloTask.setAlltasks(new LinkedList<TreuloTask>());
 
         setFilename("");
         setPath("");
@@ -108,6 +124,7 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         displayModeOld = "";
         TaskList.setMaxId(0);
         TreuloTask.setMaxId(0);
+        TreuloTask.setAlltasks(new LinkedList<TreuloTask>());
     }
 
     public ArrayList<Observator> getObservators() {
@@ -137,10 +154,7 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
     }
 
     public void addDependencyTempo(TreuloTask name)
-    {
-
-
-               this.dependencieTempo.add(name);
+    {   this.dependencieTempo.add(name);
        this.updateObservator();
     }
 
@@ -168,6 +182,7 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
 
     public void addTaskList(TaskList taskList) {
         tasks.add(taskList);
+        //on observe nos listes de tâches
         taskList.addObservator(this);
         taskList.setParentApp(this);
         this.updateObservator();
@@ -175,6 +190,7 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
 
     public void removeTaskList(TaskList taskList) {
         tasks.remove(taskList);
+        //on observe nos listes de tâches
         taskList.deleteObservator(this);
         taskList.setParentApp(null);
         this.updateObservator();
@@ -242,6 +258,7 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
         this.path = path;
     }
 
+    //patron itérateur
     @Override
     public Iterator<TaskList> iterator() {
         return tasks.iterator();

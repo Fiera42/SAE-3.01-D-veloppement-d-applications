@@ -13,6 +13,7 @@ import treulo.src.model.Model;
 import treulo.src.model.TreuloTask;
 
 //Afficheur pour créé une liste de tâche
+//Classe : Doryann
 public class CreateTaskListDisplay implements Display {
 
     Model model ;

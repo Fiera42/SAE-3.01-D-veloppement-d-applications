@@ -11,6 +11,8 @@ import java.util.Objects;
 * Controleur permetant d'ajouter les collaborateur
 * dans une liste temporaire qui sera utilisé par la suite pour crée une tache
  */
+//Handler d'événement (bouton d'ajout de collaborateur, onAction)
+//Créée par : Tom
 public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
     Treulo model;
     TextField collaborator;
@@ -23,6 +25,7 @@ public class AddTaskCollaboratorControl implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        //pas de nom de collaborateur vide ou qui existe déjà
         if (!Objects.equals(collaborator.getText(), "")&& !model.getCollaboratorTempo().contains(collaborator.getText())){
         model.addCollaboratorTempo(collaborator.getText());
         collaborator.setText("");

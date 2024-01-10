@@ -8,6 +8,9 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+//Controlleur chargé de mettre à jour l'archivage d'une tâche
+//Handler d'événement (checkbox d'archivage, onAction)
+//Créée par : Adrien
 public class ArchiveTaskControl implements EventHandler<ActionEvent> {
     private Treulo model;
     private TreuloTask treuloTask;
