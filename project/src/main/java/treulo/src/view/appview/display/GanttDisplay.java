@@ -1,16 +1,12 @@
 package treulo.src.view.appview.display;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import treulo.src.Controler.DeployTaskControl;
-import treulo.src.Controler.ToggleArchiveControl;
 import treulo.src.Controler.task.ArchiveTaskControl;
 import treulo.src.Controler.task.DetailTaskControl;
 import treulo.src.model.TaskList;
@@ -18,13 +14,21 @@ import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
-import java.util.Random;
 
+/*
+Cette classe permet d'afficher le GANTT
+ */
 public class GanttDisplay implements Display{
 
     Treulo model;
 
     LinkedList<TaskList> taskList;
+
+    /**
+     * Constructeur du display permetant d'avoir le modèle et la liste des taches
+     * @param t Le modéle
+     * @param list La liste de toute les taches
+     */
     public GanttDisplay (Treulo t ,  LinkedList<TaskList> list)
     {
         model =t;
@@ -32,6 +36,10 @@ public class GanttDisplay implements Display{
 
     }
 
+    /**
+     * Permet de générer l'affichage du GANTT
+     * @return  L'affichage qui sera récupérer
+     */
     @Override
     public Node getDisplay() {
         GridPane gridPane = new GridPane();
@@ -41,17 +49,14 @@ public class GanttDisplay implements Display{
         vBoxTasks.setBorder(Border.stroke(Color.BLACK));
         vBoxTasks.setPadding(new Insets(50));
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
-        VBox hBoxRectangle= new VBox();
-        gridPane.add(vBoxTasks,1,1,1,50);
+        gridPane.add(vBoxTasks,1,1,1,Integer.MAX_VALUE);
         int y=0;
         for (int i=0;i<TreuloTask.getAlltasks().size();i++){
 
 
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
-                        System.out.println("posy"+y);
                         y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y);
-                        System.out.println("posy"+y);
                     }
             }
 
@@ -60,6 +65,12 @@ public class GanttDisplay implements Display{
 
     }
 
+    /**
+     * Permet de créer l'affichage des taches sous forme de boutton
+     * @param task Tache donné afin de créer son affichage
+     * @param parentNode La Node du parent
+     * @return l'affichage créer
+     */
     @Override
     public Node getTaskDisplay(TreuloTask task, Node parentNode) {
 
@@ -76,29 +87,27 @@ public class GanttDisplay implements Display{
         return hb;
     }
 
-    public Node getRectangleDisplay(TreuloTask task ,double x,String type) {
+    /**
+     * Permet de créer l'affichage des rectangles
+     * @param task  la tache êrmetant de définir la taille du rectangle
+     * @param x la position sur l'axe x
+     * @return l'affichage créer
+     */
+    public Node getRectangleDisplay(TreuloTask task ,double x) {
 
 
         Pane SP =new Pane();
         Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHITESMOKE);
         r.setX(x);
 
-        Label lab = new Label(task.getName(),r);
+        Label lab = new Label(task.getName()+" Dure ' "+task.getDuration()+" ' heures",r);
         lab.setLayoutX(r.getX());
         lab.setLayoutY(r.getY());
         lab.setOnMouseClicked(new DetailTaskControl(model,task));
 
-        Line larriere;
-        if (type.equals("normal"))
-        {
-             larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight() + 20);
+        Line larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight());
             larriere.setFill(Color.BLACK);
-        }
-        else
-        {
-             larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight());
-            larriere.setFill(Color.BLACK);
-        }
+
 
         if (task.getDependencies().size()!=0) {
             Line l = new Line(r.getX() + r.getWidth(), r.getY() + r.getHeight(), r.getX() + r.getWidth(), r.getY() + r.getHeight() + 20);
@@ -111,19 +120,26 @@ public class GanttDisplay implements Display{
         }
         return SP;
     }
+
+    /**
+     * Permet d'afficher toute les tache dépendant d'une tache de façcon récursife
+     * @param parentNode La Node du parent a qui on va donner l'affichage
+     * @param task la tache que l'on observe
+     * @param posx position x de la tache
+     * @param posy position y de la tache
+     * @return le nombre de tache afficher
+     */
     public int displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
     {
         GridPane grid =(GridPane) parentNode;
         System.out.println(task.getDependencies().size());
         if (task.getDependencies().size()>0){
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
-            grid.add(getRectangleDisplay(task,posx,"fin"),2,posy+1);
+            grid.add(getRectangleDisplay(task,posx),2,posy+1);
         int i=0;
         while (i<task.getDependencies().size())
         {
-            System.out.println("posy avant "+posy);
             posy=posy+displayDependence(grid,task.getDependencies().get(i),posx+task.getDuration()*10,posy+1+i)+1+i;
-            System.out.println("posy après"+posy);
             i++;
         }
         return posy;
@@ -131,7 +147,7 @@ public class GanttDisplay implements Display{
         else
         {
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
-            grid.add(getRectangleDisplay(task,posx,"fin"),2,posy+1);
+            grid.add(getRectangleDisplay(task,posx),2,posy+1);
             return posy+1;
         }
     }
