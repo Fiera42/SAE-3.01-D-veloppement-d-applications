@@ -132,7 +132,6 @@ public class GanttDisplay implements Display{
     public int displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
     {
         GridPane grid =(GridPane) parentNode;
-        System.out.println(task.getDependencies().size());
         if (task.getDependencies().size()>0){
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
             grid.add(getRectangleDisplay(task,posx),2,posy+1);
