@@ -48,26 +48,9 @@ public class GanttDisplay implements Display{
 
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
-                        displayDependence(gridPane,TreuloTask.getAlltasks().get(i),TreuloTask.getAlltasks().get(i).getDuration(),i+1);
-                        /*gridPane.add(getTaskDisplay(TreuloTask.getAlltasks().get(i),new HBox()),1,i+1);
-                        gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i)),2,1+i);
+                        displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+1);
 
-                        for (int y=0;y<TreuloTask.getAlltasks().get(i).getDependencies().size();y++)
-                        {
-                            displayDependence(gridPane,TreuloTask.getAlltasks().get(i).getDependencies().get(y),TreuloTask.getAlltasks().get(i).getDuration()*10,y+i+1);
-                        }*/
-                        }
-               /* else
-                {
-                    for (int y=0;y<TreuloTask.getAlltasks().size();y++)
-                    {
-                     if (TreuloTask.getAlltasks().get(y).getDependencies().contains(TreuloTask.getAlltasks().get(i)))
-                        {
-                            gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i),TreuloTask.getAlltasks().get(y).getDuration()*10),2,1+i);
-                        }
                     }
-
-                }*/
             }
 
 
@@ -91,28 +74,6 @@ public class GanttDisplay implements Display{
         return hb;
     }
 
-    public Node getRectangleDisplay(TreuloTask task) {
-
-
-        Pane SP =new Pane();
-        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHEAT);
-        Label lab = new Label(task.getName(),r);
-        lab.setOnMouseClicked(new DetailTaskControl(model,task));
-
-
-        if (task.getDependencies().size()!=0) {
-            Line l = new Line(r.getX() + r.getWidth(), r.getY() + r.getHeight(), r.getX() + r.getWidth(), r.getY() + r.getHeight() + 20);
-            l.setFill(Color.BLACK);
-            SP.getChildren().addAll(r,lab,l);
-        }
-        else
-        {
-            SP.getChildren().addAll(r,lab);
-        }
-
-
-        return SP;
-    }
     public Node getRectangleDisplay(TreuloTask task ,double x,String type) {
 
 
