@@ -103,13 +103,14 @@ public class GanttDisplay implements Display{
         Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHITESMOKE);
         r.setX(x);
 
-        Label lab = new Label(task.getName(),r);
+        Label lab = new Label(task.getName()+" Dure ' "+task.getDuration()+" ' heures",r);
         lab.setLayoutX(r.getX());
         lab.setLayoutY(r.getY());
         lab.setOnMouseClicked(new DetailTaskControl(model,task));
 
         Line larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight());
             larriere.setFill(Color.BLACK);
+
 
         if (task.getDependencies().size()!=0) {
             Line l = new Line(r.getX() + r.getWidth(), r.getY() + r.getHeight(), r.getX() + r.getWidth(), r.getY() + r.getHeight() + 20);
