@@ -15,6 +15,7 @@ import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 import treulo.src.model.TreuloTask;
 
+import java.net.SocketOption;
 import java.util.ArrayList;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
@@ -117,9 +118,13 @@ public class DetailTaskDisplay implements Display {
         //comboBox
         ComboBox <TreuloTask> combo= new ComboBox <TreuloTask>();
         combo.getItems().add(null);
-        for (int i=0;i<getAlltasks().size();i++)
+        for (TreuloTask tt : getAlltasks())
         {
-            combo.getItems().add(getAlltasks().get(i));
+            if (!this.task.getName().equals(tt.getName()) && !this.task.getDependencies().contains(tt)) {
+                combo.getItems().add(tt);
+            }
+
+
         }
 
         Button bCenter4 = new Button("+");
