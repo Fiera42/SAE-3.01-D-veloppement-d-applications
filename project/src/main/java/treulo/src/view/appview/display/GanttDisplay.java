@@ -80,10 +80,8 @@ public class GanttDisplay implements Display{
         bDetail.setPadding(new Insets(10));
         bDetail.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
         bDetail.setOnMouseClicked(new DetailTaskControl(model,task));
-        CheckBox CB = new CheckBox();
-        CB.setOnAction(new ArchiveTaskControl(model,task));
 
-        hb.getChildren().addAll(bDetail,CB);
+        hb.getChildren().addAll(bDetail);
         return hb;
     }
 
