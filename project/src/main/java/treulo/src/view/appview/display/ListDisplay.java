@@ -217,8 +217,8 @@ public class ListDisplay implements Display {
 
 
         TextArea description = new TextArea(task.getDescription());
-        description.setMinHeight(100);
-        description.setMaxHeight(100);
+        int i = task.getDescription().length() / 36 ;
+        description.setPrefRowCount(i+1);
         description.setWrapText(true);
         //HBox.setHgrow(description, Priority.ALWAYS);
         vb.getChildren().add(description);

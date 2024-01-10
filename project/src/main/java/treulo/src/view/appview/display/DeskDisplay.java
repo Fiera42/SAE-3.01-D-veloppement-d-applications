@@ -177,8 +177,8 @@ public class DeskDisplay implements Display {
         name.getChildren().add(delete);
 
         TextArea description = new TextArea(task.getDescription());
-        description.setMaxHeight(100);
-        description.setMinHeight(100);
+        int i = task.getDescription().length() / 36 ;
+        description.setPrefRowCount(i+1);
         description.setWrapText(true);
         HBox.setHgrow(description, Priority.ALWAYS);
         vBox.getChildren().add(description);
