@@ -94,6 +94,9 @@ public class TreuloTask implements Model, Observator {
     }
 
     public void addSubTask(TreuloTask task){
+        if (task.getDuration()>this.duration){
+            this.duration = task.getDuration();
+        }
         this.subtasks.add(task);
         task.setParentTask(this);
         task.addObservator(this);
@@ -102,6 +105,9 @@ public class TreuloTask implements Model, Observator {
     }
 
     public void addSubTask(TreuloTask task, int index){
+        if (task.getDuration()>this.duration){
+            this.duration = task.getDuration();
+        }
         this.subtasks.add(index, task);
         task.setParentTask(this);
         task.addObservator(this);
