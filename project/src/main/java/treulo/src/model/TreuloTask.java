@@ -81,8 +81,11 @@ public class TreuloTask implements Model, Observator, Serializable {
 
 
     public void addDependencie(TreuloTask task){
+        if (!this.getDependencies().contains(task))
+        {
         this.dependencies.add(task);
         this.updateObservator();
+        }
     }
 
     public void deleteDependencie(TreuloTask task){
