@@ -3,22 +3,23 @@ package treulo.src.Controler.file_management;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 import treulo.src.model.Treulo;
 
 import java.io.File;
+import java.io.IOException;
 
-public class OpenFileControl implements EventHandler<ActionEvent> {
+public class SaveAsControl implements EventHandler<ActionEvent> {
     private Treulo model;
 
     private static Stage stage;
 
-    public OpenFileControl(Treulo model) {
+    public SaveAsControl(Treulo model) {
         this.model = model;
     }
 
-    public OpenFileControl(Treulo model, Stage stage) {
+    public SaveAsControl(Treulo model, Stage stage) {
         this.model = model;
         this.stage = stage;
     }
@@ -31,10 +32,13 @@ public class OpenFileControl implements EventHandler<ActionEvent> {
         MenuItem menu = (MenuItem) actionEvent.getSource();
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Ouvrir...");
-        File file = fileChooser.showOpenDialog(stage);
+        fileChooser.setTitle("Sauvegarder le fichier sous...");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("treulo", "*.treulo"));
+        File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
-            model.openFile(file.getPath());
+            model.setFilename(file.getName());
+            model.setPath(file.getAbsolutePath());
+            model.saveAsFile();
         }
     }
 }

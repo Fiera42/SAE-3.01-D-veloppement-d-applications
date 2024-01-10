@@ -13,8 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import treulo.src.Controler.ChangeDisplayControl;
 import treulo.src.Controler.ToggleArchiveControl;
-import treulo.src.Controler.file_management.FileControlDispatcher;
-import treulo.src.Controler.file_management.NewFileControl;
+import treulo.src.Controler.file_management.*;
 import treulo.src.model.Treulo;
 import treulo.src.view.FilenameObservor;
 import treulo.src.view.appview.AppView;
@@ -60,8 +59,11 @@ public class Main extends Application {
             MenuItem nouveau = new MenuItem("Nouveau...");
             nouveau.setOnAction(new NewFileControl(model));
             MenuItem ouvrir = new MenuItem("Ouvrir...");
+            ouvrir.setOnAction(new OpenFileControl(model, stage));
             MenuItem enregistrer = new MenuItem("Enregistrer...");
+            enregistrer.setOnAction(new SaveFileControl(model));
             MenuItem enregistrer_sous = new MenuItem("Enregistrer sous...");
+            enregistrer_sous.setOnAction(new SaveAsControl(model, stage));
             MenuItem exporter_img = new MenuItem("Exporter en image...");
             buttonFile.getItems().addAll(nouveau, ouvrir, enregistrer, enregistrer_sous, exporter_img);
         }

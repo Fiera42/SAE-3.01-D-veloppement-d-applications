@@ -2,13 +2,14 @@ package treulo.src.model;
 
 import treulo.src.view.Observator;
 
+import java.io.Serializable;
 import java.security.IdentityScope;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TaskList implements Model, Observator, Iterable<TreuloTask> {
+public class TaskList implements Model, Observator, Iterable<TreuloTask>, Serializable {
 
     private String name ;
     private boolean isArchived ;
@@ -54,7 +55,8 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
     }
 
     public void destroy() {
-        for(TreuloTask task : tasks) {
+        LinkedList<TreuloTask> temp = new LinkedList<>(tasks);
+        for(TreuloTask task : temp) {
             task.destroy();
         }
         parentApp.removeTaskList(this);
@@ -135,6 +137,10 @@ public class TaskList implements Model, Observator, Iterable<TreuloTask> {
 
     public static List<TaskList> getAllLists() {
         return allLists;
+    }
+
+    public static void setAllLists(List<TaskList> allLists) {
+        TaskList.allLists = allLists;
     }
 
     public int getId() {

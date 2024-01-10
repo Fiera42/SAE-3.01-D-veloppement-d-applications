@@ -2,12 +2,13 @@ package treulo.src.model;
 
 import treulo.src.view.Observator;
 
+import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TreuloTask implements Model, Observator {
+public class TreuloTask implements Model, Observator, Serializable {
     private String name , description;
     private boolean isArchive;
 
@@ -171,6 +172,10 @@ public class TreuloTask implements Model, Observator {
 
     public static List<TreuloTask> getAlltasks(){
         return alltasks;
+    }
+
+    public static void setAlltasks(List<TreuloTask> alltasks) {
+        TreuloTask.alltasks = alltasks;
     }
 
     public void setName(String name) {

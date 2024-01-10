@@ -9,8 +9,10 @@ import treulo.src.model.Treulo;
 import treulo.src.view.Observator;
 import treulo.src.view.appview.displayFactory.DisplayFactory;
 
+import java.io.Serializable;
+
 //Observateur du modèle, permet d'afficher la partie tâche de l'application
-public class AppView extends ScrollPane implements Observator {
+public class AppView extends ScrollPane implements Observator, Serializable {
 
     public AppView() {
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);

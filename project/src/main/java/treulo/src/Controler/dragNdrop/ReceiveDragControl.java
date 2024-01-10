@@ -86,7 +86,6 @@ public class ReceiveDragControl implements EventHandler<DragEvent> {
                     VBox physicalList = (VBox) event.getGestureTarget();
                     double currentY = (model.getDisplayMode().equals("Tableau"))?145:177;
                     int taskIndex = 0;
-                    System.out.println(dropY);
 
                     while(currentY < dropY && taskIndex < treuloTask.getSubtasks().size()) {
                         currentY += tasks.get(taskIndex++).getHeight() + physicalList.getSpacing();

@@ -3,14 +3,11 @@ package treulo.src.model;
 import treulo.src.view.Observator;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static treulo.src.model.TreuloTask.getAlltasks;
 
-public class Treulo implements Model, Observator, Serializable {
+public class Treulo implements Model, Observator, Serializable, Iterable<TaskList> {
     protected ArrayList<Observator> observators;
 
     protected boolean displayArchive;
@@ -22,7 +19,13 @@ public class Treulo implements Model, Observator, Serializable {
     protected TaskList editedTaskList;
 
     protected TreuloTask tache;
+
+    //GESTION DE FICHIER
     private String filename;
+    private String path;
+    private List<TreuloTask> serialAllTask;
+    private List<TaskList> serialAllTaskList;
+    //GESTION DE FICHIER
 
     protected List<String> collaboratorTempo = new ArrayList<String>();
 
@@ -32,23 +35,48 @@ public class Treulo implements Model, Observator, Serializable {
         this.observators = new ArrayList<>();
         this.displayArchive = false;
         this.displayMode = "default";
-        this.displayModeOld=this.displayMode;
+        this.displayModeOld = this.displayMode;
         this.tasks = new LinkedList<>();
-
+        serialAllTask = TreuloTask.getAlltasks();
+        serialAllTaskList = TaskList.getAllLists();
     }
 
-    public void loadFile(String fileName) {
-        setFilename(filename);
+    public void openFile(String path) {
+        Treulo loadedModel = null;
+
+        try {
+            if(path == null || path.isEmpty()) throw new IllegalArgumentException("Path is empty");
+            FileInputStream fileInputStream = new FileInputStream(path);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            loadedModel = (Treulo) objectInputStream.readObject();
+            objectInputStream.close();
+            if(loadedModel == null) throw new FileNotFoundException("no model loaded");
+        }
+        catch (Exception e) {e.printStackTrace();}
+
+        if(loadedModel == null) return;
+
+        newFile();
+
+        TaskList.setAllLists(loadedModel.serialAllTaskList);
+        TreuloTask.setAlltasks(loadedModel.serialAllTask);
+
+        for(TaskList taskList : loadedModel) {
+            addTaskList(taskList);
+        }
     }
 
-    public void saveAsFile (String filename) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(filename);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+    public void saveAsFile () {
+        try {
+            if(path == null || path.isEmpty()) throw new IOException("File path is empty");
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        objectOutputStream.writeObject(this);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-        setFilename(filename);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+        catch (IOException ioException) {ioException.printStackTrace();}
     }
 
     public void exportAsImage (String filename) {
@@ -57,10 +85,19 @@ public class Treulo implements Model, Observator, Serializable {
 
     public void newFile() {
         LinkedList<TaskList> listes = new LinkedList<>(tasks);
+
         for(TaskList list : listes) {
             list.destroy();
         }
+
         setFilename("");
+        setPath("");
+        setDisplayArchive(false);
+        setDisplayMode("Tableau");
+        collaboratorTempo = new ArrayList<>();
+        tache = null;
+        editedTaskList = null;
+        displayModeOld = "";
     }
 
     public ArrayList<Observator> getObservators() {
@@ -185,5 +222,18 @@ public class Treulo implements Model, Observator, Serializable {
     public void setFilename(String filename) {
         this.filename = filename;
         updateObservator();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public Iterator<TaskList> iterator() {
+        return tasks.iterator();
     }
 }

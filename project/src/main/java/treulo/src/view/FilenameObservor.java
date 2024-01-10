@@ -4,7 +4,9 @@ import javafx.scene.control.Label;
 import treulo.src.model.Model;
 import treulo.src.model.Treulo;
 
-public class FilenameObservor extends Label implements Observator {
+import java.io.Serializable;
+
+public class FilenameObservor extends Label implements Observator, Serializable {
 
     public FilenameObservor() {
     }
