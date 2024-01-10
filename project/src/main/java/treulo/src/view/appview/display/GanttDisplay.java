@@ -43,30 +43,16 @@ public class GanttDisplay implements Display{
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
         VBox hBoxRectangle= new VBox();
         gridPane.add(vBoxTasks,1,1,1,50);
-
+        int y=0;
         for (int i=0;i<TreuloTask.getAlltasks().size();i++){
+
 
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
-                        gridPane.add(getTaskDisplay(TreuloTask.getAlltasks().get(i),new HBox()),1,i+1);
-                        gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i)),2,1+i);
-
-                        for (int y=0;y<TreuloTask.getAlltasks().get(i).getDependencies().size();y++)
-                        {
-                            displayDependence(gridPane,TreuloTask.getAlltasks().get(i).getDependencies().get(y),TreuloTask.getAlltasks().get(i).getDuration()*10,y+i+1);
-                        }
-                        }
-               /* else
-                {
-                    for (int y=0;y<TreuloTask.getAlltasks().size();y++)
-                    {
-                     if (TreuloTask.getAlltasks().get(y).getDependencies().contains(TreuloTask.getAlltasks().get(i)))
-                        {
-                            gridPane.add(getRectangleDisplay(TreuloTask.getAlltasks().get(i),TreuloTask.getAlltasks().get(y).getDuration()*10),2,1+i);
-                        }
+                        System.out.println("posy"+y);
+                        y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y);
+                        System.out.println("posy"+y);
                     }
-
-                }*/
             }
 
 
@@ -90,29 +76,7 @@ public class GanttDisplay implements Display{
         return hb;
     }
 
-    public Node getRectangleDisplay(TreuloTask task) {
-
-
-        Pane SP =new Pane();
-        Rectangle r = new Rectangle(task.getDuration()*10,20,Color.WHEAT);
-        Label lab = new Label(task.getName(),r);
-        lab.setOnMouseClicked(new DetailTaskControl(model,task));
-
-
-        if (task.getDependencies().size()!=0) {
-            Line l = new Line(r.getX() + r.getWidth(), r.getY() + r.getHeight(), r.getX() + r.getWidth(), r.getY() + r.getHeight() + 20);
-            l.setFill(Color.BLACK);
-            SP.getChildren().addAll(r,lab,l);
-        }
-        else
-        {
-            SP.getChildren().addAll(r,lab);
-        }
-
-
-        return SP;
-    }
-    public Node getRectangleDisplay(TreuloTask task ,double x) {
+    public Node getRectangleDisplay(TreuloTask task ,double x,String type) {
 
 
         Pane SP =new Pane();
@@ -124,8 +88,17 @@ public class GanttDisplay implements Display{
         lab.setLayoutY(r.getY());
         lab.setOnMouseClicked(new DetailTaskControl(model,task));
 
-        Line larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight() + 20);
-        larriere.setFill(Color.BLACK);
+        Line larriere;
+        if (type.equals("normal"))
+        {
+             larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight() + 20);
+            larriere.setFill(Color.BLACK);
+        }
+        else
+        {
+             larriere = new Line(r.getX(), r.getY(), r.getX(), r.getY() + r.getHeight());
+            larriere.setFill(Color.BLACK);
+        }
 
         if (task.getDependencies().size()!=0) {
             Line l = new Line(r.getX() + r.getWidth(), r.getY() + r.getHeight(), r.getX() + r.getWidth(), r.getY() + r.getHeight() + 20);
@@ -138,24 +111,28 @@ public class GanttDisplay implements Display{
         }
         return SP;
     }
-
-    public void displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
+    public int displayDependence (Node parentNode,TreuloTask task,double posx,int posy)
     {
         GridPane grid =(GridPane) parentNode;
+        System.out.println(task.getDependencies().size());
         if (task.getDependencies().size()>0){
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
-            grid.add(getRectangleDisplay(task,posx),2,posy+1);
+            grid.add(getRectangleDisplay(task,posx,"fin"),2,posy+1);
         int i=0;
         while (i<task.getDependencies().size())
         {
-            displayDependence(grid,task.getDependencies().get(i),posx+task.getDuration()*10,posy+1+i);
+            System.out.println("posy avant "+posy);
+            posy=posy+displayDependence(grid,task.getDependencies().get(i),posx+task.getDuration()*10,posy+1+i)+1+i;
+            System.out.println("posy après"+posy);
             i++;
         }
+        return posy;
         }
         else
         {
             grid.add(getTaskDisplay(task,new HBox()),1,posy+1);
-            grid.add(getRectangleDisplay(task,posx),2,posy+1);
+            grid.add(getRectangleDisplay(task,posx,"fin"),2,posy+1);
+            return posy+1;
         }
     }
 }
