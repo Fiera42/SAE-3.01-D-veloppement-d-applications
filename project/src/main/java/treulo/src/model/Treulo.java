@@ -90,6 +90,8 @@ public class Treulo implements Model, Observator, Serializable, Iterable<TaskLis
             list.destroy();
         }
 
+        TreuloTask.setAlltasks(new LinkedList<TreuloTask>());
+
         setFilename("");
         setPath("");
         setDisplayArchive(false);
