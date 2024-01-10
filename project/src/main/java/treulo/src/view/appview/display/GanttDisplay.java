@@ -50,7 +50,7 @@ public class GanttDisplay implements Display{
         vBoxTasks.setPadding(new Insets(50));
         vBoxTasks.setBackground(Background.fill(Color.WHITE));
         VBox hBoxRectangle= new VBox();
-        gridPane.add(vBoxTasks,1,1,1,50);
+        gridPane.add(vBoxTasks,1,1,1,Integer.MAX_VALUE);
         int y=0;
         for (int i=0;i<TreuloTask.getAlltasks().size();i++){
 
