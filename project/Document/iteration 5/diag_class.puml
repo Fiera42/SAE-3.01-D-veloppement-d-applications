@@ -1,0 +1,25 @@
+@startuml
+
+interface Observateur {}
+interface Modele {}
+
+class AppView implements Observateur{}
+note right : affiche l'application à l'aide\nde la factory \n(CF diag-conception/diag_class_factory\net iteration 1/AppView_Sequence)
+
+class Treulo implements Observateur, Modele{}
+
+class TaskList implements Observateur, Modele{}
+
+class TreuloTask implements Modele{}
+
+class "Label(java)"
+
+class FilenameObservor extends "Label(java)" implements Observateur {}
+note right : affiche le nom du fichier en cour\nd'édition. Observateur à part\ncar à l'exterieur d'appView\n(CF analyse/maquette/image/graph de scene)
+
+AppView --> Treulo : Observe
+Treulo --> TaskList : Observe
+TaskList --> TreuloTask : Observe
+FilenameObservor --> Treulo : Observe
+
+@enduml

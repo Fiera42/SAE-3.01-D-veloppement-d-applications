@@ -1,0 +1,19 @@
+@startuml
+
+interface Observateur {}
+interface Modele {}
+
+class AppView implements Observateur{}
+note right : affiche l'application à l'aide\nde la factory \n(CF diag-conception/diag_class_factory\net iteration 1/AppView_Sequence)
+
+class Treulo implements Observateur, Modele{}
+
+class TaskList implements Observateur, Modele{}
+
+class TreuloTask implements Modele{}
+
+AppView --> Treulo : Observe
+Treulo --> TaskList : Observe
+TaskList --> TreuloTask : Observe
+
+@enduml
