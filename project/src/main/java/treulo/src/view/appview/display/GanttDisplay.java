@@ -50,7 +50,7 @@ public class GanttDisplay implements Display{
                     if (TreuloTask.getAlltasks().get(i).isIndependent())
                     {
                         System.out.println("posy"+y);
-                        y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y+1)+1;
+                        y = displayDependence(gridPane,TreuloTask.getAlltasks().get(i),0,i+y);
                         System.out.println("posy"+y);
                     }
             }
