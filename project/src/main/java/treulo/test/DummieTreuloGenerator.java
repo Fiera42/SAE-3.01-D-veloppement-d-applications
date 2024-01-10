@@ -30,9 +30,6 @@ public class DummieTreuloGenerator {
         list1.addTask(task2);
         list2.addTask(task3);
         list2.addTask(task4);
-        list2.addTask(task5);
-        list2.addTask(task6);
-        list2.addTask(task7);
         treulo.addTaskList(list1);
         treulo.addTaskList(list2);
 

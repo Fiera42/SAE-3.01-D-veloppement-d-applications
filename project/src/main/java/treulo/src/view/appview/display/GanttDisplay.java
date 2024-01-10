@@ -15,8 +15,8 @@ import treulo.src.model.TreuloTask;
 
 import java.util.LinkedList;
 
-/*
-Cette classe permet d'afficher le GANTT
+/**
+*Cette classe permet d'afficher le GANTT
  */
 public class GanttDisplay implements Display{
 

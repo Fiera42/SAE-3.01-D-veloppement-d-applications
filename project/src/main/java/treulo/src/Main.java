@@ -122,7 +122,6 @@ public class Main extends Application {
         //--------------------
         Scene stageScene = new Scene(scene, appWidth, appHeight);
         exporter_img.setOnAction(new ExportAsImageControl(model, stage, stageScene));
-        stageScene.getStylesheets().add("treuloStyle.css");
         stage.setScene(stageScene);
         stage.setMaximized(true);
         stage.show();
