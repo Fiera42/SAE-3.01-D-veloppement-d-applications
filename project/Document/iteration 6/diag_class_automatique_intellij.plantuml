@@ -1,0 +1,570 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AddTaskCollaboratorControl {
+  + AddTaskCollaboratorControl(Model, TextField): 
+  + handle(ActionEvent): void
+}
+class AddTaskControl {
+  + AddTaskControl(Model, TaskList, TextField, TextField, TextField, ComboBox<TreuloTask>): 
+  + handle(ActionEvent): void
+}
+class AddTaskDependencyControl {
+  + AddTaskDependencyControl(Model, ComboBox<TreuloTask>): 
+  + handle(ActionEvent): void
+}
+class AddTaskListControl {
+  + AddTaskListControl(Model, TextField): 
+  + AddTaskListControl(Model): 
+  + handle(ActionEvent): void
+}
+class AddTaskListMenuControl {
+  + AddTaskListMenuControl(Model): 
+  + handle(ActionEvent): void
+}
+class AddTaskMenuControl {
+  + AddTaskMenuControl(Model): 
+  + handle(ActionEvent): void
+}
+class AppView {
+  + AppView(): 
+  + update(Model): void
+}
+class ArchiveTaskControl {
+  + ArchiveTaskControl(Treulo, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class ArchiveTaskListControl {
+  + ArchiveTaskListControl(Treulo, TaskList): 
+  + handle(ActionEvent): void
+}
+class BackControler {
+  + BackControler(Model): 
+  + handle(ActionEvent): void
+}
+class ChangeDisplayControl {
+  + ChangeDisplayControl(Model, String): 
+  + handle(ActionEvent): void
+}
+class CreateTaskDisplay {
+  + CreateTaskDisplay(Model, LinkedList<TaskList>): 
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class CreateTaskDisplayFactory {
+  + CreateTaskDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class CreateTaskListDisplay {
+  + CreateTaskListDisplay(Model): 
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class CreateTaskListDisplayFactory {
+  + CreateTaskListDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class DeleteCollaboratorControle {
+  + DeleteCollaboratorControle(Treulo, String): 
+  + DeleteCollaboratorControle(Treulo, String, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class DeleteDependencyControle {
+  + DeleteDependencyControle(Treulo, TreuloTask, TreuloTask): 
+  + DeleteDependencyControle(Treulo, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class DeleteTaskControl {
+  + DeleteTaskControl(Model, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class DeleteTaskListControl {
+  + DeleteTaskListControl(Model, TaskList): 
+  + handle(ActionEvent): void
+}
+class DeployListControl {
+  + DeployListControl(Model, TaskList): 
+  + handle(ActionEvent): void
+}
+class DeployTaskControl {
+  + DeployTaskControl(Model, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class DeskDisplay {
+  + DeskDisplay(Treulo, LinkedList<TaskList>): 
+  + getTaskListDisplay(TaskList): Node
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DeskDisplayFactory {
+  + DeskDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class DetailTaskControl {
+  + DetailTaskControl(Model, TreuloTask): 
+  + handle(MouseEvent): void
+   boolean: Boolean
+}
+class DetailTaskDisplay {
+  + DetailTaskDisplay(Model): 
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DetailTaskDisplayFactory {
+  + DetailTaskDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+interface Display << interface >> {
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DisplayFactory {
+  + DisplayFactory(): 
+  + createDisplay(): Display
+  + getDisplayFactory(Treulo, String): DisplayFactory
+}
+class DragOverControl {
+  + DragOverControl(Model, TreuloTask): 
+  + DragOverControl(Model, TaskList): 
+  + taskHandle(DragEvent, String[]): void
+  + handle(DragEvent): void
+  + taskListHandle(DragEvent, String[]): void
+}
+class DummieTreuloGenerator {
+  + DummieTreuloGenerator(): 
+  + generateDummie(): Treulo
+}
+class EditTaskDetailControl {
+  + EditTaskDetailControl(Treulo): 
+  + EditTaskDetailControl(Treulo, TaskList, TextField, TextField, ComboBox<TreuloTask>, TreuloTask, TextField): 
+  + handle(ActionEvent): void
+}
+class EditTaskListControl {
+  + EditTaskListControl(Model, TaskList, TextField): 
+  + changed(ObservableValue<Boolean>, Boolean, Boolean): void
+  + handle(ActionEvent): void
+}
+class EditTreuloTaskControl {
+  + EditTreuloTaskControl(Model, TreuloTask, TextField, TextArea): 
+  + handle(KeyEvent): void
+}
+class EditedTaskListControl {
+  + EditedTaskListControl(Model, TaskList): 
+  + handle(MouseEvent): void
+}
+class EndDragControl {
+  + EndDragControl(Model, Node): 
+  + handle(DragEvent): void
+}
+class ExportAsImageControl {
+  + ExportAsImageControl(Treulo): 
+  + ExportAsImageControl(Treulo, Stage, Scene): 
+  + handle(ActionEvent): void
+}
+class FXImaging {
+  + FXImaging(): 
+  - initAndShowGUI(Node, File, BoundingBox): void
+  + nodeToImage(Node, ObservableList, File): void
+  - restoreNode(): void
+  + sceneToImage(Scene, File, double, double): void
+  - restoreScene(): void
+  - initAndShowGUI(Scene, File, BoundingBox): void
+  - restore(): void
+  + nodeToImage(Node, ObservableList, File, double, double): void
+  - toBufferedImage(Container, Bounds): BufferedImage
+  - save(Container, Bounds, File): void
+  + sceneToImage(Scene, File): void
+}
+class FilenameObservor {
+  + FilenameObservor(): 
+  + FilenameObservor(String): 
+  + update(Model): void
+}
+class GanttDisplay {
+  + GanttDisplay(Treulo, LinkedList<TaskList>): 
+  + displayDependence(Node, TreuloTask, double, int): int
+  + getTaskDisplay(TreuloTask, Node): Node
+  + getRectangleDisplay(TreuloTask, double): Node
+   display: Node
+}
+class GanttDisplayFactory {
+  + GanttDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class ListDisplay {
+  + ListDisplay(Treulo, LinkedList<TaskList>): 
+  + getTaskDisplay(TreuloTask, Node): Node
+  + getTaskListDisplay(TaskList): Node
+   display: Node
+}
+class ListDisplayFactory {
+  + ListDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+  + start(Stage): void
+}
+interface Model << interface >> {
+  + addObservator(Observator): void
+  + deleteObservator(Observator): void
+  + updateObservator(): void
+}
+class NewFileControl {
+  + NewFileControl(Treulo): 
+  + handle(ActionEvent): void
+}
+interface Observator << interface >> {
+  + update(Model): void
+}
+class OpenFileControl {
+  + OpenFileControl(Treulo): 
+  + OpenFileControl(Treulo, Stage): 
+  + handle(ActionEvent): void
+}
+class ReceiveDragControl {
+  + ReceiveDragControl(Treulo, TreuloTask, ArrayList<VBox>): 
+  + ReceiveDragControl(Treulo, TaskList, ArrayList<VBox>): 
+  + taskHandle(DragEvent, String[]): boolean
+  + taskListHandle(DragEvent, String[]): boolean
+  + handle(DragEvent): void
+  + switchList(Treulo, TaskList, TaskList): void
+}
+class SaveAsControl {
+  + SaveAsControl(Treulo, Stage): 
+  + SaveAsControl(Treulo): 
+  + handle(ActionEvent): void
+}
+class SaveFileControl {
+  + SaveFileControl(Treulo): 
+  + handle(ActionEvent): void
+}
+class SetParentTaskControl {
+  + SetParentTaskControl(Treulo, ComboBox<TreuloTask>, TreuloTask): 
+  + handle(ActionEvent): void
+}
+class StartDragControl {
+  + StartDragControl(Model, TaskList): 
+  + StartDragControl(Model, TreuloTask): 
+  + handle(MouseEvent): void
+}
+class TaskList {
+  + TaskList(String): 
+  - observators: ArrayList<Observator>
+  - allLists: List<TaskList>
+  - name: String
+  - parentApp: Treulo
+  - id: int
+  - maxId: int
+  - isArchived: boolean
+  - tasks: LinkedList<TreuloTask>
+  - deploy: boolean
+  + deleteTask(TreuloTask): void
+  + getListById(int): TaskList?
+  + update(Model): void
+  + deleteObservator(Observator): void
+  + destroy(): void
+  + getdeploy(): boolean
+  + addTask(TreuloTask): void
+  + iterator(): Iterator<TreuloTask>
+  + addTask(TreuloTask, int): void
+  + updateObservator(): void
+  + addObservator(Observator): void
+   name: String
+   tasks: LinkedList<TreuloTask>
+   observators: ArrayList<Observator>
+   empty: boolean
+   isArchived: boolean
+   parentApp: Treulo
+   id: int
+   allLists: List<TaskList>
+   deploy: boolean
+   maxId: int
+}
+class TextDisplay {
+  + TextDisplay(LinkedList<TaskList>): 
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class TextDisplayFactory {
+  + TextDisplayFactory(Treulo): 
+  + createDisplay(): Display
+}
+class ToggleArchiveControl {
+  + ToggleArchiveControl(Treulo): 
+  + handle(ActionEvent): void
+}
+class Treulo {
+  + Treulo(): 
+  # tasks: LinkedList<TaskList>
+  # displayModeOld: String
+  # tache: TreuloTask
+  # displayMode: String
+  # displayArchive: boolean
+  # observators: ArrayList<Observator>
+  # editedTaskList: TaskList
+  - path: String
+  - filename: String
+  # dependencieTempo: List<TreuloTask>
+  # collaboratorTempo: List<String>
+  + addCollaboratorTempo(String): void
+  + updateObservator(): void
+  + addObservator(Observator): void
+  + removeTaskList(TaskList): void
+  + newFile(): void
+  + iterator(): Iterator<TaskList>
+  + update(Model): void
+  + saveAsFile(): void
+  + deleteObservator(Observator): void
+  + openFile(String): void
+  + addDependencyTempo(TreuloTask): void
+  + addTaskList(TaskList): void
+  + addCollaborator(String): void
+   collaboratorTempo: List<String>
+   observators: ArrayList<Observator>
+   tasks: LinkedList<TaskList>
+   displayModeOld: String
+   displayArchive: boolean
+   tache: TreuloTask
+   filename: String
+   dependencieTempo: List<TreuloTask>
+   displayMode: String
+   path: String
+   editedTaskList: TaskList
+}
+class TreuloTask {
+  + TreuloTask(String): 
+  + TreuloTask(String, String, float): 
+  + TreuloTask(): 
+  + TreuloTask(String, String): 
+  - name: String
+  - description: String
+  - parentList: TaskList
+  - alltasks: List<TreuloTask>
+  - deploy: boolean
+  - isArchive: boolean
+  - parentTask: TreuloTask
+  - subtasks: LinkedList<TreuloTask>
+  - collaborators: ArrayList<String>
+  - dependencies: ArrayList<TreuloTask>
+  - id: int
+  - observators: ArrayList<Observator>
+  - maxId: int
+  - duration: float
+  + updateObservator(): void
+  + addSubTask(TreuloTask): void
+  + addCollaborator(String): void
+  + destroy(): void
+  + deleteObservator(Observator): void
+  + update(Model): void
+  + deleteSubTask(TreuloTask): void
+  + addDependencie(TreuloTask): void
+  + getTaskById(int): TreuloTask?
+  + addSubTask(TreuloTask, int): void
+  + addObservator(Observator): void
+  + deleteDependencie(TreuloTask): void
+  + toString(): String
+   alltasks: List<TreuloTask>
+   description: String
+   archived: boolean
+   collaborators: ArrayList<String>
+   subtasks: LinkedList<TreuloTask>
+   deploy: boolean
+   parentList: TaskList
+   name: String
+   observators: ArrayList<Observator>
+   independent: boolean
+   dependencies: ArrayList<TreuloTask>
+   id: int
+   parentTask: TreuloTask
+   isArchive: boolean
+   duration: float
+   maxId: int
+}
+
+AddTaskCollaboratorControl   "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AddTaskControl               "1" *-[#595959,plain]-> "tL\n1" TaskList                     
+AddTaskControl               "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AddTaskControl                -[#595959,dashed]->  TreuloTask                   : "«create»"
+AddTaskDependencyControl     "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AddTaskListControl            -[#595959,dashed]->  TaskList                     : "«create»"
+AddTaskListControl           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AddTaskListMenuControl       "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AddTaskMenuControl           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+AppView                       -[#008200,dashed]-^  Observator                   
+ArchiveTaskControl           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ArchiveTaskControl           "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+ArchiveTaskListControl       "1" *-[#595959,plain]-> "taskList\n1" TaskList                     
+ArchiveTaskListControl       "1" *-[#595959,plain]-> "model\n1" Treulo                       
+BackControler                "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ChangeDisplayControl         "1" *-[#595959,plain]-> "model\n1" Treulo                       
+CreateTaskDisplay             -[#595959,dashed]->  AddTaskCollaboratorControl   : "«create»"
+CreateTaskDisplay             -[#595959,dashed]->  AddTaskControl               : "«create»"
+CreateTaskDisplay             -[#595959,dashed]->  AddTaskDependencyControl     : "«create»"
+CreateTaskDisplay             -[#595959,dashed]->  BackControler                : "«create»"
+CreateTaskDisplay             -[#595959,dashed]->  DeleteCollaboratorControle   : "«create»"
+CreateTaskDisplay             -[#595959,dashed]->  DeleteDependencyControle     : "«create»"
+CreateTaskDisplay             -[#008200,dashed]-^  Display                      
+CreateTaskDisplay            "1" *-[#595959,plain]-> "taskLists\n*" TaskList                     
+CreateTaskDisplay            "1" *-[#595959,plain]-> "model\n1" Treulo                       
+CreateTaskDisplayFactory      -[#595959,dashed]->  CreateTaskDisplay            : "«create»"
+CreateTaskDisplayFactory      -[#000082,plain]-^  DisplayFactory               
+CreateTaskDisplayFactory     "1" *-[#595959,plain]-> "model\n1" Treulo                       
+CreateTaskListDisplay         -[#595959,dashed]->  AddTaskListControl           : "«create»"
+CreateTaskListDisplay         -[#595959,dashed]->  BackControler                : "«create»"
+CreateTaskListDisplay         -[#008200,dashed]-^  Display                      
+CreateTaskListDisplay        "1" *-[#595959,plain]-> "model\n1" Model                        
+CreateTaskListDisplayFactory  -[#595959,dashed]->  CreateTaskListDisplay        : "«create»"
+CreateTaskListDisplayFactory  -[#000082,plain]-^  DisplayFactory               
+CreateTaskListDisplayFactory "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeleteCollaboratorControle   "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeleteCollaboratorControle   "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DeleteDependencyControle     "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeleteDependencyControle     "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DeleteTaskControl            "1" *-[#595959,plain]-> "model\n1" Model                        
+DeleteTaskControl            "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DeleteTaskListControl        "1" *-[#595959,plain]-> "taskList\n1" TaskList                     
+DeleteTaskListControl        "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeployListControl            "1" *-[#595959,plain]-> "treuloList\n1" TaskList                     
+DeployListControl            "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeployTaskControl            "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeployTaskControl            "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DeskDisplay                   -[#595959,dashed]->  AddTaskListMenuControl       : "«create»"
+DeskDisplay                   -[#595959,dashed]->  AddTaskMenuControl           : "«create»"
+DeskDisplay                   -[#595959,dashed]->  ArchiveTaskControl           : "«create»"
+DeskDisplay                   -[#595959,dashed]->  ArchiveTaskListControl       : "«create»"
+DeskDisplay                   -[#595959,dashed]->  DeleteTaskControl            : "«create»"
+DeskDisplay                   -[#595959,dashed]->  DeleteTaskListControl        : "«create»"
+DeskDisplay                   -[#595959,dashed]->  DetailTaskControl            : "«create»"
+DeskDisplay                   -[#008200,dashed]-^  Display                      
+DeskDisplay                   -[#595959,dashed]->  DragOverControl              : "«create»"
+DeskDisplay                   -[#595959,dashed]->  EditTaskListControl          : "«create»"
+DeskDisplay                   -[#595959,dashed]->  EditTreuloTaskControl        : "«create»"
+DeskDisplay                   -[#595959,dashed]->  EditedTaskListControl        : "«create»"
+DeskDisplay                   -[#595959,dashed]->  EndDragControl               : "«create»"
+DeskDisplay                   -[#595959,dashed]->  ReceiveDragControl           : "«create»"
+DeskDisplay                   -[#595959,dashed]->  StartDragControl             : "«create»"
+DeskDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList                     
+DeskDisplay                  "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DeskDisplayFactory            -[#595959,dashed]->  DeskDisplay                  : "«create»"
+DeskDisplayFactory            -[#000082,plain]-^  DisplayFactory               
+DeskDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DetailTaskControl            "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DetailTaskControl            "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DetailTaskDisplay             -[#595959,dashed]->  AddTaskCollaboratorControl   : "«create»"
+DetailTaskDisplay             -[#595959,dashed]->  AddTaskDependencyControl     : "«create»"
+DetailTaskDisplay             -[#595959,dashed]->  ArchiveTaskControl           : "«create»"
+DetailTaskDisplay             -[#595959,dashed]->  DeleteCollaboratorControle   : "«create»"
+DetailTaskDisplay             -[#595959,dashed]->  DeleteDependencyControle     : "«create»"
+DetailTaskDisplay             -[#008200,dashed]-^  Display                      
+DetailTaskDisplay             -[#595959,dashed]->  EditTaskDetailControl        : "«create»"
+DetailTaskDisplay             -[#595959,dashed]->  SetParentTaskControl         : "«create»"
+DetailTaskDisplay            "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DetailTaskDisplay            "1" *-[#595959,plain]-> "task\n1" TreuloTask                   
+DetailTaskDisplayFactory      -[#595959,dashed]->  DetailTaskDisplay            : "«create»"
+DetailTaskDisplayFactory      -[#000082,plain]-^  DisplayFactory               
+DetailTaskDisplayFactory     "1" *-[#595959,plain]-> "model\n1" Treulo                       
+DisplayFactory                -[#595959,dashed]->  CreateTaskDisplayFactory     : "«create»"
+DisplayFactory                -[#595959,dashed]->  CreateTaskListDisplayFactory : "«create»"
+DisplayFactory                -[#595959,dashed]->  DeskDisplayFactory           : "«create»"
+DisplayFactory                -[#595959,dashed]->  DetailTaskDisplayFactory     : "«create»"
+DisplayFactory                -[#595959,dashed]->  GanttDisplayFactory          : "«create»"
+DisplayFactory                -[#595959,dashed]->  ListDisplayFactory           : "«create»"
+DisplayFactory                -[#595959,dashed]->  TextDisplayFactory           : "«create»"
+DragOverControl              "1" *-[#595959,plain]-> "model\n1" Model                        
+DragOverControl              "1" *-[#595959,plain]-> "taskList\n1" TaskList                     
+DragOverControl              "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+DummieTreuloGenerator         -[#595959,dashed]->  TaskList                     : "«create»"
+DummieTreuloGenerator         -[#595959,dashed]->  Treulo                       : "«create»"
+DummieTreuloGenerator         -[#595959,dashed]->  TreuloTask                   : "«create»"
+EditTaskDetailControl        "1" *-[#595959,plain]-> "tL\n1" TaskList                     
+EditTaskDetailControl        "1" *-[#595959,plain]-> "model\n1" Treulo                       
+EditTaskDetailControl        "1" *-[#595959,plain]-> "treutask\n1" TreuloTask                   
+EditTaskListControl          "1" *-[#595959,plain]-> "tL\n1" TaskList                     
+EditTaskListControl          "1" *-[#595959,plain]-> "model\n1" Treulo                       
+EditTreuloTaskControl        "1" *-[#595959,plain]-> "model\n1" Model                        
+EditTreuloTaskControl        "1" *-[#595959,plain]-> "TrTa\n1" TreuloTask                   
+EditedTaskListControl        "1" *-[#595959,plain]-> "tL\n1" TaskList                     
+EditedTaskListControl        "1" *-[#595959,plain]-> "model\n1" Treulo                       
+EndDragControl               "1" *-[#595959,plain]-> "model\n1" Model                        
+ExportAsImageControl          -[#595959,dashed]->  FXImaging                    : "«create»"
+ExportAsImageControl         "1" *-[#595959,plain]-> "model\n1" Treulo                       
+FilenameObservor              -[#008200,dashed]-^  Observator                   
+GanttDisplay                  -[#595959,dashed]->  DetailTaskControl            : "«create»"
+GanttDisplay                  -[#008200,dashed]-^  Display                      
+GanttDisplay                 "1" *-[#595959,plain]-> "taskList\n*" TaskList                     
+GanttDisplay                 "1" *-[#595959,plain]-> "model\n1" Treulo                       
+GanttDisplay                 "1" *-[#595959,plain]-> "taskDejaVU\n*" TreuloTask                   
+GanttDisplayFactory           -[#000082,plain]-^  DisplayFactory               
+GanttDisplayFactory           -[#595959,dashed]->  GanttDisplay                 : "«create»"
+GanttDisplayFactory          "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ListDisplay                   -[#595959,dashed]->  AddTaskListMenuControl       : "«create»"
+ListDisplay                   -[#595959,dashed]->  AddTaskMenuControl           : "«create»"
+ListDisplay                   -[#595959,dashed]->  ArchiveTaskControl           : "«create»"
+ListDisplay                   -[#595959,dashed]->  ArchiveTaskListControl       : "«create»"
+ListDisplay                   -[#595959,dashed]->  DeleteTaskControl            : "«create»"
+ListDisplay                   -[#595959,dashed]->  DeleteTaskListControl        : "«create»"
+ListDisplay                   -[#595959,dashed]->  DeployListControl            : "«create»"
+ListDisplay                   -[#595959,dashed]->  DeployTaskControl            : "«create»"
+ListDisplay                   -[#595959,dashed]->  DetailTaskControl            : "«create»"
+ListDisplay                   -[#008200,dashed]-^  Display                      
+ListDisplay                   -[#595959,dashed]->  DragOverControl              : "«create»"
+ListDisplay                   -[#595959,dashed]->  EditTaskListControl          : "«create»"
+ListDisplay                   -[#595959,dashed]->  EditTreuloTaskControl        : "«create»"
+ListDisplay                   -[#595959,dashed]->  EditedTaskListControl        : "«create»"
+ListDisplay                   -[#595959,dashed]->  EndDragControl               : "«create»"
+ListDisplay                   -[#595959,dashed]->  ReceiveDragControl           : "«create»"
+ListDisplay                   -[#595959,dashed]->  StartDragControl             : "«create»"
+ListDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList                     
+ListDisplay                  "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ListDisplayFactory            -[#000082,plain]-^  DisplayFactory               
+ListDisplayFactory            -[#595959,dashed]->  ListDisplay                  : "«create»"
+ListDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+Main                          -[#595959,dashed]->  AppView                      : "«create»"
+Main                          -[#595959,dashed]->  ChangeDisplayControl         : "«create»"
+Main                          -[#595959,dashed]->  ExportAsImageControl         : "«create»"
+Main                          -[#595959,dashed]->  FilenameObservor             : "«create»"
+Main                          -[#595959,dashed]->  NewFileControl               : "«create»"
+Main                          -[#595959,dashed]->  OpenFileControl              : "«create»"
+Main                          -[#595959,dashed]->  SaveAsControl                : "«create»"
+Main                          -[#595959,dashed]->  SaveFileControl              : "«create»"
+Main                          -[#595959,dashed]->  ToggleArchiveControl         : "«create»"
+Main                          -[#595959,dashed]->  Treulo                       : "«create»"
+NewFileControl               "1" *-[#595959,plain]-> "model\n1" Treulo                       
+OpenFileControl              "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ReceiveDragControl           "1" *-[#595959,plain]-> "taskList\n1" TaskList                     
+ReceiveDragControl           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ReceiveDragControl           "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+SaveAsControl                "1" *-[#595959,plain]-> "model\n1" Treulo                       
+SaveFileControl               -[#595959,dashed]->  SaveAsControl                : "«create»"
+SaveFileControl              "1" *-[#595959,plain]-> "model\n1" Treulo                       
+SetParentTaskControl         "1" *-[#595959,plain]-> "model\n1" Treulo                       
+SetParentTaskControl         "1" *-[#595959,plain]-> "tt\n1" TreuloTask                   
+StartDragControl             "1" *-[#595959,plain]-> "model\n1" Model                        
+StartDragControl             "1" *-[#595959,plain]-> "taskList\n1" TaskList                     
+StartDragControl             "1" *-[#595959,plain]-> "treuloTask\n1" TreuloTask                   
+TaskList                      -[#008200,dashed]-^  Model                        
+TaskList                      -[#008200,dashed]-^  Observator                   
+TaskList                     "1" *-[#595959,plain]-> "observators\n*" Observator                   
+TaskList                     "1" *-[#595959,plain]-> "parentApp\n1" Treulo                       
+TaskList                     "1" *-[#595959,plain]-> "tasks\n*" TreuloTask                   
+TextDisplay                   -[#008200,dashed]-^  Display                      
+TextDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList                     
+TextDisplayFactory            -[#000082,plain]-^  DisplayFactory               
+TextDisplayFactory            -[#595959,dashed]->  TextDisplay                  : "«create»"
+TextDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo                       
+ToggleArchiveControl         "1" *-[#595959,plain]-> "model\n1" Treulo                       
+Treulo                        -[#008200,dashed]-^  Model                        
+Treulo                        -[#008200,dashed]-^  Observator                   
+Treulo                       "1" *-[#595959,plain]-> "observators\n*" Observator                   
+Treulo                       "1" *-[#595959,plain]-> "tasks\n*" TaskList                     
+Treulo                       "1" *-[#595959,plain]-> "serialAllTask\n*" TreuloTask                   
+TreuloTask                    -[#008200,dashed]-^  Model                        
+TreuloTask                    -[#008200,dashed]-^  Observator                   
+TreuloTask                   "1" *-[#595959,plain]-> "observators\n*" Observator                   
+TreuloTask                   "1" *-[#595959,plain]-> "parentList\n1" TaskList                     
+@enduml

@@ -1,0 +1,308 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+
+class CreateTaskDisplay {
+  + CreateTaskDisplay(Model, LinkedList<TaskList>):
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class CreateTaskDisplayFactory {
+  + CreateTaskDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+class CreateTaskListDisplay {
+  + CreateTaskListDisplay(Model):
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class CreateTaskListDisplayFactory {
+  + CreateTaskListDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+
+class DeskDisplay {
+  + DeskDisplay(Treulo, LinkedList<TaskList>):
+  + getTaskListDisplay(TaskList): Node
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DeskDisplayFactory {
+  + DeskDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+class DetailTaskDisplay {
+  + DetailTaskDisplay(Model):
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DetailTaskDisplayFactory {
+  + DetailTaskDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+interface Display << interface >> {
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class DisplayFactory {
+  + DisplayFactory():
+  + createDisplay(): Display
+  + getDisplayFactory(Treulo, String): DisplayFactory
+}
+class DummieTreuloGenerator {
+  + DummieTreuloGenerator():
+  + generateDummie(): Treulo
+}
+class FXImaging {
+  + FXImaging():
+  - initAndShowGUI(Node, File, BoundingBox): void
+  + nodeToImage(Node, ObservableList, File): void
+  - restoreNode(): void
+  + sceneToImage(Scene, File, double, double): void
+  - restoreScene(): void
+  - initAndShowGUI(Scene, File, BoundingBox): void
+  - restore(): void
+  + nodeToImage(Node, ObservableList, File, double, double): void
+  - toBufferedImage(Container, Bounds): BufferedImage
+  - save(Container, Bounds, File): void
+  + sceneToImage(Scene, File): void
+}
+class FilenameObservor {
+  + FilenameObservor():
+  + FilenameObservor(String):
+  + update(Model): void
+}
+class GanttDisplay {
+  + GanttDisplay(Treulo, LinkedList<TaskList>):
+  + displayDependence(Node, TreuloTask, double, int): int
+  + getTaskDisplay(TreuloTask, Node): Node
+  + getRectangleDisplay(TreuloTask, double): Node
+   display: Node
+}
+class GanttDisplayFactory {
+  + GanttDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+class ListDisplay {
+  + ListDisplay(Treulo, LinkedList<TaskList>):
+  + getTaskDisplay(TreuloTask, Node): Node
+  + getTaskListDisplay(TaskList): Node
+   display: Node
+}
+class ListDisplayFactory {
+  + ListDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+class Main {
+  + Main():
+  + main(String[]): void
+  + start(Stage): void
+}
+interface Model << interface >> {
+  + addObservator(Observator): void
+  + deleteObservator(Observator): void
+  + updateObservator(): void
+}
+interface Observator << interface >> {
+  + update(Model): void
+}
+class TaskList {
+  + TaskList(String):
+  - observators: ArrayList<Observator>
+  - allLists: List<TaskList>
+  - name: String
+  - parentApp: Treulo
+  - id: int
+  - maxId: int
+  - isArchived: boolean
+  - tasks: LinkedList<TreuloTask>
+  - deploy: boolean
+  + deleteTask(TreuloTask): void
+  + getListById(int): TaskList?
+  + update(Model): void
+  + deleteObservator(Observator): void
+  + destroy(): void
+  + getdeploy(): boolean
+  + addTask(TreuloTask): void
+  + iterator(): Iterator<TreuloTask>
+  + addTask(TreuloTask, int): void
+  + updateObservator(): void
+  + addObservator(Observator): void
+   name: String
+   tasks: LinkedList<TreuloTask>
+   observators: ArrayList<Observator>
+   empty: boolean
+   isArchived: boolean
+   parentApp: Treulo
+   id: int
+   allLists: List<TaskList>
+   deploy: boolean
+   maxId: int
+}
+class TextDisplay {
+  + TextDisplay(LinkedList<TaskList>):
+  + getTaskDisplay(TreuloTask, Node): Node
+   display: Node
+}
+class TextDisplayFactory {
+  + TextDisplayFactory(Treulo):
+  + createDisplay(): Display
+}
+class Treulo {
+  + Treulo():
+  # tasks: LinkedList<TaskList>
+  # displayModeOld: String
+  # tache: TreuloTask
+  # displayMode: String
+  # displayArchive: boolean
+  # observators: ArrayList<Observator>
+  # editedTaskList: TaskList
+  - path: String
+  - filename: String
+  # dependencieTempo: List<TreuloTask>
+  # collaboratorTempo: List<String>
+  + addCollaboratorTempo(String): void
+  + updateObservator(): void
+  + addObservator(Observator): void
+  + removeTaskList(TaskList): void
+  + newFile(): void
+  + iterator(): Iterator<TaskList>
+  + update(Model): void
+  + saveAsFile(): void
+  + deleteObservator(Observator): void
+  + openFile(String): void
+  + addDependencyTempo(TreuloTask): void
+  + addTaskList(TaskList): void
+  + addCollaborator(String): void
+   collaboratorTempo: List<String>
+   observators: ArrayList<Observator>
+   tasks: LinkedList<TaskList>
+   displayModeOld: String
+   displayArchive: boolean
+   tache: TreuloTask
+   filename: String
+   dependencieTempo: List<TreuloTask>
+   displayMode: String
+   path: String
+   editedTaskList: TaskList
+}
+class TreuloTask {
+  + TreuloTask(String):
+  + TreuloTask(String, String, float):
+  + TreuloTask():
+  + TreuloTask(String, String):
+  - name: String
+  - description: String
+  - parentList: TaskList
+  - alltasks: List<TreuloTask>
+  - deploy: boolean
+  - isArchive: boolean
+  - parentTask: TreuloTask
+  - subtasks: LinkedList<TreuloTask>
+  - collaborators: ArrayList<String>
+  - dependencies: ArrayList<TreuloTask>
+  - id: int
+  - observators: ArrayList<Observator>
+  - maxId: int
+  - duration: float
+  + updateObservator(): void
+  + addSubTask(TreuloTask): void
+  + addCollaborator(String): void
+  + destroy(): void
+  + deleteObservator(Observator): void
+  + update(Model): void
+  + deleteSubTask(TreuloTask): void
+  + addDependencie(TreuloTask): void
+  + getTaskById(int): TreuloTask?
+  + addSubTask(TreuloTask, int): void
+  + addObservator(Observator): void
+  + deleteDependencie(TreuloTask): void
+  + toString(): String
+   alltasks: List<TreuloTask>
+   description: String
+   archived: boolean
+   collaborators: ArrayList<String>
+   subtasks: LinkedList<TreuloTask>
+   deploy: boolean
+   parentList: TaskList
+   name: String
+   observators: ArrayList<Observator>
+   independent: boolean
+   dependencies: ArrayList<TreuloTask>
+   id: int
+   parentTask: TreuloTask
+   isArchive: boolean
+   duration: float
+   maxId: int
+}
+CreateTaskDisplay             -[#008200,dashed]-^  Display
+CreateTaskDisplay            "1" *-[#595959,plain]-> "taskLists\n*" TaskList
+CreateTaskDisplay            "1" *-[#595959,plain]-> "model\n1" Treulo
+CreateTaskDisplayFactory      -[#595959,dashed]->  CreateTaskDisplay            : "«create»"
+CreateTaskDisplayFactory      -[#000082,plain]-^  DisplayFactory
+CreateTaskDisplayFactory     "1" *-[#595959,plain]-> "model\n1" Treulo
+CreateTaskListDisplay         -[#008200,dashed]-^  Display
+CreateTaskListDisplay        "1" *-[#595959,plain]-> "model\n1" Model
+CreateTaskListDisplayFactory  -[#595959,dashed]->  CreateTaskListDisplay        : "«create»"
+CreateTaskListDisplayFactory  -[#000082,plain]-^  DisplayFactory
+CreateTaskListDisplayFactory "1" *-[#595959,plain]-> "model\n1" Treulo
+DeskDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList
+DeskDisplay                  "1" *-[#595959,plain]-> "model\n1" Treulo
+DeskDisplayFactory            -[#595959,dashed]->  DeskDisplay                  : "«create»"
+DeskDisplayFactory            -[#000082,plain]-^  DisplayFactory
+DeskDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo
+DetailTaskDisplay            "1" *-[#595959,plain]-> "model\n1" Treulo
+DetailTaskDisplay            "1" *-[#595959,plain]-> "task\n1" TreuloTask
+DetailTaskDisplayFactory      -[#595959,dashed]->  DetailTaskDisplay            : "«create»"
+DetailTaskDisplayFactory      -[#000082,plain]-^  DisplayFactory
+DetailTaskDisplayFactory     "1" *-[#595959,plain]-> "model\n1" Treulo
+DisplayFactory                -[#595959,dashed]->  CreateTaskDisplayFactory     : "«create»"
+DisplayFactory                -[#595959,dashed]->  CreateTaskListDisplayFactory : "«create»"
+DisplayFactory                -[#595959,dashed]->  DeskDisplayFactory           : "«create»"
+DisplayFactory                -[#595959,dashed]->  DetailTaskDisplayFactory     : "«create»"
+DisplayFactory                -[#595959,dashed]->  GanttDisplayFactory          : "«create»"
+DisplayFactory                -[#595959,dashed]->  ListDisplayFactory           : "«create»"
+DisplayFactory                -[#595959,dashed]->  TextDisplayFactory           : "«create»"
+DummieTreuloGenerator         -[#595959,dashed]->  TaskList                     : "«create»"
+DummieTreuloGenerator         -[#595959,dashed]->  Treulo                       : "«create»"
+DummieTreuloGenerator         -[#595959,dashed]->  TreuloTask                   : "«create»"
+FilenameObservor              -[#008200,dashed]-^  Observator
+GanttDisplay                  -[#008200,dashed]-^  Display
+GanttDisplay                 "1" *-[#595959,plain]-> "taskList\n*" TaskList
+GanttDisplay                 "1" *-[#595959,plain]-> "model\n1" Treulo
+GanttDisplay                 "1" *-[#595959,plain]-> "taskDejaVU\n*" TreuloTask
+GanttDisplayFactory           -[#000082,plain]-^  DisplayFactory
+GanttDisplayFactory           -[#595959,dashed]->  GanttDisplay                 : "«create»"
+GanttDisplayFactory          "1" *-[#595959,plain]-> "model\n1" Treulo
+ListDisplay                   -[#008200,dashed]-^  Display
+ListDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList
+ListDisplay                  "1" *-[#595959,plain]-> "model\n1" Treulo
+ListDisplayFactory            -[#000082,plain]-^  DisplayFactory
+ListDisplayFactory            -[#595959,dashed]->  ListDisplay                  : "«create»"
+ListDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo
+Main                          -[#595959,dashed]->  AppView                      : "«create»"
+Main                          -[#595959,dashed]->  FilenameObservor             : "«create»"
+Main                          -[#595959,dashed]->  Treulo                       : "«create»"
+TaskList                      -[#008200,dashed]-^  Model
+TaskList                      -[#008200,dashed]-^  Observator
+TaskList                     "1" *-[#595959,plain]-> "observators\n*" Observator
+TaskList                     "1" *-[#595959,plain]-> "parentApp\n1" Treulo
+TaskList                     "1" *-[#595959,plain]-> "tasks\n*" TreuloTask
+TextDisplay                   -[#008200,dashed]-^  Display
+TextDisplay                  "1" *-[#595959,plain]-> "taskLists\n*" TaskList
+TextDisplayFactory            -[#000082,plain]-^  DisplayFactory
+TextDisplayFactory            -[#595959,dashed]->  TextDisplay                  : "«create»"
+TextDisplayFactory           "1" *-[#595959,plain]-> "model\n1" Treulo
+Treulo                        -[#008200,dashed]-^  Model
+Treulo                        -[#008200,dashed]-^  Observator
+Treulo                       "1" *-[#595959,plain]-> "observators\n*" Observator
+Treulo                       "1" *-[#595959,plain]-> "tasks\n*" TaskList
+Treulo                       "1" *-[#595959,plain]-> "serialAllTask\n*" TreuloTask
+TreuloTask                    -[#008200,dashed]-^  Model
+TreuloTask                    -[#008200,dashed]-^  Observator
+TreuloTask                   "1" *-[#595959,plain]-> "observators\n*" Observator
+TreuloTask                   "1" *-[#595959,plain]-> "parentList\n1" TaskList
+@enduml
