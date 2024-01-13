@@ -48,23 +48,23 @@ public class ListDisplay implements Display {
 
     @Override
     public Node getDisplay() {
-        VBox hBox = new VBox(25);
-        hBox.setPadding(new Insets(10));
+        VBox vBox = new VBox(25);
+        vBox.setPadding(new Insets(10));
 
         //Récupèration de l'affichage pour chaque liste
         for(TaskList taskList : taskLists) {
             if(model.getDisplayArchive() || !taskList.isArchived()) {
-                hBox.getChildren().add(getTaskListDisplay(taskList));
+                vBox.getChildren().add(getTaskListDisplay(taskList));
 
                 //Ajout d'une ligne entre chaque liste
                 HBox line = new HBox();
                 line.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(0, 0, 2, 0))));
-                hBox.setMargin(line, new Insets(0, 200, 0, 200));
-                hBox.getChildren().add(line);
+                vBox.setMargin(line, new Insets(0, 200, 0, 200));
+                vBox.getChildren().add(line);
             }
         }
         //Pas de ligne entre la dernière liste et le bouton d'ajout de liste
-        if(hBox.getChildren().size() > 0) hBox.getChildren().remove(hBox.getChildren().size() -1);
+        if(vBox.getChildren().size() > 0) vBox.getChildren().remove(vBox.getChildren().size() -1);
 
         //Bouton d'ajout de liste
         Button button = new Button("Nouvelle liste");
@@ -75,9 +75,9 @@ public class ListDisplay implements Display {
         HBox buttonBox = new HBox(button);
         buttonBox.setAlignment(Pos.TOP_CENTER);
         button.setOnAction(new AddTaskListMenuControl(model));
-        hBox.getChildren().add(buttonBox);
+        vBox.getChildren().add(buttonBox);
 
-        return hBox;
+        return vBox;
     }
 
     //Méthode pour obtenir l'affichage d'une liste
@@ -103,18 +103,14 @@ public class ListDisplay implements Display {
 
         vb.setOnDragOver(new DragOverControl(model, taskList));
 
-
-        VBox titre = new VBox(10);
-        hBoxHead.getChildren().add(titre);
-
         TextField listName = new TextField(taskList.getName());
         EditTaskListControl editionControl = new EditTaskListControl(model, taskList, listName);
 
+        hBoxHead.getChildren().add(listName);
+        HBox.setHgrow(listName, Priority.ALWAYS);
+
         listName.setOnAction(editionControl);
         listName.focusedProperty().addListener(editionControl);
-
-        titre.getChildren().add(listName);
-        HBox.setHgrow(listName, Priority.ALWAYS);
 
         CheckBox archive = new CheckBox("Archiver");
         archive.setSelected(taskList.isArchived());
