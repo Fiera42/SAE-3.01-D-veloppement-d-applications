@@ -1,0 +1,21 @@
+@startuml
+
+class TreuloTask {
+
+}
+
+TreuloTask "1" <-- "*" TreuloTask : Tasks
+
+class TaskList {
+
+}
+
+TaskList "1" <-- "*" TreuloTask : Tasks
+
+class Treulo {
+
+}
+
+Treulo "1" <-- "*" TaskList : Tasks
+
+@enduml

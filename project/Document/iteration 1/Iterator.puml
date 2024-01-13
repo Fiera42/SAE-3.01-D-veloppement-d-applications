@@ -1,0 +1,19 @@
+@startuml
+
+interface "Iterable (java)" {
+    iterator() : Iterator<>
+}
+
+class TreuloTask implements "Iterable (java)" {
+iterator() : Iterator<TreuloTask>
+}
+
+class TaskList implements "Iterable (java)" {
+iterator() : Iterator<TreuloTask>
+}
+
+class Treulo implements "Iterable (java)" {
+iterator() : Iterator<TaskList>
+}
+
+@enduml

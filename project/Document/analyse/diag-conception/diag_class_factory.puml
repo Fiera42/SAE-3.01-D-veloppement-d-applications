@@ -27,6 +27,16 @@ package Display {
     }
   CreateTaskDisplay "*" <-- "1" Task.TaskList : taskList
 
+  class CreateTaskListDisplay implements Display {
+        +CreateTaskListDisplay(Model)
+      }
+  CreateTaskListDisplay "*" <-- "1" Treulo : model
+
+  class DetailTaskDisplay implements Display {
+          +DetailTaskDisplay(Task)
+        }
+  DetailTaskDisplay "*" <-- "1" TreuloTask : tâche
+
   package DisplayFactory {
     abstract class DisplayFactory {
       +{abstract} createDisplay() : Display
@@ -52,6 +62,15 @@ package Display {
           CreateTaskDisplayFactory(Treulo)
         }
     CreateTaskDisplayFactory "*" <-- "1" Treulo : model
+
+    class CreateTaskListDisplayFactory extends DisplayFactory{
+              CreateTaskListDisplayFactory(Treulo)
+            }
+        CreateTaskListDisplayFactory "*" <-- "1" Treulo : model
+    class DetailTaskDisplayFactory extends DisplayFactory{
+              DetailTaskDisplayFactory(Treulo)
+            }
+    DetailTaskDisplayFactory "*" <-- "1" Treulo : model
   }
 }
 
